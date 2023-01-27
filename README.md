@@ -18,3 +18,6 @@ git status -> näkee mitkä on lisätty
 git push
 
 git merge -> vasta  testauksen jälkeen.
+
+## Flutter
+asentakaa sdk
