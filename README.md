@@ -1,0 +1,2 @@
+# kalenteri
+Mobiiledevauskurssin repo
