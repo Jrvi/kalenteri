@@ -1,6 +1,9 @@
 # kalenteri
 Mobiiledevauskurssin repo
 
+## viikkopalaverit
+viikottain torstaina klo. 16.15
+
 ## kotitehtävä1
 Tavoitteet: Saada appi kauppaan
 Käyttäjät: Opiskelijat
