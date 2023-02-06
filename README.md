@@ -22,6 +22,9 @@ git push
 
 git merge -> vasta  testauksen jälkeen.
 
+## Github
+Pushin jälkeen luokaa pull request, johon laitetta muut tarkastamaan koodinne ennen merge toimintoa
+
 ## Flutter
 Esimerkki page, joka sisältää nappulan
 ```
