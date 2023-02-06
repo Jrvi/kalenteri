@@ -1,3 +1,4 @@
+import 'package:app/pages/main_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,6 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      initialRoute: '/pages',
+      routes: {
+        '/mainpage': (context) => const MainPage(),
+      },
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -105,11 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.pushNamed(context, '/mainpage');
+      }), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
