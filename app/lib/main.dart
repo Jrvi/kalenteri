@@ -49,7 +49,7 @@ class MyHomePage extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(context, '/mainpage');
           },
-          child: const Text('nappula :D'),
+          child: const Text('testi'),
         ),
       ),
     );
