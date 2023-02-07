@@ -1,3 +1,5 @@
+// ignore_for_file: slash_for_doc_comments
+
 import 'package:app/pages/login.dart';
 import 'package:app/pages/main_page.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/mainpage': (context) => const MainPage(),
-        '/loginpage': (context) => const MyApp(),
+        '/loginpage': (context) => const LoginPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -49,7 +51,7 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/mainpage');
+            Navigator.pushNamed(context, '/loginpage');
           },
           child: const Text('testi'),
         ),

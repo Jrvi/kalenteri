@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const LoginPage());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
+  static const String _title = 'Login Page =)';
 
   // This widget is the root of your application.
   @override
@@ -14,27 +16,27 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         ),
         home: Scaffold(
-          appBar: AppBar(title: const Text('Flutter Demo Home Page')),
-          body: const LoginPage(
-            title: 'Login page =)',
+          appBar: AppBar(title: const Text('Kalenteriappi Login Page')),
+          body: const MyStatefulWidget(
+            title: _title,
           ),
         ));
   }
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.title});
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({super.key, required this.title});
 
   final String title;
 
   @override
-  State<LoginPage> createState() => _LoginPage();
+  State<MyStatefulWidget> createState() => _MyStatefulWidget();
 }
 
-class _LoginPage extends State<LoginPage> {
+class _MyStatefulWidget extends State<MyStatefulWidget> {
   TextEditingController postiController = TextEditingController();
   TextEditingController salasanaController = TextEditingController();
 
@@ -48,9 +50,11 @@ class _LoginPage extends State<LoginPage> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'Login',
+                  'LOGO PLACEHOLDER',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color:
+                          Colors.blue, // Teema vois olla kätevä saada toimimaan
+                      // color: Theme.of(context).colorScheme.primaryContainer,
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
                 )),
@@ -75,6 +79,7 @@ class _LoginPage extends State<LoginPage> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('No account?'),
                 TextButton(
