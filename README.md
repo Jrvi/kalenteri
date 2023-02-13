@@ -14,7 +14,7 @@ Aikaikkuna: 3kk (kurssi)
 * kirjautuminen
 * kalenteri synkkaus
 * ryhmät
-*k averit
+* kaverit
 * vertailu
 
 ## Git ohjeet
