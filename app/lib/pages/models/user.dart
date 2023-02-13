@@ -1,3 +1,4 @@
+//Tänne ominaisuudet, joita käyttäjän profiiliin liittyy
 class User {
   final String imagePath;
   final String name;

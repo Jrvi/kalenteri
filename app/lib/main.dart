@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:app/pages/profile.dart';
 
-class Profile extends StatefulWidget {
-  @override
-  _profileState createState() => _profileState();
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  runApp(MyApp());
 }
 
-class _profileState extends State<Profile> {
+class MyApp extends StatelessWidget {
+  static final String title = 'User Profile';
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView (
-        physics: BouncingScrollPhysics(),
-        children: [],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      theme: ThemeData(
+        //Sivulle väri; helpompi seurata tässä vaiheessa mitä sivulla
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.tealAccent,
       ),
-      ),
+      home: Profile(),
+    );
   }
 }
