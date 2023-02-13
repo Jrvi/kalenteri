@@ -20,11 +20,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
-      theme: ThemeData(
-        //Sivulle väri; helpompi seurata tässä vaiheessa mitä sivulla
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.tealAccent,
-      ),
       home: Profile(),
     );
   }
