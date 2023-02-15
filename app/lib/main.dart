@@ -1,5 +1,5 @@
 
-
+import 'package:app/pages/main_page.dart';
 
 import 'package:app/pages/login.dart';
 import 'package:app/pages/main_page.dart';
