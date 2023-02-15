@@ -21,27 +21,46 @@ class _profileState extends State<Profile> {
         padding: EdgeInsets.symmetric(horizontal: 32),
         physics: BouncingScrollPhysics(),
         children: [
-          //Otsikko
+          //Sivun otsikko
           Text(
             "Muokkaa profiilia",
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 44),
+          //Profiilikuva
           ProfileWidget(
             imagePath: user.imagePath,
             isEdit: true,
             onClicked: () async {},
           ),
           const SizedBox(height: 24),
+          //Nimi ja muokkaaminen
           TextFieldWidget(
             label: 'Nimi',
             text: user.name,
             onChanged: (name) {},
           ),
+          const SizedBox(height: 44),
+          buttonrowWidget(),
         ],
       ),
     );
   }
+
+//kncnoje
+  Widget buttonrowWidget() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ButtonWidget(
+            text: 'Lisää kalenteri',
+            onClicked: () {},
+          ),
+          ButtonWidget(
+            text: 'Muokkaa menemisiä',
+            onClicked: () {},
+          ),
+        ],
+      );
 
 //Metodi: profiilin omistajan nimi
   Widget buildName(User user) => Column(

@@ -45,7 +45,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           const SizedBox(height: 8),
-          //Syötekenttä
+          //Syöttökenttä
           TextField(
             controller: controller,
             decoration: InputDecoration(
