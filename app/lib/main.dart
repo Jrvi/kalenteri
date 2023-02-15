@@ -1,21 +1,20 @@
-// ignore_for_file: slash_for_doc_comments
+
+
 
 import 'package:app/pages/login.dart';
 import 'package:app/pages/main_page.dart';
-import 'package:flutter/material.dart';
 
-/**
- * Kalenteri apin main tiedosto
- * Käsittelee apin käynnistyksen ja navigoinnin
- */
+import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+/// Kalenteri apin main tiedosto
+/// Käsittelee apin käynnistyksen ja navigoinnin
 void main() {
-  runApp(const MyApp());
+  initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
-/**
- * Apin pääluokka
- * sisältää oletus teeman ja routerin navigointiin
- */
+/// Apin pääluokka
+/// sisältää oletus teeman ja routerin navigointiin
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -25,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Kalenteri',
       initialRoute: '/',
       routes: {
+
         '/mainpage': (context) => const MainPage(),
         '/loginpage': (context) => const LoginPage(),
       },
@@ -36,9 +36,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/**
- * Väliaikainen luokka alkunäkymälle, jonka avulla voi testata omia näkymiä
- */
+/// Väliaikainen luokka alkunäkymälle, jonka avulla voi testata omia näkymiä
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required String title});
 

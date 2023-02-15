@@ -10,6 +10,13 @@ Käyttäjät: Opiskelijat
 Alusta: Mobiili (android, ios) ehkä työpöytä sovellus
 Aikaikkuna: 3kk (kurssi)
 
+## Feature list
+* kirjautuminen
+* kalenteri synkkaus
+* ryhmät
+* kaverit
+* vertailu
+
 ## Git ohjeet
 Luokaa jokaiselle uudelle ominaisuudelle oma haara.
 git branch -> antaa listan  sun aikaisemmista haaroista
