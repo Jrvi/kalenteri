@@ -74,6 +74,7 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ),
             ),
+           
             Row(
               children: <Widget>[
                 const Text('No account?'),
