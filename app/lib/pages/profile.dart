@@ -18,7 +18,7 @@ class _profileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
           //Sivun otsikko
@@ -41,26 +41,22 @@ class _profileState extends State<Profile> {
             onChanged: (name) {},
           ),
           const SizedBox(height: 44),
-          buttonrowWidget(),
+          Row(
+            children: [
+              ButtonWidget(
+                text: 'Lisää kalenteri',
+                onClicked: () {},
+              ),
+              ButtonWidget(
+                text: 'Muokkaa menemisiä',
+                onClicked: () {},
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
-
-//kncnoje
-  Widget buttonrowWidget() => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ButtonWidget(
-            text: 'Lisää kalenteri',
-            onClicked: () {},
-          ),
-          ButtonWidget(
-            text: 'Muokkaa menemisiä',
-            onClicked: () {},
-          ),
-        ],
-      );
 
 //Metodi: profiilin omistajan nimi
   Widget buildName(User user) => Column(
