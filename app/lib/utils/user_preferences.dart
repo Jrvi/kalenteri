@@ -6,6 +6,6 @@ class UserPreferences {
     //Kuvaksi tulevaisuudessa sovelluksen logo?
     imagePath: 'https://picsum.photos/200',
     //Nimiksi tulevaisuudessa sovelluksen käyttäjän nimi
-    name: 'Tikku Ukko',
+    name: 'Ukko Tikku',
   );
 }

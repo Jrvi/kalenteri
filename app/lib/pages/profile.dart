@@ -1,7 +1,10 @@
 import 'package:app/widgets/profile_widget.dart';
+import 'package:app/widgets/textfield_widget.dart';
+import 'package:app/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/models/user.dart';
 import 'package:app/utils/user_preferences.dart';
+import 'dart:io';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,21 +12,32 @@ class Profile extends StatefulWidget {
 }
 
 class _profileState extends State<Profile> {
+  User user = UserPreferences.myUser;
+
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser; //vai final?
-
     return Scaffold(
       body: ListView(
-        physics: BouncingScrollPhysics(), //turha rivi?
+        padding: EdgeInsets.symmetric(horizontal: 32),
+        physics: BouncingScrollPhysics(),
         children: [
+          //Otsikko
+          Text(
+            "Muokkaa profiilia",
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 44),
           ProfileWidget(
             imagePath: user.imagePath,
-            //Kuvaa klikattaessa sitä voidaan muokata
+            isEdit: true,
             onClicked: () async {},
           ),
           const SizedBox(height: 24),
-          buildName(user),
+          TextFieldWidget(
+            label: 'Nimi',
+            text: user.name,
+            onChanged: (name) {},
+          ),
         ],
       ),
     );

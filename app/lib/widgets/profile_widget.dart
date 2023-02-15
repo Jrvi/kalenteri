@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
+  final bool isEdit;
   final VoidCallback onClicked;
 
   const ProfileWidget({
     Key? key,
     required this.imagePath,
+    this.isEdit = false,
     required this.onClicked,
   }) : super(key: key);
 
@@ -61,7 +63,7 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 8,
           child: Icon(
-            Icons.edit,
+            Icons.add_a_photo,
             color: Colors.white, //Muokkaus-painikkeen kuvake valkoisena
             size: 20,
           ),
