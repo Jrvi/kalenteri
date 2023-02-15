@@ -1,4 +1,9 @@
+
 import 'package:app/pages/main_page.dart';
+
+import 'package:app/pages/login.dart';
+import 'package:app/pages/main_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -19,7 +24,9 @@ class MyApp extends StatelessWidget {
       title: 'Kalenteri',
       initialRoute: '/',
       routes: {
-        '/mainpage': (context) => MainPage(),
+
+        '/mainpage': (context) => const MainPage(),
+        '/loginpage': (context) => const LoginPage(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -42,7 +49,7 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/mainpage');
+            Navigator.pushNamed(context, '/loginpage');
           },
           child: const Text('testi'),
         ),
