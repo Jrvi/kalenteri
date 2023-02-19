@@ -28,7 +28,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - run: cd app/
+      - working-directory: ./app
       - run: flutter pub get
       - run: flutter build apk
       - uses: actions/upload-artifact@v1
