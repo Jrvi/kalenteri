@@ -21,7 +21,7 @@ jobs:
             GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo "$GOOGLE_SERVICES_JSON" > app/android/app/google-services.json
       - name: Decode firebase_option
-      - working-directory: ./app
+        working-directory: ./app
         env:
           firebase_options_dart: ${{secrets.FIREBASE_OPTION}}
         run : echo "$firebase_options_dart" > app/lib/firebase_options.dart
@@ -40,5 +40,5 @@ jobs:
         with:
             appId: ${{secrets.APPID}}
             token: ${{secrets.TOKEN}}
-            groups: pre-testers
+            groups: pre-tester
             file: build/app/outputs/apk/release/app-release.apk
