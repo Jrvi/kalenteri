@@ -29,6 +29,7 @@ jobs:
         with:
           channel: "stable"
       - working-directory: ./app
+      - run: ls
       - run: flutter pub get
       - run: flutter build apk
       - uses: actions/upload-artifact@v1
