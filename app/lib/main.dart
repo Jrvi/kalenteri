@@ -61,14 +61,4 @@ class MyHomePage extends StatelessWidget {
       ),
     );
   }
-
-//Profiilinäkymä
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: title,
-      home: Profile(),
-    );
-  }
 }
