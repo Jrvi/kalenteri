@@ -1,8 +1,7 @@
-import 'package:app/pages/main_page.dart';
 
+import 'package:app/pages/main_page.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/profile.dart';
-import 'package:app/pages/main_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -40,6 +39,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required String title});
   static const String title = 'User Profile';
+
 
   @override
   Widget build(BuildContext context) {
