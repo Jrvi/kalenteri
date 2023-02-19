@@ -1,8 +1,7 @@
 
 import 'package:app/pages/main_page.dart';
-
 import 'package:app/pages/login.dart';
-import 'package:app/pages/main_page.dart';
+import 'package:app/pages/profile.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -24,9 +23,9 @@ class MyApp extends StatelessWidget {
       title: 'Kalenteri',
       initialRoute: '/',
       routes: {
-
         '/mainpage': (context) => const MainPage(),
         '/loginpage': (context) => const LoginPage(),
+        '/profilepage': (context) => const Profile(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -39,6 +38,8 @@ class MyApp extends StatelessWidget {
 /// Väliaikainen luokka alkunäkymälle, jonka avulla voi testata omia näkymiä
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required String title});
+  static const String title = 'User Profile';
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,16 @@ class MyHomePage extends StatelessWidget {
           child: const Text('testi'),
         ),
       ),
+    );
+  }
+
+//Profiilinäkymä
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      home: Profile(),
     );
   }
 }
