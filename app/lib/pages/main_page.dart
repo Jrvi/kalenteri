@@ -6,12 +6,12 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MainPage'),
+        title: const Text('Kalenteri'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Navigation
+            Navigator.pop(context);
           },
           child: const Text('nappula :D'),
         ),
