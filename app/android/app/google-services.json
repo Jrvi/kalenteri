@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "732847095789",
+    "project_id": "vapaat-5ec50",
+    "storage_bucket": "vapaat-5ec50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732847095789:android:ba73159114a2fab2f6b1e4",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732847095789-cm4njokpu1fh8mam95ir95vkcgr9imu2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx3AgPBD-lXxFZkpP5PIxqiHIyhcPIttc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732847095789-cm4njokpu1fh8mam95ir95vkcgr9imu2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
