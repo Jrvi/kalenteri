@@ -35,11 +35,11 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
-          path: app/build/app/outputs/apk/release/app-release.apk
+          path: ./build/app/outputs/apk/release/app-release.apk
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
             appId: ${{secrets.APPID}}
             token: ${{secrets.TOKEN}}
-            groups: pre-tester
+            groups: pre-testers
             file: build/app/outputs/apk/release/app-release.apk
