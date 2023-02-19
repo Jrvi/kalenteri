@@ -1,4 +1,3 @@
-
 import 'package:app/pages/main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:app/pages/login.dart';
@@ -10,10 +9,10 @@ import 'firebase_options.dart';
 /// Kalenteri apin main tiedosto
 /// Käsittelee apin käynnistyksen ja navigoinnin
 Future<void> main() async {
+  runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
 /// Apin pääluokka
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required String title});
   static const String title = 'User Profile';
-
 
   @override
   Widget build(BuildContext context) {
