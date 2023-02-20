@@ -1,4 +1,5 @@
 import 'package:app/pages/main_page.dart';
+import 'package:app/utils/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/profile.dart';
@@ -25,11 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kalenteri',
       initialRoute: '/',
-      routes: {
-        '/mainpage': (context) => const MainPage(),
-        '/loginpage': (context) => const LoginPage(),
-        //'/profilepage': (context) => const Profile(),
-      },
+      onGenerateRoute: RouteGenerator.generateRoute,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -52,7 +49,7 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/loginpage');
+            Navigator.of(context).pushNamed('/login', arguments: 'login');
           },
           child: const Text('testi'),
         ),
