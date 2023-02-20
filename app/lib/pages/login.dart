@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/utils/router.dart';
 
 void main() {
   runApp(const LoginPage());
@@ -14,6 +15,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
+        onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
@@ -78,22 +80,23 @@ class _MyStatefulWidget extends State<MyStatefulWidget> {
                 ),
               ),
             ),
-             TextButton(
+            TextButton(
               onPressed: () {
                 //forgot password screen
               },
-              child: const Text('Forgot Password',),
+              child: const Text(
+                'Forgot Password',
+              ),
             ),
-             Container(
+            Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                   child: const Text('Login'),
-                  onPressed: ( ){
-
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/main', arguments: 'main');
                   },
-                )
-            ),
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

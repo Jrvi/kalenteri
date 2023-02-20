@@ -16,7 +16,13 @@ class MainPage extends StatelessWidget {
           child: const Text('nappula :D'),
         ),
       ),
+      bottomSheet: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/profile', arguments: 'profile');
+            },
+            child: const Text('profiili')),
+      ),
     );
-    throw UnimplementedError();
   }
 }
