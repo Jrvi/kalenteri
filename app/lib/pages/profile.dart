@@ -21,6 +21,8 @@ class _profileState extends State<Profile> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
+          const SizedBox(height: 24),
+
           //Sivun otsikko
           Text(
             "Profiili",

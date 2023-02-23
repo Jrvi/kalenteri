@@ -21,6 +21,8 @@ class _EditProfileState extends State<EditProfile> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
+          const SizedBox(height: 24),
+
           //Sivun otsikko
           Text(
             "Muokkaa tietojasi",
