@@ -11,16 +11,12 @@ class ButtonWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        width: 10,
-        child: ElevatedButton(
-          onPressed: onClicked,
-          style: ElevatedButton.styleFrom(
+  Widget build(BuildContext context) => ElevatedButton(
+        style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-          ),
-          child: Text(text),
-        ),
+          borderRadius: BorderRadius.circular(5.0),
+        )),
+        onPressed: onClicked,
+        child: Text(text),
       );
 }
