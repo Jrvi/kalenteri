@@ -1,5 +1,6 @@
 import 'package:app/pages/login.dart';
 import 'package:app/pages/main_page.dart';
+import 'package:app/pages/edit_profile.dart';
 import 'package:app/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:app/main.dart';
@@ -29,6 +30,13 @@ class RouteGenerator {
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => Profile(),
+          );
+        }
+        return _errorRoute();
+      case '/edit_profile':
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => EditProfile(),
           );
         }
         return _errorRoute();
