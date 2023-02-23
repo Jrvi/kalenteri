@@ -37,7 +37,7 @@ class ProfileWidget extends StatelessWidget {
   Widget buildImage() {
     final image = NetworkImage(imagePath);
 
-    //kuva koko ja ympyrä-muoto määrityksineen
+    //kuvan koko ja ympyrä-muoto määrityksineen
     return ClipOval(
       child: Material(
         color: Colors.transparent,
@@ -63,7 +63,7 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 8,
           child: Icon(
-            Icons.add_a_photo,
+            Icons.edit,
             color: Colors.white, //Muokkaus-painikkeen kuvake valkoisena
             size: 20,
           ),
