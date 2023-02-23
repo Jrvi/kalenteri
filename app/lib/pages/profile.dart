@@ -56,16 +56,31 @@ class _profileState extends State<Profile> {
 
           const SizedBox(height: 44),
 
-          ButtonWidget(
-            text: 'Lisää kalenteri',
-            onClicked: () {},
-          ),
-
-          const SizedBox(height: 24),
-
-          ButtonWidget(
-            text: 'Muokkaa menemisiä',
-            onClicked: () {},
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: ButtonWidget(
+                  text: 'Lisää kalenteri',
+                  onClicked: () {},
+                ),
+              ),
+              const SizedBox(width: 12),
+              Center(
+                child: ButtonWidget(
+                  text: 'Lisää menemisiä',
+                  onClicked: () {},
+                ),
+              ),
+              const SizedBox(width: 12),
+              Center(
+                child: ButtonWidget(
+                  text: 'Poista menemisiä',
+                  onClicked: () {},
+                ),
+              ),
+            ],
           ),
         ],
       ),
