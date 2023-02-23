@@ -11,11 +11,16 @@ class ButtonWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            shape: CircleBorder(), padding: EdgeInsets.all(60)),
-        //todo: Tekstin koko järkeväksi, kahdelle riville
-        child: Text(text),
-        onPressed: onClicked,
+  Widget build(BuildContext context) => SizedBox(
+        width: 10,
+        child: ElevatedButton(
+          onPressed: onClicked,
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
+          child: Text(text),
+        ),
       );
 }

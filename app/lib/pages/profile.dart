@@ -26,33 +26,49 @@ class _profileState extends State<Profile> {
             "Muokkaa profiilia",
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
+
           const SizedBox(height: 44),
+
           //Profiilikuva
           ProfileWidget(
             imagePath: user.imagePath,
             isEdit: true,
             onClicked: () async {},
           ),
+
           const SizedBox(height: 24),
+
           //Nimi ja muokkaaminen
           TextFieldWidget(
             label: 'Nimi',
             text: user.name,
             onChanged: (name) {},
           ),
-          const SizedBox(height: 44),
-          Row(
-            children: [
-              ButtonWidget(
-                text: 'Lisää kalenteri',
-                onClicked: () {},
-              ),
-              ButtonWidget(
-                text: 'Muokkaa menemisiä',
-                onClicked: () {},
-              ),
-            ],
+
+          const SizedBox(height: 24),
+
+          //Salasana ja muokkaaminen
+          TextFieldWidget(
+            label: 'Salasana',
+            text: user.name, //mustia palloja?
+            onChanged: (name) {},
           ),
+
+          const SizedBox(height: 44),
+
+          Expanded(
+              child: ButtonWidget(
+            text: 'Lisää kalenteri',
+            onClicked: () {},
+          )),
+
+          const SizedBox(height: 24),
+
+          Expanded(
+              child: ButtonWidget(
+            text: 'Muokkaa menemisiä',
+            onClicked: () {},
+          )),
         ],
       ),
     );
