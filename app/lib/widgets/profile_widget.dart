@@ -63,7 +63,7 @@ class ProfileWidget extends StatelessWidget {
           color: color,
           all: 8,
           child: Icon(
-            Icons.edit,
+            isEdit ? Icons.add_a_photo : Icons.edit,
             color: Colors.white, //Muokkaus-painikkeen kuvake valkoisena
             size: 20,
           ),
@@ -76,12 +76,11 @@ class ProfileWidget extends StatelessWidget {
     required double all,
     required Color color,
   }) =>
-      Container(
-        padding: EdgeInsets.all(all),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
           color: color,
+          child: child,
         ),
-        child: child,
       );
 }

@@ -23,7 +23,7 @@ class _profileState extends State<Profile> {
         children: [
           //Sivun otsikko
           Text(
-            "Profiili !!!!!!!!!!!!!",
+            "Profiili",
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
 
@@ -32,7 +32,7 @@ class _profileState extends State<Profile> {
           //Profiilikuva
           ProfileWidget(
             imagePath: user.imagePath,
-            isEdit: true,
+            isEdit: false,
             onClicked: () {
               Navigator.of(context)
                   .pushNamed('/edit_profile', arguments: 'edit_profile');
