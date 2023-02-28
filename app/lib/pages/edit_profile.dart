@@ -53,7 +53,7 @@ class _EditProfileState extends State<EditProfile> {
           TextFieldWidget(
             label: 'Salasana',
             text: user.name, //mustia palloja?
-            onChanged: (name) {}, //varmistus (kirjoita uudelleen)
+            onChanged: (name) {}, //varmistus? (kirjoita uudelleen)
           ),
 
           const SizedBox(height: 64),

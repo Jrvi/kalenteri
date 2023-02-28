@@ -19,9 +19,10 @@ class MainPage extends StatelessWidget {
       bottomSheet: Center(
         child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/profile', arguments: 'profile');
+              Navigator.of(context)
+                  .pushNamed('/create_group', arguments: 'create_group');
             },
-            child: const Text('profiili')),
+            child: const Text('Luo Ryhmä')),
       ),
     );
   }
