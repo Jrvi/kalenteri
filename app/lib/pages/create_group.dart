@@ -1,10 +1,10 @@
-import 'package:app/widgets/textfield_widget.dart';
-import 'package:app/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:app/pages/models/user.dart';
+import 'package:app/utils/friends_preferences.dart';
 import 'dart:io';
 
 class CreateGroup extends StatefulWidget {
+  const CreateGroup({Key? key}) : super(key: key);
+
   @override
   _CreateGroupState createState() => _CreateGroupState();
 }
@@ -12,6 +12,13 @@ class CreateGroup extends StatefulWidget {
 class _CreateGroupState extends State<CreateGroup> {
   final TextEditingController _groupNameController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
+  List<Friend> _friends = [];
+
+  @override
+  void initState() {
+    _friends = getFriends();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -67,19 +74,38 @@ class _CreateGroupState extends State<CreateGroup> {
 
           SizedBox(height: 24),
 
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: _friends.length,
+              itemBuilder: (context, index) {
+                final friend = _friends[index];
+                return ListTile(
+                  title: Text(friend.name), //kaverin kuva näkyviin?
+                  onTap: () {
+                    // TODO: Implement selecting friend functionality
+                  },
+                );
+              },
+            ),
+          ),
+
+          SizedBox(height: 24),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
                 onPressed: () {
-                  // TODO: skip painikkeelle toiminnot; hylkää jos ryhmälle on jo nimi ja jäsenet?
+                  //TODO: skip painikkeelle toiminnot; hylkää jos ryhmälle on jo nimi ja jäsenet?
                 },
                 child: Text('Peruuta'),
               ),
               SizedBox(width: 64),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: Luo ryhmä ja tallennsa se
+                  //TODO: Luo ryhmä ja tallennsa se
                   String groupName = _groupNameController.text;
                   print('Luodaan ryhmä: $groupName');
                 },
