@@ -13,7 +13,9 @@ class _CreateGroupState extends State<CreateGroup> {
   final TextEditingController _groupNameController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final ScrollController _selectedFriendsScrollController = ScrollController();
   List<Friend> _friends = [];
+  List<String> _selectedFriends = [];
 
   @override
   void initState() {
@@ -25,7 +27,15 @@ class _CreateGroupState extends State<CreateGroup> {
   void dispose() {
     _groupNameController.dispose();
     _searchController.dispose();
+    _scrollController.dispose();
+    _selectedFriendsScrollController.dispose();
     super.dispose();
+  }
+
+  void _addFriendToSelected(String friendName) {
+    setState(() {
+      _selectedFriends.add(friendName);
+    });
   }
 
   @override
@@ -62,12 +72,35 @@ class _CreateGroupState extends State<CreateGroup> {
           SizedBox(height: 34),
 
           Text(
-            "Lisää jäseniä",
+            "Lisää kavereita",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
 
-          SizedBox(height: 34),
+          SizedBox(height: 24),
 
+          //valitut kaverit, nyt scrollaantuu horisontaalisesti, korjattava
+          Container(
+            height: 50,
+            child: ListView.builder(
+              controller: _selectedFriendsScrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: _selectedFriends.length,
+              itemBuilder: (context, index) {
+                final friendName = _selectedFriends[index];
+                return Chip(
+                  label: Text(friendName),
+                  deleteIcon: Icon(Icons.cancel),
+                  onDeleted: () {
+                    setState(() {
+                      _selectedFriends.remove(friendName);
+                    });
+                  },
+                );
+              },
+            ),
+          ),
+
+          //hakukenttä, ei vielä toimintoa
           TextField(
             controller: _searchController,
             decoration: InputDecoration(
@@ -76,10 +109,10 @@ class _CreateGroupState extends State<CreateGroup> {
             ),
           ),
 
-          //SizedBox(height: 24),
-
+          //kaverilista
           SizedBox(
             height: 300,
+            //jos kavereita enemmän kuin 4, scrollattava alue
             child: _friends.length > 4
                 ? Scrollbar(
                     controller: _scrollController,
@@ -88,10 +121,12 @@ class _CreateGroupState extends State<CreateGroup> {
                       itemCount: _friends.length,
                       itemBuilder: (context, index) {
                         final friend = _friends[index];
+
+                        //Kaverin kuva näkyviin
                         return ListTile(
                           title: Text(friend.name),
                           onTap: () {
-                            // TODO: Implement selecting friend functionality
+                            _addFriendToSelected(friend.name);
                           },
                         );
                       },
@@ -106,7 +141,7 @@ class _CreateGroupState extends State<CreateGroup> {
                       return ListTile(
                         title: Text(friend.name), //kaverin kuva näkyviin?
                         onTap: () {
-                          // TODO: Implement selecting friend functionality
+                          _addFriendToSelected(friend.name);
                         },
                       );
                     },
