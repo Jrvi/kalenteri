@@ -10,5 +10,9 @@ List<Friend> getFriends() {
     Friend(name: 'Kaveri'),
     Friend(name: 'friend'),
     Friend(name: 'ystävä'),
+    Friend(name: 'kamu'),
+    Friend(name: 'kamu'),
+    Friend(name: 'kamu'),
+    Friend(name: 'kamu'),
   ];
 }
