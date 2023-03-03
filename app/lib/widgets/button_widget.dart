@@ -13,9 +13,10 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ElevatedButton(
         style: ElevatedButton.styleFrom(
-            shape: CircleBorder(), padding: EdgeInsets.all(60)),
-        //todo: Tekstin koko järkeväksi, kahdelle riville
-        child: Text(text),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        ),
         onPressed: onClicked,
+        child: Text(text),
       );
 }
