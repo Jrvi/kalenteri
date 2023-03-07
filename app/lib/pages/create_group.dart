@@ -78,29 +78,74 @@ class _CreateGroupState extends State<CreateGroup> {
 
           SizedBox(height: 24),
 
-          //valitut kaverit, nyt scrollaantuu horisontaalisesti, korjattava
-          Container(
-            height: 50,
-            child: ListView.builder(
-              controller: _selectedFriendsScrollController,
-              scrollDirection: Axis.horizontal,
-              itemCount: _selectedFriends.length,
-              itemBuilder: (context, index) {
-                final friendName = _selectedFriends[index];
-                return Chip(
-                  label: Text(friendName),
-                  deleteIcon: Icon(Icons.cancel),
-                  onDeleted: () {
-                    setState(() {
-                      _selectedFriends.remove(friendName);
-                    });
-                  },
-                );
-              },
-            ),
+          //valitut kaverit alue
+          //Tähän tulevaisuudessa tarkistukse mm. saman kaverin voi lisätä vain kerran
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              final friendCount = _selectedFriends.length;
+
+              //jos kavereita enemmän kuin 8, scrollbar pystysuunnassa oikeaan reunaan
+              final scrollbarEnabled = friendCount > 8;
+              final height = scrollbarEnabled ? 80.0 : null;
+              return SizedBox(
+                height: height,
+                child: scrollbarEnabled
+                    ? Scrollbar(
+                        controller: _scrollController,
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                children: _selectedFriends.map((friendName) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Chip(
+                                      label: Text(friendName),
+                                      deleteIcon: Icon(Icons.cancel),
+                                      onDeleted: () {
+                                        setState(() {
+                                          _selectedFriends.remove(friendName);
+                                        });
+                                      },
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    //Jos kavereita valittu alle 8, ei scrollbaria koska mahtuu 'valittujen kavereiden' alueelle
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                            children: _selectedFriends.map((friendName) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Chip(
+                                  label: Text(friendName),
+                                  deleteIcon: Icon(Icons.cancel),
+                                  onDeleted: () {
+                                    setState(() {
+                                      _selectedFriends.remove(friendName);
+                                    });
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
+              );
+            },
           ),
 
-          //hakukenttä, ei vielä toimintoa
+          //hakukenttä, ei vielä toimintoa.
+          //Onko tarpeellinen mvp:hen?
           TextField(
             controller: _searchController,
             decoration: InputDecoration(
@@ -111,12 +156,12 @@ class _CreateGroupState extends State<CreateGroup> {
 
           //kaverilista
           SizedBox(
-            height: 300,
+            height: 250,
             //jos kavereita enemmän kuin 4, scrollattava alue
             child: _friends.length > 4
                 ? Scrollbar(
                     controller: _scrollController,
-                    isAlwaysShown: true,
+                    thumbVisibility: true,
                     child: ListView.builder(
                       itemCount: _friends.length,
                       itemBuilder: (context, index) {
