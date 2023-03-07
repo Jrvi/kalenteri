@@ -36,8 +36,8 @@ class _profileState extends State<Profile> {
             imagePath: user.imagePath,
             isEdit: false,
             onClicked: () {
-              Navigator.of(context)
-                  .pushNamed('/edit_profile', arguments: 'edit_profile');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile()));
             },
           ),
 

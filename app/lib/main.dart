@@ -1,3 +1,4 @@
+import 'package:app/pages/login.dart';
 import 'package:app/utils/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -39,18 +40,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Testi'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed('/login', arguments: 'login');
-          },
-          child: const Text('testi'),
-        ),
-      ),
-    );
+    return LoginPage();
   }
 }
