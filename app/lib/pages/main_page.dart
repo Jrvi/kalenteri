@@ -1,5 +1,5 @@
 import 'package:app/pages/profile.dart';
-import 'package:app/pages/group.dart';
+import 'package:app/pages/group_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
