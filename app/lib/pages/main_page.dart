@@ -32,7 +32,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       style: optionStyle,
     ),
     Profile(),
-    Group(),
+    GroupPage(),
     Text(
       'SettingPage',
       style: optionStyle,
