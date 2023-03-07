@@ -1,4 +1,5 @@
 import 'package:app/pages/profile.dart';
+import 'package:app/pages/group.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
@@ -31,10 +32,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       style: optionStyle,
     ),
     Profile(),
-    Text(
-      'GroupPage',
-      style: optionStyle,
-    ),
+    Group(),
     Text(
       'SettingPage',
       style: optionStyle,
