@@ -1,5 +1,6 @@
 import 'package:app/pages/models/group.dart';
 import 'package:app/utils/group_preferences.dart';
+import 'package:app/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -52,7 +53,7 @@ class _GroupPageState extends State<GroupPage> {
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 34),
 
           TextField(
             controller: _nameController,
@@ -62,7 +63,7 @@ class _GroupPageState extends State<GroupPage> {
             onChanged: _updateGroupName,
           ),
 
-          const SizedBox(height: 34),
+          const SizedBox(height: 54),
 
           Text(
             'Jäsenet',
@@ -70,7 +71,7 @@ class _GroupPageState extends State<GroupPage> {
           ),
 
           SizedBox(
-            height: 200,
+            height: 300,
             child: Scrollbar(
               controller: _scrollController,
               thumbVisibility: true,
@@ -86,6 +87,39 @@ class _GroupPageState extends State<GroupPage> {
               ),
             ),
           ),
+
+          const SizedBox(height: 34),
+
+          Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                ),
+                onPressed: () {},
+                child: Text('Lisää jäseniä'),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 14),
+
+          Wrap(
+            alignment: WrapAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: () {},
+                child: Text('Poistu ryhmästä'),
+              ),
+            ],
+          )
         ],
       ),
     );
