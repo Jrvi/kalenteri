@@ -6,5 +6,12 @@ class GroupPreferences {
       //malliryhmän tiedot
       id: 'r000000',
       name: 'Malliryhmä',
-      members: ['Ukko Tikku', 'Mallikaveri']);
+      members: [
+        'Ukko Tikku',
+        'Mallikaveri',
+        'Mallikaveri2',
+        'Mallikaveri3',
+        'mallikaveri4',
+        'malli5'
+      ]);
 }
