@@ -1,4 +1,6 @@
 import 'package:app/pages/profile.dart';
+import 'package:app/pages/group_page.dart';
+import 'package:app/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
@@ -26,15 +28,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'MainPage',
-      style: optionStyle,
-    ),
+    Freetime(),
     Profile(),
-    Text(
-      'GroupPage',
-      style: optionStyle,
-    ),
+    GroupPage(),
     Text(
       'SettingPage',
       style: optionStyle,
@@ -50,9 +46,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
+      //App-bar pois
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

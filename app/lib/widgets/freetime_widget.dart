@@ -1,8 +1,10 @@
+import 'package:app/utils/listViewBuilder.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Freetime extends StatefulWidget {
+class Freetime extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    throw UnimplementedError();
+  Widget build(BuildContext context) {
+    return ListViewBuilder();
   }
 }
