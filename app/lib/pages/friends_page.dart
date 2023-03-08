@@ -15,6 +15,7 @@ class _FriendsState extends State<Friends> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //vai onko tällä hyvä navigoida opis sivulta(eli ei navbaria alas vaan vain tämä?)
         title: Text('Kaverit'),
       ),
       body: ListView.builder(
@@ -26,6 +27,15 @@ class _FriendsState extends State<Friends> {
             ),
             title: Text(_friendDataList[index].name),
             subtitle: Text(_friendDataList[index].email),
+            //kaverin poisto tällä painikkeella, tähän vielä joku lisävarmistus 'oletko varma'
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                setState(() {
+                  _friendDataList.removeAt(index);
+                });
+              },
+            ),
           );
         },
       ),
