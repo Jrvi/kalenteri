@@ -23,9 +23,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -58,25 +64,5 @@ class DefaultFirebaseOptions {
     messagingSenderId: '732847095789',
     projectId: 'vapaat-5ec50',
     storageBucket: 'vapaat-5ec50.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAeeklpqIwPzNDeYrrXGbtaRQsO40x3JZo',
-    appId: '1:732847095789:ios:a310334eac5a0502f6b1e4',
-    messagingSenderId: '732847095789',
-    projectId: 'vapaat-5ec50',
-    storageBucket: 'vapaat-5ec50.appspot.com',
-    iosClientId: '732847095789-8m534hit7q0p3mnfaeon6skg8abt9q0v.apps.googleusercontent.com',
-    iosBundleId: 'com.example.app',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAeeklpqIwPzNDeYrrXGbtaRQsO40x3JZo',
-    appId: '1:732847095789:ios:a310334eac5a0502f6b1e4',
-    messagingSenderId: '732847095789',
-    projectId: 'vapaat-5ec50',
-    storageBucket: 'vapaat-5ec50.appspot.com',
-    iosClientId: '732847095789-8m534hit7q0p3mnfaeon6skg8abt9q0v.apps.googleusercontent.com',
-    iosBundleId: 'com.example.app',
   );
 }

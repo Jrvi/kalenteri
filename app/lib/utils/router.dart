@@ -2,6 +2,7 @@ import 'package:app/pages/login.dart';
 import 'package:app/pages/main_page.dart';
 import 'package:app/pages/edit_profile.dart';
 import 'package:app/pages/profile.dart';
+import 'package:app/pages/rekisterointi.dart';
 import 'package:flutter/material.dart';
 import 'package:app/main.dart';
 
@@ -11,7 +12,7 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => MyApp());
       case '/main':
         if (args is String) {
           return MaterialPageRoute(
@@ -22,7 +23,14 @@ class RouteGenerator {
       case '/login':
         if (args is String) {
           return MaterialPageRoute(
-            builder: (_) => LoginPage(),
+            builder: (_) => LoginScreen(),
+          );
+        }
+        return _errorRoute();
+      case '/rekisterointi':
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => Rekisterointi(),
           );
         }
         return _errorRoute();
