@@ -1,4 +1,5 @@
 import 'package:app/pages/profile.dart';
+import 'package:app/pages/group_page.dart';
 import 'package:app/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,10 +30,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
     Profile(),
-    Text(
-      'GroupPage',
-      style: optionStyle,
-    ),
+    GroupPage(),
     Text(
       'SettingPage',
       style: optionStyle,
@@ -48,9 +46,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
+      //App-bar pois
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

@@ -62,8 +62,7 @@ class _EditProfileState extends State<EditProfile> {
             child: ButtonWidget(
               text: 'Tallenna muutokset',
               onClicked: () {
-                Navigator.of(context)
-                    .pushNamed('/profile', arguments: 'profile');
+                Navigator.pop(context);
               },
             ),
           ),
