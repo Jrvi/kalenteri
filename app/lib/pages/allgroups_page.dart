@@ -23,10 +23,13 @@ class _AllGroupsState extends State<AllGroups> {
           const SizedBox(height: 24),
 
           //Sivun otsikko
-          Text(
-            //vai appbar?
-            "Ryhmät",
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              //vai appbar?
+              "Ryhmät",
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            ),
           ),
 
           const SizedBox(height: 44),
@@ -42,7 +45,9 @@ class _AllGroupsState extends State<AllGroups> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => GroupPage(),
+                        builder: (context) => GroupPage(
+                            group:
+                                group), //tähän se ryhmä, jonka sivua halutaan katsoa                      ),
                       ),
                     );
                   },
