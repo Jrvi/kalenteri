@@ -2,7 +2,8 @@ import 'package:app/pages/models/group.dart';
 import 'package:flutter/material.dart';
 
 class GroupPreferences {
-  static var modelgroup = Group(
+  final List<Group> groups = [
+    Group(
       //malliryhmän tiedot
       id: 'r000000',
       name: 'Malliryhmä',
@@ -13,16 +14,17 @@ class GroupPreferences {
         'Mallikaveri3',
         'mallikaveri4',
         'malli5'
-      ]);
-  static var modelgroup2 = Group(
+      ]),
+     Group(
       //malliryhmän tiedot
       id: 'r000001',
       name: 'Meikäläiset',
-      members: ['Joku', 'Matti Meikäläinen', 'Maija Meikäläinen']);
+      members: ['Joku', 'Matti Meikäläinen', 'Maija Meikäläinen']),
 
-  static var modelgroup3 = Group(
+     Group(
       //malliryhmän tiedot
       id: 'r000002',
       name: 'Pronominit',
       members: ['Sinä', 'Minä', 'hän']);
+    ];
 }
