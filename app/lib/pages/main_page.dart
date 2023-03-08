@@ -1,4 +1,5 @@
 import 'package:app/pages/profile.dart';
+import 'package:app/pages/allgroups_page.dart';
 import 'package:app/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -29,10 +30,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
     Profile(),
-    Text(
-      'GroupPage',
-      style: optionStyle,
-    ),
+    AllGroups(),
     Text(
       'SettingPage',
       style: optionStyle,
