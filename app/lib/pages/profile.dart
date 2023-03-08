@@ -3,6 +3,7 @@ import 'package:app/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/models/user.dart';
 import 'package:app/pages/edit_profile.dart';
+import 'package:app/pages/friends_page.dart';
 import 'package:app/utils/user_preferences.dart';
 import 'dart:io';
 
@@ -47,6 +48,16 @@ class _profileState extends State<Profile> {
           buildName(user),
 
           const SizedBox(height: 64),
+
+          Center(
+            child: ButtonWidget(
+              text: 'Kaverit', //väliaikasiesti tässä
+              onClicked: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Friends()));
+              },
+            ),
+          ),
 
           Center(
             child: ButtonWidget(
