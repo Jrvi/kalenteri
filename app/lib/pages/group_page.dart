@@ -13,21 +13,21 @@ class _GroupPageState extends State<GroupPage> {
   final group = GroupPreferences.modelgroup;
   late TextEditingController _nameController;
   late ScrollController _scrollController;
-  late ScrollController _listViewController; // <-- add this line
+  late ScrollController _listViewController;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: group.name);
     _scrollController = ScrollController();
-    _listViewController = ScrollController(); // <-- add this line
+    _listViewController = ScrollController();
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     _scrollController.dispose();
-    _listViewController.dispose(); // <-- add this line
+    _listViewController.dispose();
     super.dispose();
   }
 
@@ -76,7 +76,7 @@ class _GroupPageState extends State<GroupPage> {
               controller: _scrollController,
               thumbVisibility: true,
               child: ListView.builder(
-                controller: _listViewController, // <-- use the new controller
+                controller: _listViewController,
                 itemCount: group.members.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
