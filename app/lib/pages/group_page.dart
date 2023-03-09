@@ -1,16 +1,18 @@
 import 'package:app/pages/models/group.dart';
-import 'package:app/utils/group_preferences.dart';
+import 'package:app/utils/groups_preferences.dart';
 import 'package:app/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 class GroupPage extends StatefulWidget {
+  final Group group;
+  GroupPage({required this.group});
+
   @override
   _GroupPageState createState() => _GroupPageState();
 }
 
 class _GroupPageState extends State<GroupPage> {
-  final group = GroupPreferences.modelgroup;
   late TextEditingController _nameController;
   late ScrollController _scrollController;
   late ScrollController _listViewController;
@@ -18,7 +20,7 @@ class _GroupPageState extends State<GroupPage> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: group.name);
+    _nameController = TextEditingController(text: widget.group.name);
     _scrollController = ScrollController();
     _listViewController = ScrollController();
   }
@@ -33,7 +35,7 @@ class _GroupPageState extends State<GroupPage> {
 
   void _updateGroupName(String name) {
     setState(() {
-      group.name = name;
+      widget.group.name = name;
     });
   }
 
@@ -49,7 +51,7 @@ class _GroupPageState extends State<GroupPage> {
 
           //Sivun otsikko
           Text(
-            group.name,
+            widget.group.name,
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
 
@@ -77,11 +79,11 @@ class _GroupPageState extends State<GroupPage> {
               thumbVisibility: true,
               child: ListView.builder(
                 controller: _listViewController,
-                itemCount: group.members.length,
+                itemCount: widget.group.members.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     //kuva puuttuu
-                    title: Text(group.members[index]),
+                    title: Text(widget.group.members[index]),
                   );
                 },
               ),
