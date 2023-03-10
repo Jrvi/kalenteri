@@ -1,4 +1,4 @@
-import 'package:app/pages/models/event.dart';
+import 'package:vapaat/pages/models/event.dart';
 
 class TestData {
   static List<Event> events1 = [
