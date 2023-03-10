@@ -2,20 +2,34 @@ import 'package:app/pages/models/event.dart';
 
 class TestData {
   static List<Event> events1 = [
-    Event(start: DateTime(2023, 28, 2, 10), end: DateTime(2023, 28, 2, 11)),
-    Event(start: DateTime(2023, 28, 2, 11), end: DateTime(2023, 28, 2, 12)),
-    Event(start: DateTime(2023, 28, 2, 12), end: DateTime(2023, 28, 2, 13)),
-    Event(start: DateTime(2023, 28, 2, 13), end: DateTime(2023, 28, 2, 14)),
-    Event(start: DateTime(2023, 28, 2, 14), end: DateTime(2023, 28, 2, 15)),
-    Event(start: DateTime(2023, 28, 2, 14), end: DateTime(2023, 28, 2, 15)),
+    Event(
+      start: DateTime(2023, 3, 10, 9, 0),
+      end: DateTime(2023, 3, 10, 10, 0),
+    ),
+    Event(
+      start: DateTime(2023, 3, 10, 11, 0),
+      end: DateTime(2023, 3, 10, 12, 0),
+    ),
+    Event(
+      start: DateTime(2023, 3, 10, 14, 0),
+      end: DateTime(2023, 3, 10, 15, 30),
+    ),
   ];
 
   static List<Event> events2 = [
-    Event(start: DateTime(2023, 28, 2, 15), end: DateTime(2023, 28, 2, 16)),
-    Event(start: DateTime(2023, 28, 2, 16), end: DateTime(2023, 28, 2, 17)),
-    Event(start: DateTime(2023, 28, 2, 17), end: DateTime(2023, 28, 2, 18)),
-    Event(start: DateTime(2023, 28, 2, 18), end: DateTime(2023, 28, 2, 19)),
-    Event(start: DateTime(2023, 28, 2, 19), end: DateTime(2023, 28, 2, 20)),
-    Event(start: DateTime(2023, 28, 2, 14), end: DateTime(2023, 28, 2, 15)),
+    Event(
+      start: DateTime(2023, 3, 10, 9, 0),
+      end: DateTime(2023, 3, 10, 10, 0),
+    ),
+    Event(
+      start: DateTime(2023, 3, 10, 11, 0),
+      end: DateTime(2023, 3, 10, 12, 0),
+    ),
+    Event(
+      start: DateTime(2023, 3, 10, 16, 0),
+      end: DateTime(2023, 3, 10, 17, 30),
+    ),
+    Event(
+        start: DateTime(2023, 3, 10, 19, 0), end: DateTime(2023, 3, 10, 20, 0)),
   ];
 }
