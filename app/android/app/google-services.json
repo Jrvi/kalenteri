@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732847095789:android:ba73159114a2fab2f6b1e4",
+        "mobilesdk_app_id": "1:732847095789:android:9f36f68eeda20acdf6b1e4",
         "android_client_info": {
-          "package_name": "com.example.app"
+          "package_name": "com.teamvapaatajat.vapaat"
         }
       },
       "oauth_client": [
