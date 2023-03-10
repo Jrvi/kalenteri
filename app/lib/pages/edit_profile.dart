@@ -1,10 +1,9 @@
-import 'package:app/widgets/profile_widget.dart';
-import 'package:app/widgets/textfield_widget.dart';
-import 'package:app/widgets/button_widget.dart';
+import 'package:vapaat/widgets/profile_widget.dart';
+import 'package:vapaat/widgets/textfield_widget.dart';
+import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:app/pages/models/user.dart';
-import 'package:app/utils/user_preferences.dart';
-import 'dart:io';
+import 'package:vapaat/pages/models/user.dart';
+import 'package:vapaat/utils/user_preferences.dart';
 
 class EditProfile extends StatefulWidget {
   @override

@@ -1,8 +1,5 @@
-import 'package:app/pages/models/group.dart';
-import 'package:app/utils/groups_preferences.dart';
-import 'package:app/widgets/button_widget.dart';
+import 'package:vapaat/pages/models/group.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class GroupPage extends StatefulWidget {
   final Group group;
