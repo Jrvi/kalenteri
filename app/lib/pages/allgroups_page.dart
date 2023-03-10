@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:app/pages/models/group.dart';
-import 'package:app/pages/group_page.dart';
-import 'package:app/utils/groups_preferences.dart';
+import 'package:vapaat/pages/models/group.dart';
+import 'package:vapaat/pages/group_page.dart';
+import 'package:vapaat/utils/groups_preferences.dart';
 
 class AllGroups extends StatefulWidget {
   //vai stateless?
