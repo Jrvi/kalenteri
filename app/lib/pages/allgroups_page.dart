@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/group.dart';
 import 'package:vapaat/pages/group_page.dart';
