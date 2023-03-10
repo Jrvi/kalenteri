@@ -1,7 +1,6 @@
-import 'package:app/pages/login.dart';
-import 'package:app/utils/router.dart';
+import 'package:vapaat/pages/login.dart';
+import 'package:vapaat/utils/router.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:app/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 

@@ -1,5 +1,4 @@
-import 'package:app/pages/models/user.dart';
-import 'package:flutter/material.dart';
+import 'package:vapaat/pages/models/user.dart';
 
 class UserPreferences {
   static const myUser = User(

@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:app/pages/models/TimeSlot.dart';
-import 'package:app/pages/models/event.dart';
-import 'package:app/testdata/testdata.dart';
+import 'package:vapaat/pages/models/TimeSlot.dart';
+import 'package:vapaat/pages/models/event.dart';
+import 'package:vapaat/testdata/testdata.dart';
 import 'package:flutter/material.dart';
 
 class Freetime extends StatefulWidget {
