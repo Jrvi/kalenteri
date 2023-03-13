@@ -1,5 +1,6 @@
 import 'package:vapaat/pages/profile.dart';
 import 'package:vapaat/pages/allgroups_page.dart';
+import 'package:vapaat/pages/settings_page.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +33,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     Freetime(),
     Profile(),
     AllGroups(groups: GroupPreferences().groups),
-    Text(
-      'SettingPage',
-      style: optionStyle,
-    ),
+    SettingsPage(),
   ];
 
   void _onItemTapped(int index) {
