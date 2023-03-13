@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vapaat/pages/login.dart';
 import 'package:vapaat/utils/router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,14 +24,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kalenteri',
-      initialRoute: '/',
       // router initial
       onGenerateRoute: RouteGenerator.generateRoute,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Demo'),
+      home: const MyHomePage(title: 'Vapaat'),
     );
   }
 }

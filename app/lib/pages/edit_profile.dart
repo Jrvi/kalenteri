@@ -2,7 +2,7 @@ import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/textfield_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/user.dart';
+import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 
 class EditProfile extends StatefulWidget {
@@ -11,7 +11,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  User user = UserPreferences.myUser;
+  LocalUser user = UserPreferences.myUser;
 
   @override
   Widget build(BuildContext context) {
