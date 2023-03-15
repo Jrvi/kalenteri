@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
 
-class OwnNavigationBar extends StatefulWidget {
-  final int currentIndex;
-  final ValueChanged<int> onTap;
+class OwnNavBar extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onItemSelected;
 
-  OwnNavigationBar({required this.currentIndex, required this.onTap});
+  const OwnNavBar(
+      {Key? key, required this.selectedIndex, required this.onItemSelected})
+      : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => _OwnNavigationBarState();
-}
-
-class _OwnNavigationBarState extends State<OwnNavigationBar> {
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      unselectedItemColor: Colors.black,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
+    return NavigationBar(
+      selectedIndex: selectedIndex,
+      onDestinationSelected: onItemSelected,
+      destinations: [
+        NavigationDestination(
           icon: Icon(Icons.date_range),
           label: 'Free times',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
           icon: Icon(Icons.add_circle),
-          label: 'Calendar', // calendar view from where to add/delete events
+          label: 'Calender',
         ),
-        BottomNavigationBarItem(
+        NavigationDestination(
           icon: Icon(Icons.settings),
-          label: 'Settings',
+          label: 'Setting',
         ),
       ],
-      currentIndex: widget.currentIndex,
-      selectedItemColor: Colors.lightBlue,
-      onTap: widget.onTap,
     );
   }
 }
