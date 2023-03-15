@@ -4,9 +4,10 @@ import 'package:vapaat/pages/settings_page.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/widgets/navbar_widget.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+  const MainPage({Key? key}) : super(key: key);
   static const String _title = 'Kalenteri App';
 
   @override
@@ -19,7 +20,7 @@ class MainPage extends StatelessWidget {
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+  const MyStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
@@ -45,32 +46,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //app-bar pois
+      appBar: AppBar(
+        title: Text(
+          "App's name",
+          textAlign: TextAlign.center, // not aligning right yet
+        ),
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box_sharp),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groupchat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
-          ),
-        ],
+      bottomNavigationBar: OwnNavigationBar(
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.lightBlue,
         onTap: _onItemTapped,
       ),
     );
