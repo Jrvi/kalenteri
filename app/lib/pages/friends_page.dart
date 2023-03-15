@@ -1,3 +1,4 @@
+import 'package:app/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/models/friend.dart';
 import 'package:app/utils/friends_preference.dart';
@@ -47,13 +48,10 @@ class _FriendsState extends State<Friends> {
           Wrap(
             alignment: WrapAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                ),
-                //TODO: toiminto, joka lisää uuden kaverin
+              FilledButton(
+                //color: Theme.of(context).colorScheme.primary,
                 onPressed: () {},
+                //TODO: toiminto, joka lisää uuden kaverin
                 child: Text('Lisää uusi kaveri'),
               ),
             ],
