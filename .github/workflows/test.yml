@@ -1,9 +1,9 @@
-name: Build & upload to Firebase App Distribution
+name: Test
 
 on:
   push:
     branches:
-      - release
+      - test
 
 jobs:
   build:
@@ -41,5 +41,5 @@ jobs:
         with:
             appId: ${{secrets.APPID}}
             token: ${{secrets.TOKEN}}
-            groups: pre-testers
+            groups: internal-testers 
             file: app/build/app/outputs/flutter-apk/app-release.apk

@@ -1,4 +1,4 @@
-import 'package:app/pages/models/group.dart';
+import 'package:vapaat/pages/models/group.dart';
 import 'package:flutter/material.dart';
 
 class GroupPreferences {

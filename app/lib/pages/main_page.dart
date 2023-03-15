@@ -1,6 +1,8 @@
-import 'package:app/pages/profile.dart';
-import 'package:app/pages/group_page.dart';
-import 'package:app/widgets/freetime_widget.dart';
+import 'package:vapaat/pages/profile.dart';
+import 'package:vapaat/pages/allgroups_page.dart';
+import 'package:vapaat/pages/settings_page.dart';
+import 'package:vapaat/utils/groups_preferences.dart';
+import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
@@ -30,11 +32,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
     Profile(),
-    GroupPage(),
-    Text(
-      'SettingPage',
-      style: optionStyle,
-    ),
+    AllGroups(groups: GroupPreferences().groups),
+    SettingsPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,7 +45,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //App-bar pois
+      //app-bar pois
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
