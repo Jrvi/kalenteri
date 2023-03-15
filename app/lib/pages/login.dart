@@ -87,23 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     // Login -nappi
-    final loginButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blue,
-      child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          // Navigator.of(context).pushNamed('/main', arguments: 'main');
-          signIn(sahkoPostiController.text, salasanaController.text);
-        },
-        child: Text(
-          'Kirjaudu',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+    final loginButton = FilledButton(
+      onPressed: () {
+        // Navigator.of(context).pushNamed('/main', arguments: 'main');
+        signIn(sahkoPostiController.text, salasanaController.text);
+      },
+      child: Text(
+        'Kirjaudu',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 20),
       ),
     );
 

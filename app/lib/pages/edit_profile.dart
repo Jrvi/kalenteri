@@ -50,18 +50,35 @@ class _EditProfileState extends State<EditProfile> {
 
           //Salasana ja muokkaaminen
           TextFieldWidget(
-            label: 'Salasana',
+            label: 'Nykyinen salasana',
             text: user.name, //mustia palloja?
             onChanged: (name) {}, //varmistus (kirjoita uudelleen)
           ),
 
-          const SizedBox(height: 64),
+          const SizedBox(height: 24),
+
+          TextFieldWidget(
+            label: 'Uusi salasana',
+            text: user.name, //mustia palloja?
+            onChanged: (name) {}, //varmistus (kirjoita uudelleen)
+          ),
+
+          const SizedBox(height: 14),
+
+          TextFieldWidget(
+            label: 'Uudelleen uusi salasana',
+            text: user.name, //mustia palloja?
+            onChanged: (name) {}, //varmistus (kirjoita uudelleen)
+          ),
+
+          const SizedBox(height: 44),
 
           Center(
             child: ButtonWidget(
               text: 'Tallenna muutokset',
               onClicked: () {
                 Navigator.pop(context);
+                //tänne tarkistus vanhasta salasanasta/uusista salasanoista
               },
             ),
           ),
