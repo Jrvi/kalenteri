@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vapaat/pages/login.dart';
+import 'package:vapaat/pages/profile.dart';
 import 'package:vapaat/utils/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -46,5 +47,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoginScreen();
+    //Tämän takia vain loginiin teema, muilla sivuilla ei toimi
   }
 }

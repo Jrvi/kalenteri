@@ -15,16 +15,16 @@ class OwnNavBar extends StatelessWidget {
       onDestinationSelected: onItemSelected,
       destinations: [
         NavigationDestination(
+          icon: Icon(Icons.access_time),
+          label: 'Yhteistä aikaa',
+        ),
+        NavigationDestination(
           icon: Icon(Icons.date_range),
-          label: 'Free times',
+          label: 'Kalenteri',
         ),
         NavigationDestination(
           icon: Icon(Icons.add_circle),
-          label: 'Calender',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.settings),
-          label: 'Setting',
+          label: 'Lisää',
         ),
       ],
     );
