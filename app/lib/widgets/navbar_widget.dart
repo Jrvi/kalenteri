@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class OwnNavigationBar extends StatelessWidget {
+class OwnNavigationBar extends StatefulWidget {
   final int currentIndex;
-  final Function(int) onTap;
+  final ValueChanged<int> onTap;
 
-  OwnNavigationBar({
-    required this.currentIndex,
-    required this.onTap,
-  });
+  OwnNavigationBar({required this.currentIndex, required this.onTap});
 
+  @override
+  State<StatefulWidget> createState() => _OwnNavigationBarState();
+}
+
+class _OwnNavigationBarState extends State<OwnNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -20,16 +22,16 @@ class OwnNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add_circle),
-          label: 'Calender', // calender view from where to add/delete events
+          label: 'Calendar', // calendar view from where to add/delete events
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          label: 'Setting',
+          label: 'Settings',
         ),
       ],
-      currentIndex: currentIndex,
+      currentIndex: widget.currentIndex,
       selectedItemColor: Colors.lightBlue,
-      onTap: onTap,
+      onTap: widget.onTap,
     );
   }
 }

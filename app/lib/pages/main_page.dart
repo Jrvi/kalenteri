@@ -4,10 +4,9 @@ import 'package:vapaat/pages/settings_page.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/widgets/navbar_widget.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({super.key});
   static const String _title = 'Kalenteri App';
 
   @override
@@ -20,7 +19,7 @@ class MainPage extends StatelessWidget {
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+  const MyStatefulWidget({super.key});
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
@@ -28,8 +27,7 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  //Screens from where the bar navigates
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
     Profile(),
@@ -37,6 +35,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     SettingsPage(),
   ];
 
+  //when the bar is clicked, the screen changes
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -49,15 +48,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       appBar: AppBar(
         title: Text(
           "App's name",
-          textAlign: TextAlign.center, // not aligning right yet
+          textAlign:
+              TextAlign.center, //does not align in the center yet, fix later
         ),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: OwnNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
+        //labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        destinations: [
+          NavigationDestination(
+            icon: Icon(Icons.date_range),
+            label: 'Free times',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.add_circle),
+            label: 'Calender', // calender view from where to add/delete events
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings),
+            label: 'Setting',
+          ),
+        ],
       ),
     );
   }
