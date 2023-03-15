@@ -30,6 +30,11 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: RouteGenerator.generateRoute,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: true, //toimiiko?
+        colorScheme: ColorScheme.fromSeed(
+            brightness: Brightness.light,
+            //primary: Colors.yellow,
+            seedColor: Color(0x00006a60)),
       ),
       home: const MyHomePage(title: 'Demo'),
     );
