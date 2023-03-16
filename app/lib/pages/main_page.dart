@@ -2,6 +2,7 @@ import 'package:vapaat/pages/settings_page.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/widgets/navbar_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -29,7 +30,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
     Text('Todo: calender, add/delete events'),
-//    AllGroups(groups: GroupPreferences().groups),
     SettingsPage(), //from here one can navigate to profile, groups, friends, etc
   ];
 
@@ -45,7 +45,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "App's name",
+          app_name,
           textAlign:
               TextAlign.center, //does not align in the center yet, fix later
         ),

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
+import 'package:vapaat/pages/friends_page.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
@@ -57,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   text: view_all,
                   onClicked: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EditProfile()));
+                        MaterialPageRoute(builder: (context) => Friends()));
                   },
                 ),
               ],
