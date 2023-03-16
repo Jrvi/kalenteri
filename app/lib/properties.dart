@@ -5,6 +5,8 @@ const navBar_calender = "Calender";
 const navBar_more = "More";
 const navBar_time = "Free time";
 
-//Profile pages:
+//More-page's texts:
 
-cont profile_caption = "Profile";
+const profile_caption = "Profile";
+const friendlist_caption = "Friends";
+const grouplist_caption = "Friend groups";
