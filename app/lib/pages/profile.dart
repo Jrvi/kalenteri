@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/utils/user_preferences.dart';
+import 'package:vapaat/properties.dart';
 import 'dart:io';
 
 class Profile extends StatefulWidget {
@@ -100,12 +101,11 @@ class _profileState extends State<Profile> {
 
           //Sivun otsikko
           Text(
-            "Profiili",
+            profile_caption,
             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
 
           const SizedBox(height: 44),
-
           //Profiilikuva
           ProfileWidget(
             imagePath: user.imagePath,
@@ -124,6 +124,7 @@ class _profileState extends State<Profile> {
           const SizedBox(height: 64),
 
           Center(
+            //these will go under Calender-page
             child: ButtonWidget(
               text: 'Lisää kalenteri',
               onClicked: () {},
@@ -131,6 +132,7 @@ class _profileState extends State<Profile> {
           ),
           const SizedBox(height: 24),
           Center(
+            //these will go under Calender-page
             child: ButtonWidget(
               text: 'Lisää menemisiä',
               onClicked: () {
@@ -150,7 +152,7 @@ class _profileState extends State<Profile> {
     );
   }
 
-//Metodi: profiilin omistajan nimi ja spo (jos on => salasanan palautus)
+//User's name and email
   Widget buildName(LocalUser user) => Column(
         children: [
           Text(

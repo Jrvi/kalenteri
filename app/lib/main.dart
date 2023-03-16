@@ -47,6 +47,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoginScreen();
-    //Tämän takia vain loginiin teema, muilla sivuilla ei toimi
+    //Tämän takia vain loginiin teema, muilla sivuilla ei toimi. Korjattava
   }
 }

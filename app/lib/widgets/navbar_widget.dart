@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vapaat/properties.dart';
 
 class OwnNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -16,15 +17,15 @@ class OwnNavBar extends StatelessWidget {
       destinations: [
         NavigationDestination(
           icon: Icon(Icons.access_time),
-          label: 'Yhteistä aikaa',
+          label: navBar_time,
         ),
         NavigationDestination(
           icon: Icon(Icons.date_range),
-          label: 'Kalenteri',
+          label: navBar_calender,
         ),
         NavigationDestination(
           icon: Icon(Icons.add_circle),
-          label: 'Lisää',
+          label: navBar_more,
         ),
       ],
     );
