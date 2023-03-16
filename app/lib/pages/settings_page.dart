@@ -44,6 +44,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const SizedBox(width: 16.0),
                 buildName(fakeuser),
+                Padding(
+                    padding: EdgeInsets.only(
+                      left: 40.0,
+                    ),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.popUntil(context,
+                              (Route<dynamic> predicate) => predicate.isFirst);
+                        },
+                        child: Text(logout)))
               ],
             ),
             Divider(height: 32.0, thickness: 2.0),
