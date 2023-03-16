@@ -10,6 +10,12 @@ const navBar_time = "Free time";
 //More-page's texts:
 
 const profile_caption = "Profile";
+const profile_edit = "Edit your profile";
+const profile_name = "Name";
+const profile_password = "Password";
+const profile_new_password = "New password";
+const profile_password_confirm = "Confirm new password";
+const profile_save = "Save changes";
 const friendlist_caption = "Friends";
 const grouplist_caption = "Friend groups";
 const view_all = "View all";
