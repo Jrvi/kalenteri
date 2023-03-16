@@ -1,8 +1,9 @@
-import 'package:vapaat/pages/profile.dart';
-import 'package:vapaat/pages/allgroups_page.dart';
-import 'package:vapaat/utils/groups_preferences.dart';
+import 'package:vapaat/pages/settings_page.dart';
+import 'package:vapaat/pages/calender_page.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/widgets/navbar_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -26,18 +27,14 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  //Screens from where the bar navigates
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
-    Profile(),
-    AllGroups(groups: GroupPreferences().groups),
-    Text(
-      'SettingPage',
-      style: optionStyle,
-    ),
+    Calender(),
+    SettingsPage(), //from here one can navigate to profile, groups, friends, etc
   ];
 
+  //when the bar is clicked, the screen changes
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -47,33 +44,19 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //app-bar pois
+      appBar: AppBar(
+        title: Text(
+          app_name,
+          textAlign:
+              TextAlign.center, //does not align in the center yet, fix later
+        ),
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box_sharp),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groupchat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.lightBlue,
-        onTap: _onItemTapped,
+      bottomNavigationBar: OwnNavBar(
+        selectedIndex: _selectedIndex,
+        onItemSelected: _onItemTapped,
       ),
     );
   }

@@ -2,8 +2,9 @@ import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/textfield_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/user.dart';
+import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/utils/user_preferences.dart';
+import 'package:vapaat/properties.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -11,23 +12,22 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  User user = UserPreferences.myUser;
+  LocalUser user = UserPreferences.myUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          profile_edit,
+          textAlign:
+              TextAlign.center, //does not align in the center yet, fix later
+        ),
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
-          const SizedBox(height: 24),
-
-          //Sivun otsikko
-          Text(
-            "Muokkaa tietojasi",
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-
           const SizedBox(height: 44),
 
           //Profiilikuva
@@ -41,25 +41,41 @@ class _EditProfileState extends State<EditProfile> {
 
           //Nimi ja muokkaaminen
           TextFieldWidget(
-            label: 'Nimi',
+            label: profile_name,
             text: user.name,
             onChanged: (name) {},
           ),
 
           const SizedBox(height: 24),
 
-          //Salasana ja muokkaaminen
+          //Password and modifying it
           TextFieldWidget(
-            label: 'Salasana',
+            label: profile_password,
+            text: user.name, //not show!
+            onChanged: (name) {},
+          ),
+
+          const SizedBox(height: 24),
+
+          TextFieldWidget(
+            label: profile_new_password,
             text: user.name, //mustia palloja?
             onChanged: (name) {}, //varmistus (kirjoita uudelleen)
           ),
 
-          const SizedBox(height: 64),
+          const SizedBox(height: 14),
+
+          TextFieldWidget(
+            label: profile_password_confirm,
+            text: user.name,
+            onChanged: (name) {}, //does the password match?
+          ),
+
+          const SizedBox(height: 44),
 
           Center(
             child: ButtonWidget(
-              text: 'Tallenna muutokset',
+              text: profile_save,
               onClicked: () {
                 Navigator.pop(context);
               },

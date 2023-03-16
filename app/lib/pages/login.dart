@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/properties.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,13 +31,13 @@ class _LoginScreenState extends State<LoginScreen> {
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ('Anna sähköpostiosoite');
+          return (login_email_hint);
         }
 
         // Tarkastetaan sähköpostiosoite. Saa muuttaa, jos tietään paremman tavan :D
         // Tässä versiossa tarkastetaan osoite outojen merkkien varalta
         if (!RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]').hasMatch(value)) {
-          return ('Anna oikeanlainen sähköpostiosoite');
+          return (login_email_error);
         }
         return null;
       },
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.email),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Sähköposti',
+          hintText: login_email,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -64,10 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         RegExp regex = new RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
-          return ('Anna salasana');
+          return (login_email_hint);
         }
         if (!regex.hasMatch((value))) {
-          return ('Salsanassa oltava vähintään 8 merkkiä');
+          return (login_password_hint2);
         }
       },
       onSaved: (value) {
@@ -80,30 +81,22 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.password),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Salasana',
+          hintText: login_password,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
     // Login -nappi
-    final loginButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blue,
-      child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          // Navigator.of(context).pushNamed('/main', arguments: 'main');
-          signIn(sahkoPostiController.text, salasanaController.text);
-        },
-        child: Text(
-          'Kirjaudu',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+    final loginButton = FilledButton(
+      onPressed: () {
+        // Navigator.of(context).pushNamed('/main', arguments: 'main');
+        signIn(sahkoPostiController.text, salasanaController.text);
+      },
+      child: Text(
+        login_login,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 20),
       ),
     );
 
@@ -112,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          'Ei tiliä? ',
+          login_no_account,
           style: TextStyle(fontSize: 15),
         ),
         GestureDetector(
@@ -121,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 .pushNamed('/rekisterointi', arguments: 'rekisterointi');
           },
           child: Text(
-            'Rekisteröidy',
+            login_register,
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blue),
           ),

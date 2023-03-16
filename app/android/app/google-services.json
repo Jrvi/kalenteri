@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "732847095789",
+    "firebase_url": "https://vapaat-5ec50-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "vapaat-5ec50",
     "storage_bucket": "vapaat-5ec50.appspot.com"
   },
@@ -34,7 +35,7 @@
               "client_id": "732847095789-8m534hit7q0p3mnfaeon6skg8abt9q0v.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.teamvapaatajat.vapaat"
+                "bundle_id": "com.example.app"
               }
             }
           ]
