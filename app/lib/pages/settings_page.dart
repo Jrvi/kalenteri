@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/utils/user_preferences.dart';
+import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
+import 'package:vapaat/widgets/button_widget.dart';
 import 'package:vapaat/properties.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -50,9 +53,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 SizedBox(width: 16.0),
                 Text(friendlist_caption),
                 Spacer(),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('View All'),
+                ButtonWidget(
+                  text: view_all,
+                  onClicked: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => EditProfile()));
+                  },
                 ),
               ],
             ),
@@ -65,9 +71,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 SizedBox(width: 16.0),
                 Text(grouplist_caption),
                 Spacer(),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('View All'),
+                ButtonWidget(
+                  text: view_all,
+                  onClicked: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AllGroups(
+                                groups: GroupPreferences()
+                                    .groups))); //now fake group data
+                  },
                 ),
               ],
             ),

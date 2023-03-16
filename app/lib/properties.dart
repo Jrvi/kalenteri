@@ -10,3 +10,4 @@ const navBar_time = "Free time";
 const profile_caption = "Profile";
 const friendlist_caption = "Friends";
 const grouplist_caption = "Friend groups";
+const view_all = "View all";
