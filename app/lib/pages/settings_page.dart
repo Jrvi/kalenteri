@@ -52,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 Icon(Icons.group),
                 SizedBox(width: 16.0),
-                Text(friendlist_caption),
+                Text(friendlist_caption, style: TextStyle(fontSize: 20)),
                 Spacer(),
                 ButtonWidget(
                   text: view_all,
@@ -70,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 Icon(Icons.group),
                 SizedBox(width: 16.0),
-                Text(grouplist_caption),
+                Text(grouplist_caption, style: TextStyle(fontSize: 20)),
                 Spacer(),
                 ButtonWidget(
                   text: view_all,
