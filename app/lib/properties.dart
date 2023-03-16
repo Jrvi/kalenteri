@@ -55,3 +55,6 @@ const group_members = "Members";
 const group_edit_name = "Edit the name";
 const group_add_member = "Add new member";
 const group_exit = "Leave group";
+
+//Logout
+const logout = "Logout";
