@@ -1,24 +1,16 @@
 import 'dart:developer';
-
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/utils/database_util.dart';
-import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/localuser.dart';
-import 'package:vapaat/pages/edit_profile.dart';
-import 'package:vapaat/utils/user_preferences.dart';
-import 'package:vapaat/properties.dart';
 import 'dart:io';
 
-class Profile extends StatefulWidget {
+class Calender extends StatefulWidget {
   @override
-  _profileState createState() => _profileState();
+  _CalenderState createState() => _CalenderState();
 }
 
-class _profileState extends State<Profile> {
-  final user = UserPreferences.getUser();
-  // Dialogin text controllerit
+class _CalenderState extends State<Calender> {
   TextEditingController dateCtl = TextEditingController();
   TextEditingController startTimeCtl = TextEditingController();
   TextEditingController endTimeCtl = TextEditingController();
@@ -97,32 +89,6 @@ class _profileState extends State<Profile> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
-          const SizedBox(height: 24),
-
-          //Sivun otsikko
-          Text(
-            profile_caption,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-
-          const SizedBox(height: 44),
-          //Profiilikuva
-          ProfileWidget(
-            imagePath: user.imagePath,
-            isEdit: false,
-            onClicked: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfile()));
-            },
-          ),
-
-          const SizedBox(height: 24),
-
-          //Nimi ja spo
-          buildName(user),
-
-          const SizedBox(height: 64),
-
           Center(
             //these will go under Calender-page
             child: ButtonWidget(
@@ -146,24 +112,9 @@ class _profileState extends State<Profile> {
               text: 'Poista menemisiä',
               onClicked: () {},
             ),
-          ),
+          )
         ],
       ),
     );
   }
-
-//User's name and email
-  Widget buildName(LocalUser user) => Column(
-        children: [
-          Text(
-            user.name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            user.email,
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      );
 }
