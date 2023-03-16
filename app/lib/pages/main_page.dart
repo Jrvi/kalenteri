@@ -1,4 +1,5 @@
 import 'package:vapaat/pages/settings_page.dart';
+import 'package:vapaat/pages/calender_page.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/widgets/navbar_widget.dart';
@@ -29,7 +30,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   //Screens from where the bar navigates
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
-    Text('Todo: calender, add/delete events'),
+    Calender(),
     SettingsPage(), //from here one can navigate to profile, groups, friends, etc
   ];
 
