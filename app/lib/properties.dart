@@ -2,6 +2,18 @@
 
 const app_name = "App's name";
 
+//Login-page's texts:
+const login_login = "Log in";
+const login_no_account = "Don't have account?";
+const login_register = "Register here";
+const login_email = "Email";
+const login_password = "Password";
+const login_password_hint = "Enter your password";
+const login_password_hint2 = "The password must contain at least 8 characters.";
+const login_email_error = "Please enter a valid email address";
+const login_password_error = "Please enter a valid password";
+const login_email_hint = "Enter your email";
+
 //Navbar texts:
 const navBar_calender = "Calender";
 const navBar_more = "More";
