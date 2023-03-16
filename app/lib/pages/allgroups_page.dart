@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/group.dart';
 import 'package:vapaat/pages/group_page.dart';
+import 'package:vapaat/pages/create_group.dart';
 import 'package:vapaat/properties.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/button_widget.dart';
@@ -83,7 +84,16 @@ class _AllGroupsState extends State<AllGroups> {
             ),
           ),
           const SizedBox(height: 34),
-          ButtonWidget(text: add_group, onClicked: () {}),
+          ButtonWidget(
+              text: add_group,
+              onClicked: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateGroup(),
+                  ),
+                );
+              }),
           const SizedBox(height: 54),
         ],
       ),

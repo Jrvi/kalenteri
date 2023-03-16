@@ -41,6 +41,14 @@ const friend_add = "Add new friend";
 const all_groups_caption = "All groups";
 const add_group = "Add new group";
 
+//Create group-page's texts:
+
+const create_group = "Create new group";
+const create_name = "Give a name for the group";
+const create_members = "Add members";
+const create_cancel = "Cancel";
+const create_save = "Save";
+
 //Group-page's texts:
 
 const group_members = "Members";
