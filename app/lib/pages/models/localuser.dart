@@ -1,4 +1,4 @@
-//Tänne ominaisuudet, joita käyttäjän profiiliin liittyy
+// User profile properties
 class LocalUser {
   final String imagePath;
   final String name;
