@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:vapaat/pages/models/TimeSlot.dart';
 import 'package:vapaat/testdata/testdata.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/utils/database_utils.dart';
 
 class Freetime extends StatefulWidget {
   @override
@@ -103,6 +104,7 @@ class _FreetimeState extends State<Freetime> {
           children: [
             TextButton(
               onPressed: () {
+                DatabaseUtil.getLocalUser();
                 setState(() {
                   getFreeTimeSlotsForTwoCalendars(
                       DateTime(2023, 3, 10, 0, 0), DateTime(2023, 3, 11, 0, 0),

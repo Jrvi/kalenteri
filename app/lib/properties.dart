@@ -58,3 +58,7 @@ const group_exit = "Leave group";
 
 //Logout
 const logout = "Logout";
+
+//Dialog texts:
+
+const event_add = "Add";

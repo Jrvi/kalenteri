@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/localuser.dart';
-import 'package:vapaat/utils/database_util.dart';
+import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 
 class Rekisterointi extends StatefulWidget {
@@ -186,11 +186,14 @@ class _RekisterointiState extends State<Rekisterointi> {
   // TODO: Handle errors
   void addUser(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      LocalUser localuser = LocalUser(
-          imagePath: 'imageurl', name: nameController.text, email: email);
       await _authKey
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {DatabaseUtil.addUserToDB(localuser)})
+          .then((value) => {
+                _authKey.currentUser?.updateDisplayName(nameController.text),
+                _authKey.currentUser
+                    ?.updatePhotoURL("https://picsum.photos/200"),
+                Navigator.of(context).pushNamed('/main', arguments: 'main')
+              })
           .catchError((e) {
         final error = SnackBar(content: Text(e!));
         ScaffoldMessenger.of(context).showSnackBar(error);
