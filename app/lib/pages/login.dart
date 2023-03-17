@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/widgets/button_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,13 +32,13 @@ class _LoginScreenState extends State<LoginScreen> {
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ('Enter an email address');
+          return (login_email_hint);
         }
 
-        // Checking the email. Feel free to change if oyu know a better way :D
+        // Checking the email. Feel free to change if you know a better way :D
         // This version checks the string for 'weird' characters
         if (!RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]').hasMatch(value)) {
-          return ('Enter a valid email address');
+          return (login_email_error);
         }
         return null;
       },
@@ -51,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.email),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Email',
+          hintText: login_email,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -66,10 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
         RegExp regex = RegExp(
             r'^.{8,}$'); // Making sure the password is at least 8 characters long. TODO:
         if (value!.isEmpty) {
-          return ('Insert password');
+          return (login_email_hint);
         }
         if (!regex.hasMatch((value))) {
-          return ('Password must at least 8 characters long');
+          return (login_password_hint2);
         }
       },
       onSaved: (value) {
@@ -82,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.password),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Password',
+          hintText: login_password,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -100,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          'No account? ',
+          login_no_account,
           style: TextStyle(fontSize: 15),
         ),
         GestureDetector(
@@ -108,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.of(context).pushNamed('/register', arguments: 'register');
           },
           child: Text(
-            'Register',
+            login_register,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         )

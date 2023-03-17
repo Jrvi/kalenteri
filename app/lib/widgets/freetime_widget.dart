@@ -1,7 +1,5 @@
 import 'dart:developer';
-
 import 'package:vapaat/pages/models/TimeSlot.dart';
-import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/testdata/testdata.dart';
 import 'package:flutter/material.dart';
 
@@ -60,9 +58,13 @@ class _FreetimeState extends State<Freetime> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 160.0,
             flexibleSpace: const FlexibleSpaceBar(
-              title: Text("Vapaatajat"),
+              title: Text(
+                "Vapaatajat",
+                style: TextStyle(color: Colors.black),
+              ),
               background: FlutterLogo(),
             ),
           ),

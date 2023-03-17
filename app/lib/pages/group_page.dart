@@ -1,5 +1,7 @@
 import 'package:vapaat/pages/models/group.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/widgets/button_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class GroupPage extends StatefulWidget {
   final Group group;
@@ -39,38 +41,34 @@ class _GroupPageState extends State<GroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.group.name,
+          textAlign:
+              TextAlign.center, //does not align in the center yet, fix later
+        ),
+      ),
       body: ListView(
         controller: _scrollController,
         padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
           const SizedBox(height: 34),
-
-          //Sivun otsikko
-          Text(
-            widget.group.name,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-
-          const SizedBox(height: 34),
-
           TextField(
             controller: _nameController,
             decoration: InputDecoration(
-              labelText: 'Muokkaa nimeä',
+              labelText: group_edit_name,
             ),
             onChanged: _updateGroupName,
           ),
-
           const SizedBox(height: 54),
-
           Text(
-            'Jäsenet',
+            group_members,
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-
+          const SizedBox(height: 24),
           SizedBox(
-            height: 300,
+            height: 320,
             child: Scrollbar(
               controller: _scrollController,
               thumbVisibility: true,
@@ -86,25 +84,14 @@ class _GroupPageState extends State<GroupPage> {
               ),
             ),
           ),
-
-          const SizedBox(height: 34),
-
+          const SizedBox(height: 54),
           Wrap(
             alignment: WrapAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                ),
-                onPressed: () {},
-                child: Text('Lisää jäseniä'),
-              ),
+              ButtonWidget(text: group_add_member, onClicked: () {}),
             ],
           ),
-
-          const SizedBox(height: 14),
-
+          const SizedBox(height: 24),
           Wrap(
             alignment: WrapAlignment.center,
             children: [
@@ -115,7 +102,7 @@ class _GroupPageState extends State<GroupPage> {
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {},
-                child: Text('Poistu ryhmästä'),
+                child: Text(group_exit),
               ),
             ],
           )

@@ -36,25 +36,9 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //otsikko
-          Text(
-            widget.label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          //Syöttökenttä
-          TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            maxLines: widget.maxLines,
-          ),
-        ],
+  Widget build(BuildContext context) => TextField(
+        decoration: InputDecoration(labelText: widget.label),
+        controller: controller,
+        maxLines: widget.maxLines,
       );
 }
