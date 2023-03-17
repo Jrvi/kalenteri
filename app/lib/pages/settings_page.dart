@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/allgroups_page.dart';
@@ -18,7 +19,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance;
   final fakeuser = UserPreferences
       .getUser(); //since not yet real users with right info (name + picture), lets use fake data
 
@@ -47,6 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ButtonWidget(
                     onClicked: () {
                       FirebaseAuth.instance.signOut().then((value) => {
+                            log("signed out"),
                             Navigator.popUntil(context,
                                 (Route<dynamic> predicate) => predicate.isFirst)
                           });

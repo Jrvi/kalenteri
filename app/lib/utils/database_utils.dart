@@ -5,11 +5,13 @@ import 'package:vapaat/pages/models/localuser.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
-  static final user = FirebaseAuth.instance.currentUser!;
+  static LocalUser? localUser;
+  //static final user = FirebaseAuth.instance.currentUser!;
 
   /// Adds Event to database
   /// example for path "events/uid/14-3_19-20" first two numbers are day and month second two are start hour and end hour
   static Future<void> addEvent(Event event) async {
+    final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref(
         "/events/${user.uid}/${event.start.day}-${event.start.month}_${event.start.hour}-${event.end.hour}");
     await ref.set({
@@ -30,13 +32,25 @@ class DatabaseUtil {
 
   /// Adds new user to database
   static Future<void> addUserToDB(LocalUser localuser) async {
+    final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref("/users/${user.uid}");
     await ref.set({
       "email": user.email.toString(),
-      "username": "testi",
-      "profile_picture": "imageUrl"
+      "username": localuser.name,
+      "profile_picture": localuser.imagePath
     });
   }
 
+  // Täs pitäis ottaa myös huomioon FirebaseAuthin user, että voi olla järkevämpää, että vaihdetaan siihen.
   static void updateUser(LocalUser user) {}
+
+  static void getLocalUser() {
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref();
+    final data = ref.child("/users/${user.uid}").get();
+    data.then((value) => localUser = LocalUser(
+        imagePath: value.child("profile_picture/").value.toString(),
+        name: value.child("username/").value.toString(),
+        email: value.child("email/").value.toString()));
+  }
 }
