@@ -27,7 +27,7 @@ class RouteGenerator {
           );
         }
         return _errorRoute();
-      case '/rekisterointi':
+      case '/register':
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => Rekisterointi(),

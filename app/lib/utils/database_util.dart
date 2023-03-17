@@ -29,7 +29,7 @@ class DatabaseUtil {
   }*/
 
   /// Adds new user to database
-  static Future<void> addUser(LocalUser localuser) async {
+  static Future<void> addUserToDB(LocalUser localuser) async {
     DatabaseReference ref = database.ref("/users/${user.uid}");
     await ref.set({
       "email": user.email.toString(),
