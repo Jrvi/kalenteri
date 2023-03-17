@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
@@ -44,17 +43,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 const SizedBox(width: 16.0),
                 buildName(fakeuser),
-                Padding(
-                    padding: EdgeInsets.only(
-                      left: 40.0,
-                    ),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.popUntil(context,
-                              (Route<dynamic> predicate) => predicate.isFirst);
-                        },
-                        child: Text(logout)))
+                Spacer(),
+                ButtonWidget(
+                    onClicked: () {
+                      FirebaseAuth.instance.signOut().then((value) => {
+                            Navigator.popUntil(context,
+                                (Route<dynamic> predicate) => predicate.isFirst)
+                          });
+                    },
+                    text: logout),
               ],
             ),
             Divider(height: 32.0, thickness: 2.0),
