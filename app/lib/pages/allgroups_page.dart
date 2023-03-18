@@ -85,16 +85,18 @@ class _AllGroupsState extends State<AllGroups> {
             ),
           ),
           const SizedBox(height: 34),
-          FilledButtonWidget(
-              text: 'add_group',
-              onClicked: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreateGroup(),
-                  ),
-                );
-              }),
+          FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateGroup(),
+                ),
+              );
+            },
+            label: const Text(add_group),
+            icon: const Icon(Icons.add),
+          ),
           const SizedBox(height: 54),
         ],
       ),
