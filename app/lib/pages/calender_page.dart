@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/utils/Calendar_utils.dart';
-import 'package:vapaat/utils/database_util.dart';
+import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
