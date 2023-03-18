@@ -57,6 +57,10 @@ const group_exit = "Leave group";
 const calender_add = "Add event";
 const calender_delete = "Delete event";
 
+//Freetime page:
+const freetime_update = "Update";
+const freetime_clear = "Clear";
+
 //Logout
 const logout = "Logout";
 
