@@ -17,7 +17,7 @@ const login_email_hint = "Enter your email";
 //Navbar texts:
 const navBar_calender = "Calender";
 const navBar_more = "More";
-const navBar_time = "Free time";
+const navBar_time = "Free times";
 
 //More-page's texts:
 

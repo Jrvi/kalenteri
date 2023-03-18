@@ -31,7 +31,7 @@ class _AllGroupsState extends State<AllGroups> {
           const SizedBox(height: 20),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true, // make scrollbar always visible
+              thumbVisibility: true, // make scrollbar always visible
               child: ListView.builder(
                 itemCount: widget.groups.length,
                 itemBuilder: (context, index) {
