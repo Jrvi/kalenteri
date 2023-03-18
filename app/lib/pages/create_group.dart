@@ -104,7 +104,7 @@ class _CreateGroupState extends State<CreateGroup> {
             child: _friends.length > 6
                 ? Scrollbar(
                     controller: _scrollController,
-                    isAlwaysShown: true,
+                    thumbVisibility: true,
                     child: ListView.builder(
                       itemCount: _friends.length,
                       itemBuilder: (context, index) {

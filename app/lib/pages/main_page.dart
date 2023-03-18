@@ -42,12 +42,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          app_name,
-          textAlign:
-              TextAlign.center, //does not align in the center yet, fix later
-        ),
-      ),
+          //Here something else, so that the app wont go over phone's upper edge
+          //but there wont't be 'back' arrowbutton in main pages(free times, calender, settings)
+          ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

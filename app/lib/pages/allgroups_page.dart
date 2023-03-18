@@ -5,6 +5,7 @@ import 'package:vapaat/pages/create_group.dart';
 import 'package:vapaat/properties.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/button_widget.dart';
+import 'package:vapaat/widgets/filledbutton_widget.dart';
 
 class AllGroups extends StatefulWidget {
   final List<Group> groups;
@@ -30,7 +31,7 @@ class _AllGroupsState extends State<AllGroups> {
           const SizedBox(height: 20),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true, // make scrollbar always visible
+              thumbVisibility: true, // make scrollbar always visible
               child: ListView.builder(
                 itemCount: widget.groups.length,
                 itemBuilder: (context, index) {
@@ -84,16 +85,18 @@ class _AllGroupsState extends State<AllGroups> {
             ),
           ),
           const SizedBox(height: 34),
-          ButtonWidget(
-              text: add_group,
-              onClicked: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreateGroup(),
-                  ),
-                );
-              }),
+          FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateGroup(),
+                ),
+              );
+            },
+            label: const Text(add_group),
+            icon: const Icon(Icons.add),
+          ),
           const SizedBox(height: 54),
         ],
       ),

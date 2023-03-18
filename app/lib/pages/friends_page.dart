@@ -4,6 +4,7 @@ import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/utils/friends_preference.dart';
 import 'package:vapaat/properties.dart';
 import 'package:vapaat/widgets/freetime_widget.dart';
+import 'package:vapaat/widgets/filledbutton_widget.dart';
 import 'package:vapaat/pages/settings_page.dart';
 import 'dart:io';
 
@@ -58,15 +59,16 @@ class _FriendsState extends State<Friends> {
           Wrap(
             alignment: WrapAlignment.center,
             children: [
-              ButtonWidget(
-                //color: Theme.of(context).colorScheme.primary,
-                onClicked: () {},
-                //TODO: add new friend
-                text: friend_add,
+              FloatingActionButton.extended(
+                onPressed: () {
+                  //todo
+                },
+                label: const Text(friend_add),
+                icon: const Icon(Icons.add),
               ),
             ],
           ),
-          const SizedBox(height: 34),
+          const SizedBox(height: 44),
         ],
       ),
     );

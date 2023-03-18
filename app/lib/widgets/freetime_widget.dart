@@ -3,6 +3,7 @@ import 'package:vapaat/pages/models/TimeSlot.dart';
 import 'package:vapaat/testdata/testdata.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/utils/database_utils.dart';
+import 'package:vapaat/properties.dart';
 
 class Freetime extends StatefulWidget {
   @override
@@ -111,7 +112,7 @@ class _FreetimeState extends State<Freetime> {
                       duration: 30);
                 });
               },
-              child: Text("Päivitä"),
+              child: Text(freetime_update),
             ),
             TextButton(
                 onPressed: () {
@@ -119,7 +120,7 @@ class _FreetimeState extends State<Freetime> {
                     freeTimeSlots.clear();
                   });
                 },
-                child: Text("Clear"))
+                child: Text(freetime_clear))
           ],
         ),
       )),
