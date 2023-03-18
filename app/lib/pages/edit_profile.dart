@@ -12,7 +12,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  LocalUser user = UserPreferences.myUser;
+  LocalUser user = UserPreferences.getUser();
 
   @override
   Widget build(BuildContext context) {

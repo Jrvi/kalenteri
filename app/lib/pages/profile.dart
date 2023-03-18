@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:vapaat/pages/models/event.dart';
-import 'package:vapaat/utils/database_util.dart';
+import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,6 @@ import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/properties.dart';
-import 'dart:io';
 
 class Profile extends StatefulWidget {
   @override
@@ -17,12 +14,13 @@ class Profile extends StatefulWidget {
 }
 
 class _profileState extends State<Profile> {
-  final user = UserPreferences.getUser();
+  final LocalUser user = UserPreferences.getUser();
   // Dialogin text controllerit
   TextEditingController dateCtl = TextEditingController();
   TextEditingController startTimeCtl = TextEditingController();
   TextEditingController endTimeCtl = TextEditingController();
 
+  // Tää kyl on laitettava johonkin omaan luokkaa
   Future eventDialog() => showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -74,8 +72,8 @@ class _profileState extends State<Profile> {
               ]),
             ),
             actions: [
-              TextButton(
-                  onPressed: () {
+              ButtonWidget(
+                  onClicked: () {
                     Navigator.of(context).pop();
                     String startString =
                         "${dateCtl.text.substring(0, 10)} ${startTimeCtl.text.substring(10, 15)}:00";
@@ -86,7 +84,7 @@ class _profileState extends State<Profile> {
                         end: DateTime.parse(endString));
                     DatabaseUtil.addEvent(newEvent);
                   },
-                  child: Text("submit"))
+                  text: event_add)
             ],
           ));
 

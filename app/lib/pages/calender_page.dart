@@ -2,10 +2,10 @@ import 'dart:developer';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/utils/Calendar_utils.dart';
-import 'package:vapaat/utils/database_util.dart';
+import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/button_widget.dart';
+import 'package:vapaat/properties.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class Calender extends StatefulWidget {
   @override
@@ -113,18 +113,11 @@ class _CalenderState extends State<Calender> {
               _focusedDay = focusedDay;
             },
           ),
+          const SizedBox(height: 84),
           Center(
             //these will go under Calender-page
             child: ButtonWidget(
-              text: 'Lisää kalenteri',
-              onClicked: () {},
-            ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            //these will go under Calender-page
-            child: ButtonWidget(
-              text: 'Lisää menemisiä',
+              text: calender_add,
               onClicked: () {
                 eventDialog();
               },
@@ -133,7 +126,7 @@ class _CalenderState extends State<Calender> {
           const SizedBox(height: 24),
           Center(
             child: ButtonWidget(
-              text: 'Poista menemisiä',
+              text: calender_delete,
               onClicked: () {},
             ),
           )
