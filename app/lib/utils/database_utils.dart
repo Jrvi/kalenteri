@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
+import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/utils/friends_preference.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -53,4 +55,32 @@ class DatabaseUtil {
         name: value.child("username/").value.toString(),
         email: value.child("email/").value.toString()));
   }
+
+  ///Add new friend to user's friend list
+  /// [friend] is Friend object that will be added user's friend list
+  /// [user] is the user who is adding the friend
+  static Future<void> addFriend(Friend friend) async {
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref('users/${user.uid}/friends');
+
+    final data = {
+      'name': friend.name,
+      'email': friend.email,
+      'imagePath': friend.imagePath,
+    };
+
+    await ref.push().set(
+        data); //push() creates a new child node; without it this only saves one friend at the time
+  }
+
+  ///Get list of friends from database
+  /// [user] is the user who is getting the friends
+  /// Returns list of Friend objects
+  /// TODO: This should be changed to return Future<List<Friend>>
+  static Future<List<Friend>> getFriends(friendDataList) async {
+    return []; //TODO return the real list of friends or empty list, now just fake data
+  }
+
+  ///Delete friend from user's friend list
+  static void delFriend(Friend friend) {}
 }
