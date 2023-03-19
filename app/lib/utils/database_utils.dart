@@ -56,14 +56,11 @@ class DatabaseUtil {
   }
 
   ///Add new friend to user's friend list
-  /// [friendEmail] is email of the friend to be added
-  /// [friendName] is name of the friend to be added
-  /// [friendImage] is image of the friend to be added NOW just a random image
+  /// [friend] is Friend object that will be added user's friend list
   /// [user] is the user who is adding the friend
   static Future<void> addFriend(Friend friend) async {
-    final databaseReference = FirebaseDatabase.instance.ref();
     final user = FirebaseAuth.instance.currentUser!;
-    final friendRef = databaseReference.child('users/${user.uid}/friends');
+    DatabaseReference ref = database.ref('users/${user.uid}/friends');
 
     final data = {
       'name': friend.name,
@@ -71,6 +68,6 @@ class DatabaseUtil {
       'imagePath': friend.imagePath,
     };
 
-    await friendRef.push().set(data);
+    await ref.set(data);
   }
 }
