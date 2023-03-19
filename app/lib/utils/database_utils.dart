@@ -68,6 +68,7 @@ class DatabaseUtil {
       'imagePath': friend.imagePath,
     };
 
-    await ref.set(data);
+    await ref.push().set(
+        data); //push() creates a new child node; without it this only saves one friend at the time
   }
 }
