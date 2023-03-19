@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/friend.dart';
-import 'package:vapaat/widgets/button_widget.dart';
 import 'package:vapaat/utils/friends_preference.dart';
+import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/properties.dart';
 import 'dart:io';
-
-import 'package:vapaat/widgets/filledbutton_widget.dart';
 
 class Friends extends StatefulWidget {
   @override
@@ -57,15 +55,22 @@ class _FriendsState extends State<Friends> {
               ),
               FilledButton(
                 onPressed: () {
-                  setState(() {
-                    _friendDataList.add(Friend(
-                        name: _nameController.text,
-                        email: _emailController.text,
-                        imagePath: ''));
+                  final name = _nameController.text;
+                  final email = _emailController.text;
+
+                  // Check if name and email are not empty and if not, adds friend
+                  if (name.isNotEmpty && email.isNotEmpty) {
+                    Friend newFriend = Friend(
+                      name: name,
+                      email: email,
+                      imagePath:
+                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
+                    );
+                    DatabaseUtil.addFriend(newFriend);
                     _nameController.clear();
                     _emailController.clear();
-                  });
-                  Navigator.pop(context, 'OK');
+                    Navigator.pop(context, 'OK');
+                  }
                 },
                 child: Text('OK'),
               ),

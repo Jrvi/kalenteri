@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
+import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 
 class DatabaseUtil {
@@ -52,5 +53,24 @@ class DatabaseUtil {
         imagePath: value.child("profile_picture/").value.toString(),
         name: value.child("username/").value.toString(),
         email: value.child("email/").value.toString()));
+  }
+
+  ///Add new friend to user's friend list
+  /// [friendEmail] is email of the friend to be added
+  /// [friendName] is name of the friend to be added
+  /// [friendImage] is image of the friend to be added NOW just a random image
+  /// [user] is the user who is adding the friend
+  static Future<void> addFriend(Friend friend) async {
+    final databaseReference = FirebaseDatabase.instance.ref();
+    final user = FirebaseAuth.instance.currentUser!;
+    final friendRef = databaseReference.child('users/${user.uid}/friends');
+
+    final data = {
+      'name': friend.name,
+      'email': friend.email,
+      'imagePath': friend.imagePath,
+    };
+
+    await friendRef.push().set(data);
   }
 }
