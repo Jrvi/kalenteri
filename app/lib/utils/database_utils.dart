@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/utils/friends_preference.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -71,4 +72,15 @@ class DatabaseUtil {
     await ref.push().set(
         data); //push() creates a new child node; without it this only saves one friend at the time
   }
+
+  ///Get list of friends from database
+  /// [user] is the user who is getting the friends
+  /// Returns list of Friend objects
+  /// TODO: This should be changed to return Future<List<Friend>>
+  static Future<List<Friend>> getFriends(friendDataList) async {
+    return []; //TODO return the real list of friends or empty list, now just fake data
+  }
+
+  ///Delete friend from user's friend list
+  static void delFriend(Friend friend) {}
 }
