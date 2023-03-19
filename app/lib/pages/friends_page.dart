@@ -1,12 +1,11 @@
-import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/friend.dart';
+import 'package:vapaat/widgets/button_widget.dart';
 import 'package:vapaat/utils/friends_preference.dart';
 import 'package:vapaat/properties.dart';
-import 'package:vapaat/widgets/freetime_widget.dart';
-import 'package:vapaat/widgets/filledbutton_widget.dart';
-import 'package:vapaat/pages/settings_page.dart';
 import 'dart:io';
+
+import 'package:vapaat/widgets/filledbutton_widget.dart';
 
 class Friends extends StatefulWidget {
   @override
@@ -16,7 +15,62 @@ class Friends extends StatefulWidget {
 class _FriendsState extends State<Friends> {
   List<Friend> _friendDataList = friendDataList;
   final _scrollController = ScrollController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
+  Future addFriendDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(friend_new),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: friend_name,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: friend_email,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  _nameController.clear();
+                  _emailController.clear();
+                  Navigator.pop(context, 'Cancel');
+                },
+                child: const Text('Cancel'),
+              ),
+              FilledButton(
+                onPressed: () {
+                  setState(() {
+                    _friendDataList.add(Friend(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        imagePath: ''));
+                    _nameController.clear();
+                    _emailController.clear();
+                  });
+                  Navigator.pop(context, 'OK');
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +115,7 @@ class _FriendsState extends State<Friends> {
             children: [
               FloatingActionButton.extended(
                 onPressed: () {
-                  //todo
+                  addFriendDialog();
                 },
                 label: const Text(friend_add),
                 icon: const Icon(Icons.add),
