@@ -34,6 +34,9 @@ const view_all = "View all";
 //Friendlist-page's texts:
 const friend_caption = "Friends";
 const friend_add = "Add new friend";
+const friend_new = "Add a new friend using their email";
+const friend_email = "Email";
+const friend_name = "Friend's name";
 
 //All groups-page's texts:
 const all_groups_caption = "All groups";
