@@ -31,67 +31,90 @@ class FriendsState extends State<FriendsPage> {
     _friendDataList = await DatabaseUtil.getFriends();
   }
 
-  Future addFriendDialog() => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(friend_new),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: friend_name,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: friend_email,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  _nameController.clear();
-                  _emailController.clear();
-                  Navigator.pop(context, 'Cancel');
-                },
-                child: const Text('Cancel'),
-              ),
-              FilledButton(
-                onPressed: () {
-                  final name = _nameController.text;
-                  final email = _emailController.text;
+//Add friend dialog
+  Future addFriendDialog() async {
+    String name = '';
+    String email = '';
 
-                  // Check if name and email are not empty and if not, adds friend
-                  if (name.isNotEmpty && email.isNotEmpty) {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(friend_new),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    onChanged: (value) {
+                      name = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: friend_name,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    decoration: InputDecoration(
+                      labelText: friend_email,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, 'Cancel');
+                  },
+                  child: const Text('Cancel'),
+                ),
+                FilledButton(
+                  onPressed: () async {
                     Friend newFriend = Friend(
                       name: name,
                       email: email,
                       imagePath:
-                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
+                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random photo, in the future use friend's profile picture
                     );
-                    DatabaseUtil.addFriend(newFriend);
-                    _nameController.clear();
-                    _emailController.clear();
-                    fetchList();
-                    Navigator.pop(context, 'OK');
-                  }
-                },
-                child: Text('OK'),
-              ),
-            ],
-          ));
+                    // Check if name and email are not empty
+                    if (name != '' && email != '') {
+                      final existingFriend = _friendDataList.firstWhere(
+                        (friend) => friend.email == newFriend.email,
+                        orElse: () => Friend(
+                          name: '',
+                          email: '',
+                          imagePath: '',
+                        ),
+                      );
+
+                      if (existingFriend.email != '') {
+                        // Friend already exists
+                        Navigator.pop(context, 'OK');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Friend already exists')));
+                      } else {
+                        // Add friend to database
+                        DatabaseUtil.addFriend(newFriend);
+                        _nameController.clear();
+                        _emailController.clear();
+                        await fetchList();
+                        Navigator.pop(context, 'OK');
+                      }
+                    }
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
