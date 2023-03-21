@@ -76,7 +76,7 @@ class DatabaseUtil {
   /// [user] is the user who is getting the friends
   /// Returns list of Friend objects
   /// TODO: This should be changed to return Future<List<Friend>>
-  static Future<List> getFriends() async {
+  static Future<List<Friend>> getFriends() async {
     List<Friend> friends = [];
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref('users/${user.uid}/friends/');
