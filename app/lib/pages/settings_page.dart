@@ -5,6 +5,7 @@ import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/pages/friends_page.dart';
+import 'package:vapaat/utils/listfriends_preference.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
@@ -67,8 +68,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 ButtonWidget(
                   text: view_all,
                   onClicked: () {
+                    FriendsPage.friendsUpdate();
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Friends()));
+                        MaterialPageRoute(builder: (context) => FriendsPage()));
                   },
                 ),
               ],
@@ -99,6 +101,12 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    FriendsPage.friendsUpdate();
+    super.initState();
   }
 
   //User's name and email
