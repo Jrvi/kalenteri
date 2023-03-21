@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
-import 'package:vapaat/utils/friends_preference.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -77,8 +76,22 @@ class DatabaseUtil {
   /// [user] is the user who is getting the friends
   /// Returns list of Friend objects
   /// TODO: This should be changed to return Future<List<Friend>>
-  static Future<List<Friend>> getFriends(friendDataList) async {
-    return []; //TODO return the real list of friends or empty list, now just fake data
+  static Future<List> getFriends() async {
+    List<Friend> friends = [];
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref('users/${user.uid}/friends/');
+    final snapshot = await ref.get();
+    for (var friend in snapshot.children) {
+      var data = friend.value.toString().split(",");
+      var imagePath = data[0].split(" ");
+      var name = data[1].split(" ");
+      var email = data[2].split(" ");
+      String emailString = email[2].substring(0, email[2].length - 1);
+      var friendObject =
+          Friend(name: name[2], email: emailString, imagePath: imagePath[1]);
+      friends.add(friendObject);
+    }
+    return friends;
   }
 
   ///Delete friend from user's friend list
