@@ -83,8 +83,8 @@ class FriendsState extends State<FriendsPage> {
                       imagePath:
                           'https://picsum.photos/200?random=${email.hashCode}', //now just a random photo, in the future use friend's profile picture
                     );
-                    // Check if name and email are not empty
-                    if (name != '' && email != '') {
+                    // Check if name and email are not empty and does not contain only whitespaces
+                    if (name.trim() != '' && email.trim() != '') {
                       final existingFriend = _friendDataList.firstWhere(
                         (friend) => friend.email == newFriend.email,
                         orElse: () => Friend(
@@ -96,7 +96,6 @@ class FriendsState extends State<FriendsPage> {
 
                       if (existingFriend.email != '') {
                         // Friend already exists
-                        Navigator.pop(context, 'OK');
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Friend already exists')));
                       } else {
