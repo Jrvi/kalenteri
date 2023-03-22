@@ -27,7 +27,6 @@ class DatabaseUtil {
 
   /// Gets list of Events from data place and return it
   /*List<Event> getEvents (LocalUser localuser) {
-
     return
   }*/
 

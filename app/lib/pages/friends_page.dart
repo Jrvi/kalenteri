@@ -31,6 +31,12 @@ class FriendsState extends State<FriendsPage> {
     _friendDataList = await DatabaseUtil.getFriends();
   }
 
+//Check if email is valid
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(email);
+  }
+
 //Add friend dialog
   Future addFriendDialog() async {
     String name = '';
@@ -85,6 +91,15 @@ class FriendsState extends State<FriendsPage> {
                     );
                     // Check if name and email are not empty and does not contain only whitespaces
                     if (name.trim() != '' && email.trim() != '') {
+                      //Check if email is valid
+                      if (!isValidEmail(email.trim())) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text('Please enter a valid email address')));
+                        return;
+                      }
+
+                      //Check if friend already exists
                       final existingFriend = _friendDataList.firstWhere(
                         (friend) => friend.email == newFriend.email,
                         orElse: () => Friend(
