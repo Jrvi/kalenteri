@@ -19,7 +19,7 @@ class CreateGroupState extends State<CreateGroup> {
   final ScrollController _scrollController = ScrollController();
   final ScrollController _selectedFriendsScrollController = ScrollController();
   static List<Friend> _friends = [];
-  List<String> _selectedFriends = [];
+  List<Friend> _selectedFriends = [];
 
   @override
   void initState() {
@@ -42,9 +42,11 @@ class CreateGroupState extends State<CreateGroup> {
     super.dispose();
   }
 
-  void _addFriendToSelected(String friendName) {
+  void _addFriendToSelected(
+      String friendName, String friendEmail, String friendImage) {
     setState(() {
-      _selectedFriends.add(friendName);
+      _selectedFriends.add(
+          Friend(name: friendName, email: friendEmail, imagePath: friendImage));
     });
   }
 
@@ -99,13 +101,13 @@ class CreateGroupState extends State<CreateGroup> {
                     scrollDirection: Axis.horizontal,
                     itemCount: _selectedFriends.length,
                     itemBuilder: (context, index) {
-                      final friendName = _selectedFriends[index];
+                      final friend = _selectedFriends[index];
                       return Chip(
-                        label: Text(friendName),
+                        label: Text(friend.name),
                         deleteIcon: Icon(Icons.cancel),
                         onDeleted: () {
                           setState(() {
-                            _selectedFriends.remove(friendName);
+                            _selectedFriends.remove(friend);
                           });
                         },
                       );
@@ -138,7 +140,8 @@ class CreateGroupState extends State<CreateGroup> {
                                 subtitle: Text(friend.email),
                                 onTap: () {
                                   // TODO: Implement selecting friend functionality
-                                  _addFriendToSelected(friend.name);
+                                  _addFriendToSelected(friend.name,
+                                      friend.email, friend.imagePath);
                                 },
                               );
                             },
@@ -154,7 +157,8 @@ class CreateGroupState extends State<CreateGroup> {
                               title: Text(friend.name), //kaverin kuva näkyviin?
                               onTap: () {
                                 // TODO: Implement selecting friend functionality
-                                _addFriendToSelected(friend.name);
+                                _addFriendToSelected(friend.name, friend.email,
+                                    friend.imagePath);
                               },
                             );
                           },
