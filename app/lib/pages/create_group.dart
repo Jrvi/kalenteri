@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:vapaat/utils/listfriends_preference.dart';
+import 'package:vapaat/pages/models/friend.dart';
+import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/properties.dart';
 import 'dart:io';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
   @override
-  _CreateGroupState createState() => _CreateGroupState();
+  CreateGroupState createState() => CreateGroupState();
+  static void friendsUpdate() {
+    CreateGroupState.fetchList();
+  }
 }
 
-class _CreateGroupState extends State<CreateGroup> {
+class CreateGroupState extends State<CreateGroup> {
   final TextEditingController _groupNameController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final ScrollController _selectedFriendsScrollController = ScrollController();
-  List<Friend> _friends = [];
+  static List<Friend> _friends = [];
   List<String> _selectedFriends = [];
 
   @override
   void initState() {
-    _friends = getFriends();
     super.initState();
+    setState(() {
+      fetchList();
+    });
+  }
+
+  static Future fetchList() async {
+    _friends = await DatabaseUtil.getFriends();
   }
 
   @override
@@ -112,7 +122,11 @@ class _CreateGroupState extends State<CreateGroup> {
 
                         //Kaverin kuva näkyviin
                         return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(friend.imagePath),
+                          ),
                           title: Text(friend.name),
+                          subtitle: Text(friend.email),
                           onTap: () {
                             // TODO: Implement selecting friend functionality
                             _addFriendToSelected(friend.name);
