@@ -1,16 +1,17 @@
-import 'package:app/pages/models/group.dart';
-import 'package:app/utils/group_preferences.dart';
-import 'package:app/widgets/button_widget.dart';
+import 'package:vapaat/pages/models/group.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:vapaat/widgets/button_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class GroupPage extends StatefulWidget {
+  final Group group;
+  GroupPage({required this.group});
+
   @override
   _GroupPageState createState() => _GroupPageState();
 }
 
 class _GroupPageState extends State<GroupPage> {
-  final group = GroupPreferences.modelgroup;
   late TextEditingController _nameController;
   late ScrollController _scrollController;
   late ScrollController _listViewController;
@@ -18,7 +19,7 @@ class _GroupPageState extends State<GroupPage> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: group.name);
+    _nameController = TextEditingController(text: widget.group.name);
     _scrollController = ScrollController();
     _listViewController = ScrollController();
   }
@@ -33,79 +34,64 @@ class _GroupPageState extends State<GroupPage> {
 
   void _updateGroupName(String name) {
     setState(() {
-      group.name = name;
+      widget.group.name = name;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          widget.group.name,
+          textAlign:
+              TextAlign.center, //does not align in the center yet, fix later
+        ),
+      ),
       body: ListView(
         controller: _scrollController,
         padding: EdgeInsets.symmetric(horizontal: 10),
         physics: BouncingScrollPhysics(),
         children: [
           const SizedBox(height: 34),
-
-          //Sivun otsikko
-          Text(
-            group.name,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-
-          const SizedBox(height: 34),
-
           TextField(
             controller: _nameController,
             decoration: InputDecoration(
-              labelText: 'Muokkaa nimeä',
+              labelText: group_edit_name,
             ),
             onChanged: _updateGroupName,
           ),
-
           const SizedBox(height: 54),
-
           Text(
-            'Jäsenet',
+            group_members,
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-
+          const SizedBox(height: 24),
           SizedBox(
-            height: 300,
+            height: 320,
             child: Scrollbar(
               controller: _scrollController,
               thumbVisibility: true,
               child: ListView.builder(
                 controller: _listViewController,
-                itemCount: group.members.length,
+                itemCount: widget.group.members.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     //kuva puuttuu
-                    title: Text(group.members[index]),
+                    title: Text(widget.group.members[index]),
                   );
                 },
               ),
             ),
           ),
-
-          const SizedBox(height: 34),
-
+          const SizedBox(height: 54),
           Wrap(
             alignment: WrapAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
-                ),
-                onPressed: () {},
-                child: Text('Lisää jäseniä'),
-              ),
+              ButtonWidget(text: group_add_member, onClicked: () {}),
             ],
           ),
-
-          const SizedBox(height: 14),
-
+          const SizedBox(height: 24),
           Wrap(
             alignment: WrapAlignment.center,
             children: [
@@ -116,7 +102,7 @@ class _GroupPageState extends State<GroupPage> {
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {},
-                child: Text('Poistu ryhmästä'),
+                child: Text(group_exit),
               ),
             ],
           )

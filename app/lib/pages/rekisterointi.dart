@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/utils/database_utils.dart';
+import 'package:vapaat/widgets/button_widget.dart';
 
 class Rekisterointi extends StatefulWidget {
   const Rekisterointi({super.key});
@@ -8,117 +12,134 @@ class Rekisterointi extends StatefulWidget {
 }
 
 class _RekisterointiState extends State<Rekisterointi> {
+  final _authKey = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
-  // Kontrollerit
-  final nimiController = new TextEditingController();
-  final sahkopostiController = new TextEditingController();
-  final salasanaController = new TextEditingController();
-  final vahvistusController = new TextEditingController();
+  // Controllers
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // Käyttäjänimikenttä
-    final nimiKentta = TextFormField(
+    // User name field
+    final nameField = TextFormField(
       autofocus: false,
-      controller: nimiController,
+      controller: nameController,
       keyboardType: TextInputType.name,
-      onSaved: (value) {
-        nimiController.text = value!;
+      validator: (value) {
+        RegExp regex = RegExp(r'^.{2,}$');
+        if (value!.isEmpty) {
+          return ('Username can not be empty');
+        }
+        if (!regex.hasMatch((value))) {
+          return ('Name must be 2 letters or longer');
+        }
       },
-      // Mitä tapahtuu kun painaa näppäimistön oikeasta alakulmasta (se OK/Next/Enter -näppäin)
+      onSaved: (value) {
+        nameController.text = value!;
+      },
+      // What happens when you press the bottom right button (OK/Next/Enter)
       textInputAction: TextInputAction.next,
 
       // Muotoilua
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Käyttäjänimi',
+          hintText: 'User name',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
-    // Sähköpostikenttä
-    final sahkoPostiKentta = TextFormField(
+    // Email field
+    final emailField = TextFormField(
       autofocus: false,
-      controller: sahkopostiController,
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
-      onSaved: (value) {
-        sahkopostiController.text = value!;
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ('Enter an email address');
+        }
+
+        // Checking the email. Feel free to change if oyu know a better way :D
+        // This version checks the string for 'weird' characters
+        if (!RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]').hasMatch(value)) {
+          return ('Enter a valid email address');
+        }
+        return null;
       },
-      // Mitä tapahtuu kun painaa näppäimistön oikeasta alakulmasta (se OK/Next/Enter -näppäin)
+      onSaved: (value) {
+        emailController.text = value!;
+      },
+      //  What happens when you press the bottom right button (OK/Next/Enter)
       textInputAction: TextInputAction.next,
 
-      // Muotoilua
+      // Decoration
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.email),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Sähköposti',
+          hintText: 'Email',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
-    // Salasanakenttä
-    final salasanaKentta = TextFormField(
+    // Password field
+    final passwordField = TextFormField(
       autofocus: false,
-      controller: salasanaController,
+      controller: passwordController,
       obscureText: true,
       onSaved: (value) {
-        salasanaController.text = value!;
+        passwordController.text = value!;
       },
-      // Mitä tapahtuu kun painaa näppäimistön oikeasta alakulmasta (se OK/Next/Enter -näppäin)
+      //  What happens when you press the bottom right button (OK/Next/Enter)
       textInputAction: TextInputAction.next,
 
-      // Muotoilua
+      // Decoration
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.password),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Salasana',
+          hintText: 'Password',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
-    // Salasananvahvistuskenttä
-    final vahvistusKentta = TextFormField(
+    // Confirm password field
+    final confirmPassword = TextFormField(
       autofocus: false,
-      controller: vahvistusController,
+      controller: confirmController,
       obscureText: true,
-      onSaved: (value) {
-        vahvistusController.text = value!;
+      validator: (value) {
+        if (confirmController.text != passwordController.text) {
+          return 'Passwords do not match';
+        }
+        return null;
       },
-      // Mitä tapahtuu kun painaa näppäimistön oikeasta alakulmasta (se OK/Next/Enter -näppäin)
+      onSaved: (value) {
+        confirmController.text = value!;
+      },
+      //  What happens when you press the bottom right button (OK/Next/Enter)
       textInputAction: TextInputAction.next,
 
-      // Muotoilua
+      // Decoration
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.password),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Vahvista salasana',
+          hintText: 'Confirm Password',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
-    // Rekisteröidy -nappi
-    final signUpButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blue,
-      child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
-        child: Text(
-          'Rekisteröidy',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
+    // Register button
+    final signUpButton = ButtonWidget(
+        text: 'Register',
+        onClicked: () {
+          addUser(emailController.text, passwordController.text);
+        });
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -141,13 +162,13 @@ class _RekisterointiState extends State<Rekisterointi> {
                     //   fit: BoxFit.contain,),
                     // ),
                     //SizedBox(height: 15),
-                    nimiKentta,
+                    nameField,
                     SizedBox(height: 15),
-                    sahkoPostiKentta,
+                    emailField,
                     SizedBox(height: 15),
-                    salasanaKentta,
+                    passwordField,
                     SizedBox(height: 15),
-                    vahvistusKentta,
+                    confirmPassword,
                     SizedBox(height: 15),
                     signUpButton,
                   ],
@@ -158,5 +179,25 @@ class _RekisterointiState extends State<Rekisterointi> {
         ),
       ),
     );
+  }
+
+  // Adding user to authenticated users
+  // Also adding user to database
+  // TODO: Handle errors
+  void addUser(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _authKey
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+                _authKey.currentUser?.updateDisplayName(nameController.text),
+                _authKey.currentUser
+                    ?.updatePhotoURL("https://picsum.photos/200"),
+                Navigator.of(context).pushNamed('/main', arguments: 'main')
+              })
+          .catchError((e) {
+        final error = SnackBar(content: Text(e!));
+        ScaffoldMessenger.of(context).showSnackBar(error);
+      });
+    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/widgets/button_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,154 +13,136 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // Kontrollerit
-  final TextEditingController sahkoPostiController = TextEditingController();
-  final TextEditingController salasanaController = TextEditingController();
+  // Controllers
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   // Firebase
   final _auth = FirebaseAuth.instance;
 
-  // Error viesti
+  // Error message
   String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
-    // Sähköpostikenttä
-    final sahkoPostiKentta = TextFormField(
+    // Email field
+    final emailField = TextFormField(
       autofocus: false,
-      controller: sahkoPostiController,
+      controller: emailController,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
-          return ('Anna sähköpostiosoite');
+          return (login_email_hint);
         }
 
-        // Tarkastetaan sähköpostiosoite. Saa muuttaa, jos tietään paremman tavan :D
-        // Tässä versiossa tarkastetaan osoite outojen merkkien varalta
+        // Checking the email. Feel free to change if you know a better way :D
+        // This version checks the string for 'weird' characters
         if (!RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]').hasMatch(value)) {
-          return ('Anna oikeanlainen sähköpostiosoite');
+          return (login_email_error);
         }
         return null;
       },
       onSaved: (value) {
-        sahkoPostiController.text = value!;
+        emailController.text = value!;
       },
-      // Mitä tapahtuu kun painaa näppäimistön oikeasta alakulmasta (se OK/Next/Enter -näppäin)
+      // What happens when you press the bottom right button (OK/Next/Enter)
       textInputAction: TextInputAction.next,
 
-      // Muotoilua
+      // Decoration
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.email),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Sähköposti',
+          hintText: login_email,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
-    // Salasanakenttä
-    final salasanaKentta = TextFormField(
+    // Password field
+    final passwordField = TextFormField(
       autofocus: false,
-      controller: salasanaController,
-      obscureText: true, // Piilotetaan salasana
+      controller: passwordController,
+      obscureText: true, // Hiding the password
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{8,}$');
+        RegExp regex = RegExp(
+            r'^.{8,}$'); // Making sure the password is at least 8 characters long. TODO:
         if (value!.isEmpty) {
-          return ('Anna salasana');
+          return (login_email_hint);
         }
         if (!regex.hasMatch((value))) {
-          return ('Salsanassa oltava vähintään 8 merkkiä');
+          return (login_password_hint2);
         }
       },
       onSaved: (value) {
-        salasanaController.text = value!;
+        passwordController.text = value!;
       },
-      // Mitä tapahtuu kun painaa näppäimistön oikeasta alakulmasta (se OK/Next/Enter -näppäin)
+      // What happens when you press the bottom right button (OK/Next/Enter)
       textInputAction: TextInputAction.done,
 
-      // Muotoilua
+      // Decoration
       decoration: InputDecoration(
           prefixIcon: Icon(Icons.password),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: 'Salasana',
+          hintText: login_password,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
     );
 
-    // Login -nappi
-    final loginButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blue,
-      child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          // Navigator.of(context).pushNamed('/main', arguments: 'main');
-          signIn(sahkoPostiController.text, salasanaController.text);
-        },
-        child: Text(
-          'Kirjaudu',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
+    // Login button using our very own button widget :)
+    final loginButton = ButtonWidget(
+        text: 'Sign in',
+        onClicked: () {
+          signIn(emailController.text, passwordController.text);
+        });
 
-    // Rekisteröidy -teksti
-    final rekisterointi = Row(
+    // Register account text
+    final register = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          'Ei tiliä? ',
+          login_no_account,
           style: TextStyle(fontSize: 15),
         ),
         GestureDetector(
           onTap: () {
-            Navigator.of(context)
-                .pushNamed('/rekisterointi', arguments: 'rekisterointi');
+            Navigator.of(context).pushNamed('/register', arguments: 'register');
           },
           child: Text(
-            'Rekisteröidy',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blue),
+            login_register,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         )
       ],
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // TODO: Logo =)
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: Image.asset('polku/kuvan/sijaintiin.png',
-                    //   fit: BoxFit.contain,),
-                    // ),
-                    //SizedBox(height: 15),
-                    sahkoPostiKentta,
-                    SizedBox(height: 15),
-                    salasanaKentta,
-                    SizedBox(height: 15),
-                    loginButton,
-                    SizedBox(height: 15),
-                    rekisterointi,
-                  ],
-                ),
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // TODO: Logo =)
+                  // SizedBox(
+                  //   height: 200,
+                  //   child: Image.asset('polku/kuvan/sijaintiin.png',
+                  //   fit: BoxFit.contain,),
+                  // ),
+                  //SizedBox(height: 15),
+                  emailField,
+                  SizedBox(height: 15),
+                  passwordField,
+                  SizedBox(height: 15),
+                  loginButton,
+                  SizedBox(height: 15),
+                  register,
+                ],
               ),
             ),
           ),
@@ -167,12 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Kirjautuminen
-  void signIn(String sahkoposti, String salasana) async {
+  // Signing in
+  void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
-            .signInWithEmailAndPassword(email: sahkoposti, password: salasana)
+            .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
                   Navigator.of(context).pushNamed('/main', arguments: 'main'),
                 });
@@ -198,9 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
             break;
           default:
             errorMessage = "An undefined Error happened.";
-          // e.message voi olla mallia:
+          // e.message is something like:
           // "There is no user record corresponding to this identifier. The user may have been deleted."
-          // Eli ylempi try...catch lause voi olla turha -> TODO: Tarkista onko välttämätön
+          // So the try...catch might be uselee -> TODO: Check if try...catch is necessary
           // print(e.message);
         }
         final error = SnackBar(content: Text(errorMessage!));

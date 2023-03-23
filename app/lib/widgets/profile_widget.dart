@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -16,37 +14,38 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Kuva keskelle sivua
-    return Center(
-      //Stackin avulla useampi widget päällekkäin: muokkaus-painike profiilikuvan päälle
-      child: Stack(
-        children: [
-          buildImage(),
-          //Muokkaus-painike profiilikuvan oikeaan alakulmaan
-          Positioned(
-            bottom: 0,
-            right: 4,
-            child: buildEditButton(Colors.blue),
-          ),
-        ],
-      ),
+    return Row(
+      //With stack, edit-icon in front of image
+      children: [
+        Stack(
+          children: [
+            buildImage(),
+            //Edit button in the right corner of the image
+            Positioned(
+              bottom: 0,
+              right: 4,
+              child: buildEditButton(Colors.blue),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
-//Metodi: profiilikuva sivulle
+//Prifilepicture on the page
   Widget buildImage() {
     final image = NetworkImage(imagePath);
 
-    //kuvan koko ja ympyrä-muoto määrityksineen
+    //Images size and circle form
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
           image: image,
           fit: BoxFit.cover,
-          width: 180,
-          height: 180,
-          //Efekti: Kuvaa painettaessa "aaltomainen" korostus
+          width: 100,
+          height: 100,
+          //Efect when image is clicked
           child: InkWell(
             onTap: onClicked,
           ),
@@ -55,9 +54,9 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  //Metodi: muokkaus-painike profiilikuvan päälle
+  //Edit button in front of profile picture
   Widget buildEditButton(Color color) => buildCircle(
-        color: Colors.white, //Muokkaus-painikke ympyröity valkoisella
+        color: Colors.white, //Edit-button circled with white line
         all: 3,
         child: buildCircle(
           color: color,
@@ -65,12 +64,11 @@ class ProfileWidget extends StatelessWidget {
           child: Icon(
             isEdit ? Icons.add_a_photo : Icons.edit,
             color: Colors.white, //Muokkaus-painikkeen kuvake valkoisena
-            size: 20,
+            size: 15,
           ),
         ),
       );
 
-  //Kuvan muokaaus-painikkeesta valokoinen ympyrä
   Widget buildCircle({
     required Widget child,
     required double all,

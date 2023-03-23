@@ -1,7 +1,9 @@
-import 'package:app/pages/profile.dart';
-import 'package:app/pages/group_page.dart';
-import 'package:app/widgets/freetime_widget.dart';
+import 'package:vapaat/pages/settings_page.dart';
+import 'package:vapaat/pages/calender_page.dart';
+import 'package:vapaat/widgets/freetime_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/widgets/navbar_widget.dart';
+import 'package:vapaat/properties.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -9,10 +11,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
+    return MyStatefulWidget();
   }
 }
 
@@ -25,18 +24,14 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  //Screens from where the bar navigates
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
-    Profile(),
-    GroupPage(),
-    Text(
-      'SettingPage',
-      style: optionStyle,
-    ),
+    Calender(),
+    SettingsPage(), //from here one can navigate to profile, groups, friends, etc
   ];
 
+  //when the bar is clicked, the screen changes
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -46,33 +41,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //App-bar pois
+      appBar: AppBar(
+          //Here something else, so that the app wont go over phone's upper edge
+          //but there wont't be 'back' arrowbutton in main pages(free times, calender, settings)
+          ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box_sharp),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groupchat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.lightBlue,
-        onTap: _onItemTapped,
+      bottomNavigationBar: OwnNavBar(
+        selectedIndex: _selectedIndex,
+        onItemSelected: _onItemTapped,
       ),
     );
   }

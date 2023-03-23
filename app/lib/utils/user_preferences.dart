@@ -1,11 +1,14 @@
-import 'package:app/pages/models/user.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:vapaat/pages/models/localuser.dart';
 
 class UserPreferences {
-  static const myUser = User(
-      //Kuvaksi tulevaisuudessa sovelluksen logo?
-      imagePath: 'https://picsum.photos/200',
-      //Nimiksi tulevaisuudessa sovelluksen käyttäjän nimi
-      name: 'Ukko Tikku',
-      email: 'ukkotikku@email.com');
+  static LocalUser getUser() {
+    final user = FirebaseAuth.instance.currentUser!;
+    var newUser = LocalUser(
+        imagePath: user.photoURL.toString(),
+        name: user.displayName.toString(),
+        email: user.email.toString());
+    return newUser;
+  }
 }
