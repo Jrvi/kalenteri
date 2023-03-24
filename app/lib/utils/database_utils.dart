@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
@@ -27,7 +28,6 @@ class DatabaseUtil {
 
   /// Gets list of Events from data place and return it
   /*List<Event> getEvents (LocalUser localuser) {
-
     return
   }*/
 
@@ -56,26 +56,55 @@ class DatabaseUtil {
   }
 
   ///Add new friend to user's friend list
-  /// [friend] is Friend object that will be added user's friend list
-  /// [user] is the user who is adding the friend
-  static Future<void> addFriend(Friend friend) async {
+  /// [email] is email of a friend that will be added user's friend
+  Future<void> addFriend(String email) async {
     final user = FirebaseAuth.instance.currentUser!;
-    DatabaseReference ref = database.ref('users/${user.uid}/friends');
+    try {
+      // Query the users collection for the friend's email
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+      if (querySnapshot.docs.isEmpty) {
+        // Friend with the provided email not found
+        throw Exception('No user found with email $email');
+      } else {
+        final friendDoc = querySnapshot.docs[0];
+        final friendUid = friendDoc.id;
 
-    final data = {
-      'name': friend.name,
-      'email': friend.email,
-      'imagePath': friend.imagePath,
-    };
+        // Add friendUid to the user's friend list
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        final currentFriends = List.from(userDoc.data()!['friends']);
+        if (currentFriends.contains(friendUid)) {
+          throw Exception('$email is already a friend');
+        } else {
+          currentFriends.add(friendUid);
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .update({'friends': currentFriends});
 
-    await ref.push().set(
-        data); //push() creates a new child node; without it this only saves one friend at the time
+          // Add the user's uid to friendUid's friend list
+          final Map<String, dynamic>? friendData =
+              friendDoc.data() as Map<String, dynamic>?;
+          final friendFriends = friendData != null
+              ? List.from(friendData['friends'] as List<dynamic>)
+              : [];
+          friendFriends.add(user.uid);
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(friendUid)
+              .update({'friends': friendFriends});
+        }
+      }
+    } catch (e) {
+      throw Exception('Failed to add friend: $e');
+    }
   }
 
-  ///Get list of friends from database
-  /// [user] is the user who is getting the friends
-  /// Returns list of Friend objects
-  /// TODO: This should be changed to return Future<List<Friend>>
   static Future<List<Friend>> getFriends() async {
     List<Friend> friends = [];
     final user = FirebaseAuth.instance.currentUser!;
@@ -93,7 +122,4 @@ class DatabaseUtil {
     }
     return friends;
   }
-
-  ///Delete friend from user's friend list
-  static void delFriend(Friend friend) {}
 }

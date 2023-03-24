@@ -75,13 +75,8 @@ class FriendsState extends State<FriendsPage> {
 
                   // Check if name and email are not empty and if not, adds friend
                   if (name.isNotEmpty && email.isNotEmpty) {
-                    Friend newFriend = Friend(
-                      name: name,
-                      email: email,
-                      imagePath:
-                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
-                    );
-                    DatabaseUtil.addFriend(newFriend);
+                    final dbUtil = DatabaseUtil();
+                    dbUtil.addFriend(email);
                     _nameController.clear();
                     _emailController.clear();
                     fetchList();

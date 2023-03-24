@@ -40,6 +40,7 @@ dependencies:
   firebase_auth:
   google_nav_bar: ^5.0.6  
   firebase_database: ^10.0.15
+  cloud_firestore: 
   table_calendar: ^3.0.9
  
 dev_dependencies:
