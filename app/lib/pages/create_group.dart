@@ -1,7 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/utils/listfriends_preference.dart';
 import 'package:vapaat/properties.dart';
-import 'dart:io';
 
 class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
@@ -16,6 +17,9 @@ class _CreateGroupState extends State<CreateGroup> {
   final ScrollController _selectedFriendsScrollController = ScrollController();
   List<Friend> _friends = [];
   List<String> _selectedFriends = [];
+
+  final DatabaseReference _groupRef =
+      FirebaseDatabase.instance.ref().child("groups");
 
   @override
   void initState() {
@@ -99,7 +103,7 @@ class _CreateGroupState extends State<CreateGroup> {
 
           //kaverilista
           SizedBox(
-            height: 380,
+            height: 200,
             //jos kavereita enemmän kuin 4, scrollattava alue
             child: _friends.length > 6
                 ? Scrollbar(
@@ -109,7 +113,6 @@ class _CreateGroupState extends State<CreateGroup> {
                       itemCount: _friends.length,
                       itemBuilder: (context, index) {
                         final friend = _friends[index];
-
                         //Kaverin kuva näkyviin
                         return ListTile(
                           title: Text(friend.name),
@@ -137,7 +140,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     },
                   ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 105),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -148,13 +151,31 @@ class _CreateGroupState extends State<CreateGroup> {
                 child: Text(create_cancel),
               ),
               SizedBox(width: 64),
-              ElevatedButton(
-                onPressed: () {
-                  //TODO: Luo ryhmä ja tallennsa se
-                  String groupName = _groupNameController.text;
-                  print(': $groupName');
-                },
-                child: Text(create_save),
+              SizedBox(
+                height: 40, // add a fixed height to give space for the button
+                child: ElevatedButton(
+                  onPressed: () {
+                    //TODO: Luo ryhmä ja tallennsa se
+                    String groupName = _groupNameController.text;
+                    List<String> members = _selectedFriends;
+                    if (groupName.isNotEmpty && members.isNotEmpty) {
+                      _groupRef.push().set({
+                        'name': groupName,
+                        'members': members,
+                      }).then((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Group created successfully')),
+                        );
+                        Navigator.pop(context);
+                      }).catchError((error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(error.toString())),
+                        );
+                      });
+                    }
+                  },
+                  child: Text(create_save),
+                ),
               ),
             ],
           ),

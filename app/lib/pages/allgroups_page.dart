@@ -3,20 +3,32 @@ import 'package:vapaat/pages/models/group.dart';
 import 'package:vapaat/pages/group_page.dart';
 import 'package:vapaat/pages/create_group.dart';
 import 'package:vapaat/properties.dart';
-import 'package:vapaat/utils/groups_preferences.dart';
-import 'package:vapaat/widgets/button_widget.dart';
-import 'package:vapaat/widgets/filledbutton_widget.dart';
+import 'package:vapaat/utils/database_utils.dart';
 
 class AllGroups extends StatefulWidget {
   final List<Group> groups;
 
-  AllGroups({required this.groups});
-
+  const AllGroups({required this.groups});
   @override
   _AllGroupsState createState() => _AllGroupsState();
 }
 
 class _AllGroupsState extends State<AllGroups> {
+  List<Group> groups = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getGroups();
+  }
+
+  Future<void> _getGroups() async {
+    final List<Group> groupsList = await DatabaseUtil.getGroups();
+    setState(() {
+      groups = groupsList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +45,9 @@ class _AllGroupsState extends State<AllGroups> {
             child: Scrollbar(
               thumbVisibility: true, // make scrollbar always visible
               child: ListView.builder(
-                itemCount: widget.groups.length,
+                itemCount: groups.length,
                 itemBuilder: (context, index) {
-                  final group = widget.groups[index];
+                  final group = groups[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16.0, vertical: 8.0),

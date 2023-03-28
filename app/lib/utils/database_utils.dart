@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/group.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -45,14 +46,15 @@ class DatabaseUtil {
   // Täs pitäis ottaa myös huomioon FirebaseAuthin user, että voi olla järkevämpää, että vaihdetaan siihen.
   static void updateUser(LocalUser user) {}
 
-  static void getLocalUser() {
+  static void getLocalUser() async {
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref();
-    final data = ref.child("/users/${user.uid}").get();
-    data.then((value) => localUser = LocalUser(
-        imagePath: value.child("profile_picture/").value.toString(),
-        name: value.child("username/").value.toString(),
-        email: value.child("email/").value.toString()));
+    final DataSnapshot data = await ref.child("/users/${user.uid}").get();
+    final value = data.value as Map<dynamic, dynamic>;
+    localUser = LocalUser(
+        imagePath: value["profile_picture"].toString(),
+        name: value["username"].toString(),
+        email: value["email"].toString());
   }
 
   ///Add new friend to user's friend list
@@ -75,25 +77,50 @@ class DatabaseUtil {
   ///Get list of friends from database
   /// [user] is the user who is getting the friends
   /// Returns list of Friend objects
+  // ignore: todo
   /// TODO: This should be changed to return Future<List<Friend>>
   static Future<List<Friend>> getFriends() async {
     List<Friend> friends = [];
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref('users/${user.uid}/friends/');
     final snapshot = await ref.get();
-    for (var friend in snapshot.children) {
-      var data = friend.value.toString().split(",");
-      var imagePath = data[0].split(" ");
-      var name = data[1].split(" ");
-      var email = data[2].split(" ");
-      String emailString = email[2].substring(0, email[2].length - 1);
-      var friendObject =
-          Friend(name: name[2], email: emailString, imagePath: imagePath[1]);
-      friends.add(friendObject);
+    if (snapshot.value != null) {
+      final Map<dynamic, dynamic> friendList =
+          snapshot.value as Map<dynamic, dynamic>;
+      friendList.forEach((key, value) {
+        Friend friend = Friend(
+          name: value['name'],
+          imagePath: value['imagePath'] ?? 'https://picsum.photos/200',
+          email: value['email'] ?? '',
+        );
+        friends.add(friend);
+      });
     }
     return friends;
   }
 
   ///Delete friend from user's friend list
   static void delFriend(Friend friend) {}
+
+  /// Retrieves a list of groups belonging to the currently logged in user from the Firebase Realtime Database.
+  /// Returns a Future containing a list of [Group] objects.
+  static Future<List<Group>> getGroups() async {
+    List<Group> groups = [];
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref('groups/${user.uid}/');
+    final snapshot = await ref.get();
+    if (snapshot.value != null) {
+      final Map<dynamic, dynamic> groupList =
+          snapshot.value as Map<dynamic, dynamic>;
+      groupList.forEach((key, value) {
+        Group group = Group(
+          id: key,
+          name: value['name'],
+          members: List<String>.from(value['members']),
+        );
+        groups.add(group);
+      });
+    }
+    return groups;
+  }
 }

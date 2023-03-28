@@ -5,7 +5,6 @@ import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localuser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/pages/friends_page.dart';
-import 'package:vapaat/utils/listfriends_preference.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';

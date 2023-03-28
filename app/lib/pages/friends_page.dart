@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/utils/database_utils.dart';
@@ -22,9 +21,7 @@ class FriendsState extends State<FriendsPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      fetchList();
-    });
+    fetchList();
   }
 
   static Future fetchList() async {
@@ -79,7 +76,7 @@ class FriendsState extends State<FriendsPage> {
                       name: name,
                       email: email,
                       imagePath:
-                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
+                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random photo, in the future use friend's profile picture
                     );
                     DatabaseUtil.addFriend(newFriend);
                     _nameController.clear();
