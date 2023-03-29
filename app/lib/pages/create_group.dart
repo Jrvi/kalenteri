@@ -155,7 +155,6 @@ class _CreateGroupState extends State<CreateGroup> {
                 height: 40, // add a fixed height to give space for the button
                 child: ElevatedButton(
                   onPressed: () {
-                    //TODO: Luo ryhmä ja tallennsa se
                     String groupName = _groupNameController.text;
                     List<String> members = _selectedFriends;
                     if (groupName.isNotEmpty && members.isNotEmpty) {
@@ -166,7 +165,8 @@ class _CreateGroupState extends State<CreateGroup> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Group created successfully')),
                         );
-                        Navigator.pop(context);
+                        Navigator.pop(context,
+                            true); // Palauta arvo "true", kun ryhmä on luotu
                       }).catchError((error) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text(error.toString())),

@@ -107,7 +107,7 @@ class DatabaseUtil {
   static Future<List<Group>> getGroups() async {
     List<Group> groups = [];
     final user = FirebaseAuth.instance.currentUser!;
-    DatabaseReference ref = database.ref('groups/${user.uid}/');
+    DatabaseReference ref = database.ref('groups/');
     final snapshot = await ref.get();
     if (snapshot.value != null) {
       final Map<dynamic, dynamic> groupList =

@@ -6,9 +6,6 @@ import 'package:vapaat/properties.dart';
 import 'package:vapaat/utils/database_utils.dart';
 
 class AllGroups extends StatefulWidget {
-  final List<Group> groups;
-
-  const AllGroups({required this.groups});
   @override
   _AllGroupsState createState() => _AllGroupsState();
 }
@@ -24,6 +21,7 @@ class _AllGroupsState extends State<AllGroups> {
 
   Future<void> _getGroups() async {
     final List<Group> groupsList = await DatabaseUtil.getGroups();
+    print('Fetched groups: $groupsList');
     setState(() {
       groups = groupsList;
     });
@@ -98,13 +96,16 @@ class _AllGroupsState extends State<AllGroups> {
           ),
           const SizedBox(height: 34),
           FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              final bool groupCreated = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => CreateGroup(),
                 ),
               );
+              if (groupCreated != null && groupCreated) {
+                _getGroups(); // Päivitä ryhmät, kun ryhmä on luotu
+              }
             },
             label: const Text(add_group),
             icon: const Icon(Icons.add),

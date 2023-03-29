@@ -12,8 +12,7 @@ import 'package:vapaat/widgets/button_widget.dart';
 import 'package:vapaat/properties.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage({super.key});
-
+  SettingsPage({Key? key}) : super(key: key);
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
@@ -87,15 +86,15 @@ class _SettingsPageState extends State<SettingsPage> {
                   text: view_all,
                   onClicked: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AllGroups(
-                                groups: GroupPreferences()
-                                    .groups))); //now fake group data
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AllGroups(),
+                      ),
+                    );
                   },
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
