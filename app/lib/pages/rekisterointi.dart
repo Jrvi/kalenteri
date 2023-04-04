@@ -94,11 +94,10 @@ class _RekisterointiState extends State<Rekisterointi> {
       controller: passwordController,
       obscureText: true,
       validator: (value) {
-        RegExp regex = RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
           return (login_password_hint);
         }
-        if (!regex.hasMatch((value))) {
+        if (value.length < password_length) {
           return (login_password_hint2);
         }
       },
