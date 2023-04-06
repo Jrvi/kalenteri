@@ -65,7 +65,7 @@ class _RekisterointiState extends State<Rekisterointi> {
           return ('Enter an email address');
         }
 
-        // Checking the email. Feel free to change if oyu know a better way :D
+        // Checking the email. Feel free to change if you know a better way :D
         // This version checks the string for 'weird' characters
         if (!RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]').hasMatch(value)) {
           return ('Enter a valid email address');

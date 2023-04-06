@@ -58,18 +58,17 @@ class _FriendsState extends State<Friends> {
                 child: const Text('Cancel'),
               ),
               FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   final name = _nameController.text;
                   final email = _emailController.text;
 
                   // Checking if there is an account tied to given email
                   // fetchSignInMethodsForEmail returns an array with sign-in methods then given email has
-                  // TODO: Error messages for when user gives a wrong email address
-                  bool accountExists = false;
-                  FirebaseAuth.instance
+                  // TODO: Error messages for when user gives a wrong email address (and maybe put this in database_utils)
+                  var accountExists = await FirebaseAuth.instance
                       .fetchSignInMethodsForEmail(email)
                       .then((value) {
-                    accountExists = value.isNotEmpty;
+                    return value.isNotEmpty;
                   });
 
                   // Check if name and email are not empty and if not, adds friend
