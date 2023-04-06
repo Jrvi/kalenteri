@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/pages/models/localuser.dart';
-import 'package:vapaat/utils/friends_preference.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;

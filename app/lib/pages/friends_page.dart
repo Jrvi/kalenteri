@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/utils/friends_preference.dart';
 import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/properties.dart';
-import 'dart:io';
 
 class Friends extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class _FriendsState extends State<Friends> {
   final _scrollController = ScrollController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  static FirebaseDatabase database = FirebaseDatabase.instance;
+  final user = FirebaseAuth.instance.currentUser!;
 
   Future addFriendDialog() => showDialog(
       context: context,
@@ -58,8 +62,18 @@ class _FriendsState extends State<Friends> {
                   final name = _nameController.text;
                   final email = _emailController.text;
 
+                  // Checking if there is an account tied to given email
+                  // fetchSignInMethodsForEmail returns an array with sign-in methods then given email has
+                  // TODO: Error messages for when user gives a wrong email address
+                  bool accountExists = false;
+                  FirebaseAuth.instance
+                      .fetchSignInMethodsForEmail(email)
+                      .then((value) {
+                    accountExists = value.isNotEmpty;
+                  });
+
                   // Check if name and email are not empty and if not, adds friend
-                  if (name.isNotEmpty && email.isNotEmpty) {
+                  if (name.isNotEmpty && email.isNotEmpty && accountExists) {
                     Friend newFriend = Friend(
                       name: name,
                       email: email,
@@ -118,6 +132,27 @@ class _FriendsState extends State<Friends> {
           Wrap(
             alignment: WrapAlignment.center,
             children: [
+              FilledButton(
+                  onPressed: () async {
+                    print('Eeee ${user.uid}');
+
+                    DatabaseReference db =
+                        database.ref().child('users/${user.uid}/friends');
+                    // For reasons I don't know, putting ".value" after db.get() doesn't work
+                    // await db.get();
+                    // print('Jotain ${await db.get()}');
+
+                    // Assigning it first seems to work fine, though
+                    DataSnapshot snapshot = await db.get();
+                    print('Jotain ${snapshot.value}');
+
+                    // Finally figured out how to get something out of our database!!!!!!
+                    print('Childrenn: ${snapshot.children}');
+                    for (DataSnapshot avain in snapshot.children) {
+                      print('Nimi: ${avain.child('name').value}');
+                    }
+                  },
+                  child: const Text('Reeeeeeeee')),
               FloatingActionButton.extended(
                 onPressed: () {
                   addFriendDialog();
