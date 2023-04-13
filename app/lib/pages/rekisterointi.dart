@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 
@@ -148,7 +148,8 @@ class _RekisterointiState extends State<Rekisterointi> {
     final signUpButton = ButtonWidget(
         text: 'Register',
         onClicked: () {
-          addUser(emailController.text, passwordController.text);
+          addUser(emailController.text, passwordController.text,
+              nameController.text);
         });
 
     return Scaffold(
@@ -188,9 +189,8 @@ class _RekisterointiState extends State<Rekisterointi> {
   }
 
   // Adding user to authenticated users
-  // Also adding user to database
   // TODO: Handle errors
-  void addUser(String email, String password) async {
+  void addUser(String email, String password, String name) async {
     if (_formKey.currentState!.validate()) {
       await _authKey
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -201,17 +201,21 @@ class _RekisterointiState extends State<Rekisterointi> {
                 Navigator.of(context).pushNamed('/main', arguments: 'main')
               })
           .catchError((e) {
-        // switch (e.code) {
-        // case "wrong-password":
-        //   errorMessage = "Wrong email or password.";
-        //   break;
-        // default:
-        //   errorMessage = "An undefined Error happened.";
         print('Error message: $e');
         // print('Error code: ${e.code}');
         final error = SnackBar(content: Text(e!));
         ScaffoldMessenger.of(context).showSnackBar(error);
       });
+      addUserToDB(name, email);
     }
+  }
+
+  // Adding new user to database
+  addUserToDB(String name, String email) {
+    LocalUser user = LocalUser(
+        imagePath: 'https://picsum.photos/200?random=${email.hashCode}',
+        name: name,
+        email: email);
+    DatabaseUtil.addUserToDB(user);
   }
 }

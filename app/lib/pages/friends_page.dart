@@ -79,7 +79,18 @@ class _FriendsState extends State<Friends> {
                       imagePath:
                           'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
                     );
-                    DatabaseUtil.addFriend(newFriend);
+
+                    DatabaseReference db = database.ref().child('users/');
+
+                    // Querying for the correct user using their email address
+                    // Returns a DataSnapshot
+                    // Could be in database_utils
+                    DataSnapshot snapshot =
+                        await db.orderByChild('email').equalTo(email).get();
+
+                    String? friendUID = snapshot.children.first.key;
+
+                    DatabaseUtil.addFriend(newFriend, friendUID);
                     _nameController.clear();
                     _emailController.clear();
                     Navigator.pop(context, 'OK');
@@ -131,27 +142,6 @@ class _FriendsState extends State<Friends> {
           Wrap(
             alignment: WrapAlignment.center,
             children: [
-              FilledButton(
-                  onPressed: () async {
-                    print('Eeee ${user.uid}');
-
-                    DatabaseReference db =
-                        database.ref().child('users/${user.uid}/friends');
-                    // For reasons I don't know, putting ".value" after db.get() doesn't work
-                    // await db.get();
-                    // print('Jotain ${await db.get()}');
-
-                    // Assigning it first seems to work fine, though
-                    DataSnapshot snapshot = await db.get();
-                    print('Jotain ${snapshot.value}');
-
-                    // Finally figured out how to get something out of our database!!!!!!
-                    print('Childrenn: ${snapshot.children}');
-                    for (DataSnapshot avain in snapshot.children) {
-                      print('Nimi: ${avain.child('name').value}');
-                    }
-                  },
-                  child: const Text('Reeeeeeeee')),
               FloatingActionButton.extended(
                 onPressed: () {
                   addFriendDialog();

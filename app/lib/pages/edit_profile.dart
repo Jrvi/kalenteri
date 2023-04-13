@@ -2,7 +2,7 @@ import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/textfield_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/properties.dart';
 

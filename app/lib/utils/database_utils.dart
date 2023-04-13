@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
-import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -60,9 +60,9 @@ class DatabaseUtil {
   ///Add new friend to user's friend list
   /// [friend] is Friend object that will be added user's friend list
   /// [user] is the user who is adding the friend
-  static Future<void> addFriend(Friend friend) async {
+  static Future<void> addFriend(Friend friend, String? friendUID) async {
     final user = FirebaseAuth.instance.currentUser!;
-    DatabaseReference ref = database.ref('users/${user.uid}/friends');
+    DatabaseReference ref = database.ref('users/${user.uid}/friends/');
 
     final data = {
       'name': friend.name,
@@ -70,30 +70,8 @@ class DatabaseUtil {
       'imagePath': friend.imagePath,
     };
 
-    await ref.push().set(
-        data); //push() creates a new child node; without it this only saves one friend at the time
+    await ref.child('$friendUID').set(data);
   }
-
-  /**
-   * // Retrieve the current user's ID from Firebase Authentication
-final currentUserUid = FirebaseAuth.instance.currentUser.uid;
-
-// Retrieve the entered email address from a form or text input field
-final email = 'example@example.com';
-
-// Check if a user with the entered email address exists in the "users" node
-final snapshot = await FirebaseDatabase.instance.reference().child('users').orderByChild('email').equalTo(email).once();
-if (snapshot.value != null) {
-  // Retrieve the user ID of the user with the entered email address
-  final friendUid = snapshot.value.keys.first;
-
-  // Add the friend's user ID to the current user's "friends" node
-  await FirebaseDatabase.instance.reference().child('users').child(currentUserUid).child('friends').child(friendUid).set(true);
-
-  // Add the current user's user ID to the friend's "friends" node
-  await FirebaseDatabase.instance.reference().child('users').child(friendUid).child('friends').child(currentUserUid).set(true);
-}
-   */
 
   ///Get list of friends from database
   /// [user] is the user who is getting the friends
