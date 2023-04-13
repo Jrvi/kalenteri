@@ -3,22 +3,37 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/friend.dart';
-import 'package:vapaat/utils/friends_preference.dart';
 import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/properties.dart';
 
-class Friends extends StatefulWidget {
+class FriendsPage extends StatefulWidget {
   @override
-  _FriendsState createState() => _FriendsState();
+  FriendsState createState() => FriendsState();
+
+  static void friendsUpdate() {
+    FriendsState.fetchList();
+  }
 }
 
-class _FriendsState extends State<Friends> {
-  List<Friend> _friendDataList = friendDataList;
+class FriendsState extends State<FriendsPage> {
+  static List<Friend> _friendDataList = [];
   final _scrollController = ScrollController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   static FirebaseDatabase database = FirebaseDatabase.instance;
   final user = FirebaseAuth.instance.currentUser!;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      fetchList();
+    });
+  }
+
+  static Future fetchList() async {
+    _friendDataList = await DatabaseUtil.getFriends();
+  }
 
   Future addFriendDialog() => showDialog(
       context: context,
@@ -93,6 +108,7 @@ class _FriendsState extends State<Friends> {
                     DatabaseUtil.addFriend(newFriend, friendUID);
                     _nameController.clear();
                     _emailController.clear();
+                    fetchList();
                     Navigator.pop(context, 'OK');
                   }
                 },
@@ -113,29 +129,32 @@ class _FriendsState extends State<Friends> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              physics: BouncingScrollPhysics(),
-              itemCount: _friendDataList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(_friendDataList[index].imagePath),
-                  ),
-                  title: Text(_friendDataList[index].name),
-                  subtitle: Text(_friendDataList[index].email),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      setState(() {
-                        _friendDataList.removeAt(index);
-                      });
-                    },
-                  ),
-                );
-              },
+            child: RefreshIndicator(
+              onRefresh: fetchList,
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                physics: BouncingScrollPhysics(),
+                itemCount: _friendDataList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage:
+                          NetworkImage(_friendDataList[index].imagePath),
+                    ),
+                    title: Text(_friendDataList[index].name),
+                    subtitle: Text(_friendDataList[index].email),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        setState(() {
+                          _friendDataList.removeAt(index);
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           const SizedBox(height: 24),

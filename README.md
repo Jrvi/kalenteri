@@ -1,6 +1,25 @@
 # kalenteri
 Mobiiledevauskurssin repo
 
+## 24.4.2023 MVP?
+ ### Ulkoasu
+  vakiot
+	  - tekstit ja fontit
+
+### Toiminnot
+	Onko MVP:
+
+	EI - kaverin poisto
+	EI - Käyttäjän tietojen muokkaus (nimi, salasana, kuva)
+	EI - Käyttäjälle oikea kuva
+	EI - Ryhmän poistaminen/ryhmästä poistuminen?
+	EI - logout
+
+	ON - kaverien lisäys
+	ON - Log in toimimaan oikein
+	ON - Ryhmien tekeminen
+	ON - kalenteri
+
 ## viikkopalaverit
 viikottain torstaina klo. 16.15
 

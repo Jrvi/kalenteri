@@ -1,9 +1,6 @@
-import 'dart:developer';
 import 'package:vapaat/pages/models/TimeSlot.dart';
 import 'package:vapaat/testdata/testdata.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/utils/database_utils.dart';
-import 'package:vapaat/properties.dart';
 
 class Freetime extends StatefulWidget {
   @override
@@ -49,81 +46,50 @@ class _FreetimeState extends State<Freetime> {
         freeTimeSlots.add(TimeSlot(timeSlots.last.end, endDate));
       }
     }
+  }
 
-    log("data. $timeSlots");
-    log("free: $freeTimeSlots");
+  Future refresh() async {
+    freeTimeSlots.clear();
+    setState(() {
+      getFreeTimeSlotsForTwoCalendars(
+          DateTime(2023, 3, 10, 0, 0), DateTime(2023, 3, 11, 0, 0),
+          duration: 30);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refresh();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: 160.0,
-            flexibleSpace: const FlexibleSpaceBar(
-              title: Text(
-                "Vapaatajat",
-                style: TextStyle(color: Colors.black),
-              ),
-              background: FlutterLogo(),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 40,
-              child: Center(
-                child: Text("Have a nice day"),
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Container(
-                    color: index.isOdd ? Colors.green : Colors.lightGreen,
-                    height: 100.0,
-                    child: Center(
-                        child: Text(
-                            "${freeTimeSlots[index].start.hour.toString()}.${freeTimeSlots[index].start.minute.toString()}-${freeTimeSlots[index].end.hour.toString()}.${freeTimeSlots[index].end.minute.toString()}")),
-                  ),
-                );
-              },
-              childCount: freeTimeSlots.length,
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text("Vapaatajat"),
       ),
-      bottomNavigationBar: BottomAppBar(
-          child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: OverflowBar(
-          overflowAlignment: OverflowBarAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                DatabaseUtil.getLocalUser();
-                setState(() {
-                  getFreeTimeSlotsForTwoCalendars(
-                      DateTime(2023, 3, 10, 0, 0), DateTime(2023, 3, 11, 0, 0),
-                      duration: 30);
-                });
-              },
-              child: Text(freetime_update),
-            ),
-            TextButton(
-                onPressed: () {
-                  setState(() {
-                    freeTimeSlots.clear();
-                  });
-                },
-                child: Text(freetime_clear))
-          ],
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: ListView.builder(
+          padding: EdgeInsets.all(8),
+          itemCount: freeTimeSlots.length,
+          itemBuilder: (context, index) {
+            return SizedBox(
+              height: 125,
+              child: Card(
+                child: ListTile(
+                  leading: FlutterLogo(),
+                  trailing: Text("tänne jotain?"),
+                  title: Text(
+                      "${freeTimeSlots[index].start.hour.toString()}.${freeTimeSlots[index].start.minute.toString()}-${freeTimeSlots[index].end.hour.toString()}.${freeTimeSlots[index].end.minute.toString()}"),
+                ),
+              ),
+            );
+          },
         ),
-      )),
+      ),
     );
   }
 }
