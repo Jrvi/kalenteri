@@ -64,14 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
       controller: passwordController,
       obscureText: true, // Hiding the password
       validator: (value) {
-        RegExp regex = RegExp(
-            r'^.{8,}$'); // Making sure the password is at least 8 characters long. TODO:
+        // Why would we check for password length? Only message should be about the password being empty or invalid.
+        // RegExp regex = RegExp(r'^.{8,}$');
         if (value!.isEmpty) {
-          return (login_email_hint);
+          return (login_password_hint);
         }
-        if (!regex.hasMatch((value))) {
-          return (login_password_hint2);
-        }
+        // if (!regex.hasMatch((value))) {
+        //   return (login_password_hint2);
+        // }
       },
       onSaved: (value) {
         passwordController.text = value!;
@@ -161,31 +161,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pushNamed('/main', arguments: 'main'),
                 });
       } on FirebaseAuthException catch (e) {
-        switch (e.message) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
+        switch (e.code) {
+          // Mabe we shouldn't give the person loggin in too much information on whether the password or email is wrong.
+          // Could the first two messages be shown underneath the text fields, kind of like in the validator?
           case "wrong-password":
-            errorMessage = "Your password is wrong.";
+            errorMessage = "Wrong email or password.";
             break;
           case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
+            errorMessage = "Wrong email or password.";
             break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
+          case "network-request-failed":
+            errorMessage = "Unable to connect to the internet.";
             break;
           case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
+            errorMessage = "Too many login attempts. Try again later.";
             break;
           default:
             errorMessage = "An undefined Error happened.";
-          // e.message is something like:
-          // "There is no user record corresponding to this identifier. The user may have been deleted."
-          // So the try...catch might be uselee -> TODO: Check if try...catch is necessary
-          // print(e.message);
+            print('Error message: ${e.message}');
+            print('Error code: ${e.code}');
         }
         final error = SnackBar(content: Text(errorMessage!));
         ScaffoldMessenger.of(context).showSnackBar(error);

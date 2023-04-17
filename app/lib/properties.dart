@@ -3,13 +3,14 @@
 const app_name = "App's name";
 
 //Login-page's texts:
+const password_length = 6;
 const login_login = "Log in";
 const login_no_account = "Don't have account?";
 const login_register = "Register here";
 const login_email = "Email";
 const login_password = "Password";
 const login_password_hint = "Enter your password";
-const login_password_hint2 = "The password must contain at least 8 characters.";
+const login_password_hint2 = "At least $password_length characters";
 const login_email_error = "Please enter a valid email address";
 const login_password_error = "Please enter a valid password";
 const login_email_hint = "Enter your email";
