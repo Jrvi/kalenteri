@@ -201,6 +201,12 @@ class _RekisterointiState extends State<Rekisterointi> {
                 Navigator.of(context).pushNamed('/main', arguments: 'main')
               })
           .catchError((e) {
+        // switch (e.code) {
+        // case "wrong-password":
+        //   errorMessage = "Wrong email or password.";
+        //   break;
+        // default:
+        //   errorMessage = "An undefined Error happened.";
         print('Error message: $e');
         // print('Error code: ${e.code}');
         final error = SnackBar(content: Text(e!));
