@@ -1,4 +1,6 @@
-import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/utils/database_utils.dart';
@@ -18,6 +20,8 @@ class FriendsState extends State<FriendsPage> {
   final _scrollController = ScrollController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  static FirebaseDatabase database = FirebaseDatabase.instance;
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {
@@ -69,19 +73,39 @@ class FriendsState extends State<FriendsPage> {
                 child: const Text('Cancel'),
               ),
               FilledButton(
-                onPressed: () {
+                onPressed: () async {
                   final name = _nameController.text;
                   final email = _emailController.text;
 
+                  // Checking if there is an account tied to given email
+                  // fetchSignInMethodsForEmail returns an array with sign-in methods the given email has
+                  // TODO: Error messages for when user gives a wrong email address (and maybe put this in database_utils)
+                  var accountExists = await FirebaseAuth.instance
+                      .fetchSignInMethodsForEmail(email)
+                      .then((value) {
+                    return value.isNotEmpty;
+                  });
+
                   // Check if name and email are not empty and if not, adds friend
-                  if (name.isNotEmpty && email.isNotEmpty) {
+                  if (name.isNotEmpty && email.isNotEmpty && accountExists) {
                     Friend newFriend = Friend(
                       name: name,
                       email: email,
                       imagePath:
                           'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
                     );
-                    DatabaseUtil.addFriend(newFriend);
+
+                    DatabaseReference db = database.ref().child('users/');
+
+                    // Querying for the correct user using their email address
+                    // Returns a DataSnapshot
+                    // Could be in database_utils
+                    DataSnapshot snapshot =
+                        await db.orderByChild('email').equalTo(email).get();
+
+                    String? friendUID = snapshot.children.first.key;
+
+                    DatabaseUtil.addFriend(newFriend, friendUID);
                     _nameController.clear();
                     _emailController.clear();
                     fetchList();

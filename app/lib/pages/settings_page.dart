@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/allgroups_page.dart';
-import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/pages/friends_page.dart';
 import 'package:vapaat/utils/listfriends_preference.dart';
