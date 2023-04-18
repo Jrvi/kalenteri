@@ -3,9 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localUser.dart';
-import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/pages/friends_page.dart';
-import 'package:vapaat/utils/listfriends_preference.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
@@ -36,12 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ProfileWidget(
-                  imagePath: fakeuser.imagePath,
                   isEdit: false,
-                  onClicked: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EditProfile()));
-                  },
                 ),
                 const SizedBox(width: 16.0),
                 buildName(fakeuser),

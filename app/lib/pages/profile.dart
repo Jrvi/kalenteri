@@ -4,7 +4,6 @@ import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/localUser.dart';
-import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/properties.dart';
 
@@ -106,12 +105,7 @@ class _profileState extends State<Profile> {
           const SizedBox(height: 44),
           //Profiilikuva
           ProfileWidget(
-            imagePath: user.imagePath,
             isEdit: false,
-            onClicked: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfile()));
-            },
           ),
 
           const SizedBox(height: 24),

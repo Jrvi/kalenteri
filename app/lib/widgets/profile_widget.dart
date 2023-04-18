@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
-  final String imagePath;
   final bool isEdit;
-  final VoidCallback onClicked;
 
   const ProfileWidget({
     Key? key,
-    required this.imagePath,
     this.isEdit = false,
-    required this.onClicked,
   }) : super(key: key);
 
   @override
@@ -20,12 +16,6 @@ class ProfileWidget extends StatelessWidget {
         Stack(
           children: [
             buildImage(),
-            //Edit button in the right corner of the image
-            Positioned(
-              bottom: 0,
-              right: 4,
-              child: buildEditButton(Colors.blue),
-            ),
           ],
         ),
       ],
@@ -34,7 +24,7 @@ class ProfileWidget extends StatelessWidget {
 
 //Prifilepicture on the page
   Widget buildImage() {
-    final image = NetworkImage(imagePath);
+    final image = AssetImage('assets/profile.jpg');
 
     //Images size and circle form
     return ClipOval(
@@ -45,17 +35,14 @@ class ProfileWidget extends StatelessWidget {
           fit: BoxFit.cover,
           width: 100,
           height: 100,
-          //Efect when image is clicked
-          child: InkWell(
-            onTap: onClicked,
-          ),
         ),
       ),
     );
   }
 
-  //Edit button in front of profile picture
-  Widget buildEditButton(Color color) => buildCircle(
+  //Edit button in front of profile picture.
+  //someday to be added
+/*  Widget buildEditButton(Color color) => buildCircle(
         color: Colors.white, //Edit-button circled with white line
         all: 3,
         child: buildCircle(
@@ -67,7 +54,7 @@ class ProfileWidget extends StatelessWidget {
             size: 15,
           ),
         ),
-      );
+      );*/
 
   Widget buildCircle({
     required Widget child,
