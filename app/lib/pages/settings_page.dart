@@ -22,8 +22,6 @@ class _SettingsPageState extends State<SettingsPage> {
       .getUser(); //since not yet real users with right info (name + picture), lets use fake data
   List<Friend> _friendDataList = [];
   final _scrollController = ScrollController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   static FirebaseDatabase database = FirebaseDatabase.instance;
   final user = FirebaseAuth.instance.currentUser!;
 
@@ -41,85 +39,94 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {});
   }
 
-  Future addFriendDialog() => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(friend_new),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: friend_name,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+  Future addFriendDialog() {
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+
+    nameController
+        .clear(); // empty the text field everytime the addFriendDialog is opened
+    emailController.clear();
+
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(friend_new),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: friend_name,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      labelText: friend_email,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    nameController.clear();
+                    emailController.clear();
+                    Navigator.pop(context, 'Cancel');
+                  },
+                  child: const Text('Cancel'),
                 ),
-                SizedBox(height: 10),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: friend_email,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
+                FilledButton(
+                  onPressed: () async {
+                    final name = nameController.text;
+                    final email = emailController.text;
+
+                    // Checking if there is an account tied to given email
+                    // fetchSignInMethodsForEmail returns an array with sign-in methods the given email has
+                    // TODO: Error messages for when user gives a wrong email address (and maybe put this in database_utils)
+                    var accountExists = await FirebaseAuth.instance
+                        .fetchSignInMethodsForEmail(email)
+                        .then((value) {
+                      return value.isNotEmpty;
+                    });
+
+                    // Check if name and email are not empty and if not, adds friend
+                    if (name.isNotEmpty && email.isNotEmpty && accountExists) {
+                      Friend newFriend = Friend(
+                        name: name,
+                        email: email,
+                      );
+
+                      DatabaseReference db = database.ref().child('users/');
+
+                      // Querying for the correct user using their email address
+                      // Returns a DataSnapshot
+                      // Could be in database_utils
+                      DataSnapshot snapshot =
+                          await db.orderByChild('email').equalTo(email).get();
+
+                      String? friendUID = snapshot.children.first.key;
+
+                      DatabaseUtil.addFriend(newFriend, friendUID);
+                      nameController.clear();
+                      emailController.clear();
+                      fetchList();
+                      Navigator.pop(context, 'OK');
+                    }
+                  },
+                  child: Text('OK'),
                 ),
               ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  _nameController.clear();
-                  _emailController.clear();
-                  Navigator.pop(context, 'Cancel');
-                },
-                child: const Text('Cancel'),
-              ),
-              FilledButton(
-                onPressed: () async {
-                  final name = _nameController.text;
-                  final email = _emailController.text;
-
-                  // Checking if there is an account tied to given email
-                  // fetchSignInMethodsForEmail returns an array with sign-in methods the given email has
-                  // TODO: Error messages for when user gives a wrong email address (and maybe put this in database_utils)
-                  var accountExists = await FirebaseAuth.instance
-                      .fetchSignInMethodsForEmail(email)
-                      .then((value) {
-                    return value.isNotEmpty;
-                  });
-
-                  // Check if name and email are not empty and if not, adds friend
-                  if (name.isNotEmpty && email.isNotEmpty && accountExists) {
-                    Friend newFriend = Friend(
-                      name: name,
-                      email: email,
-                    );
-
-                    DatabaseReference db = database.ref().child('users/');
-
-                    // Querying for the correct user using their email address
-                    // Returns a DataSnapshot
-                    // Could be in database_utils
-                    DataSnapshot snapshot =
-                        await db.orderByChild('email').equalTo(email).get();
-
-                    String? friendUID = snapshot.children.first.key;
-
-                    DatabaseUtil.addFriend(newFriend, friendUID);
-                    _nameController.clear();
-                    _emailController.clear();
-                    fetchList();
-                    Navigator.pop(context, 'OK');
-                  }
-                },
-                child: Text('OK'),
-              ),
-            ],
-          ));
+            ));
+  }
 
   @override
   Widget build(BuildContext context) {
