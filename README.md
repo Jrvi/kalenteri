@@ -1,7 +1,31 @@
 # kalenteri
 Mobiiledevauskurssin repo
 
-## 24.4.2023 MVP?
+##18.4.2023
+MVP to do:
+	- tekstit ? terms of services + kuvia sovelluksessa (Mitä Play-kauppa vaatii)
+
+	- Kaverin varmistus --> kaverin spo ja nimimerkki pitää täsmätä.
+	- Error viestit (kaverin lisääminen)?
+	- Takaisin napin käsittely (Free times, calender ja more sivulla)
+	- Kaverit sivulle näkyviin oikein (nyt vaatii toisella screenillä käynnin, että päivittyy)
+	- Kaverin poistaminen
+	- Profiilikuvan vaihtaminen johonkin vakkarikuvaan
+	- "Add new friend" --> tyhjennä tekstikentät (jos esim. kirjoittanut jo jotain, painanut vback ja uudelleen add new friend, vanhat tekstit jää)
+
+	- Poista tapahtumat ("delete events")
+
+	- Back painikkeen toiminta pois joka screeniltä.
+	- Poista turhat sivut (ryhmät, profiilin muokkaus)
+
+
+
+(Joskus jää aikaa)
+- kalenterinäkymään jotain, mistä tietää mikä päivä on merkitty jotain.
+
+---------------------------------------------------------------------------------------------
+
+## 24.3.2023 MVP?
  ### Ulkoasu
   vakiot
 	  - tekstit ja fontit
