@@ -1,16 +1,11 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/allgroups_page.dart';
 import 'package:vapaat/pages/models/localUser.dart';
-import 'package:vapaat/pages/friends_page.dart';
 import 'package:vapaat/utils/user_preferences.dart';
-import 'package:vapaat/utils/groups_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:vapaat/properties.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/friend.dart';
 import 'package:vapaat/utils/database_utils.dart';
@@ -20,16 +15,12 @@ class SettingsPage extends StatefulWidget {
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
-
-  static void friendsUpdate() {
-    FriendsState.fetchList();
-  }
 }
 
 class _SettingsPageState extends State<SettingsPage> {
   final fakeuser = UserPreferences
       .getUser(); //since not yet real users with right info (name + picture), lets use fake data
-  static List<Friend> _friendDataList = [];
+  List<Friend> _friendDataList = [];
   final _scrollController = ScrollController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -38,15 +29,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
-    FriendsPage.friendsUpdate();
     super.initState();
     setState(() {
       fetchList();
     });
   }
 
-  static Future fetchList() async {
+//static?
+  Future<void> fetchList() async {
     _friendDataList = await DatabaseUtil.getFriends();
+    setState(() {});
   }
 
   Future addFriendDialog() => showDialog(
@@ -120,7 +112,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     DatabaseUtil.addFriend(newFriend, friendUID);
                     _nameController.clear();
                     _emailController.clear();
-                    SettingsPage.friendsUpdate();
                     fetchList();
                     Navigator.pop(context, 'OK');
                   }

@@ -78,7 +78,6 @@ class DatabaseUtil {
     final snapshot = await ref.get();
     for (var friend in snapshot.children) {
       var data = friend.value.toString().split(",");
-      print(data);
       var name = data[0].split(" ");
       var email = data[1].split(" ");
       String emailString = email[2].substring(0, email[2].length - 1);
