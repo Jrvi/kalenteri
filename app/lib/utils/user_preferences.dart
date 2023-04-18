@@ -6,9 +6,7 @@ class UserPreferences {
   static LocalUser getUser() {
     final user = FirebaseAuth.instance.currentUser!;
     var newUser = LocalUser(
-        imagePath: user.photoURL.toString(),
-        name: user.displayName.toString(),
-        email: user.email.toString());
+        name: user.displayName.toString(), email: user.email.toString());
     return newUser;
   }
 }

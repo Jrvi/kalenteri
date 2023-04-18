@@ -37,11 +37,7 @@ class DatabaseUtil {
   static Future<void> addUserToDB(LocalUser localuser) async {
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref("/users/${user.uid}");
-    await ref.set({
-      "email": user.email.toString(),
-      "username": localuser.name,
-      "profile_picture": localuser.imagePath
-    });
+    await ref.set({"email": user.email.toString(), "username": localuser.name});
   }
 
   // Täs pitäis ottaa myös huomioon FirebaseAuthin user, että voi olla järkevämpää, että vaihdetaan siihen.
@@ -52,7 +48,6 @@ class DatabaseUtil {
     DatabaseReference ref = database.ref();
     final data = ref.child("/users/${user.uid}").get();
     data.then((value) => localUser = LocalUser(
-        imagePath: value.child("profile_picture/").value.toString(),
         name: value.child("username/").value.toString(),
         email: value.child("email/").value.toString()));
   }
@@ -67,7 +62,6 @@ class DatabaseUtil {
     final data = {
       'name': friend.name,
       'email': friend.email,
-      'imagePath': friend.imagePath,
     };
 
     await ref.child('$friendUID').set(data);
@@ -84,12 +78,10 @@ class DatabaseUtil {
     final snapshot = await ref.get();
     for (var friend in snapshot.children) {
       var data = friend.value.toString().split(",");
-      var imagePath = data[0].split(" ");
-      var name = data[1].split(" ");
-      var email = data[2].split(" ");
+      var name = data[0].split(" ");
+      var email = data[1].split(" ");
       String emailString = email[2].substring(0, email[2].length - 1);
-      var friendObject =
-          Friend(name: name[2], email: emailString, imagePath: imagePath[1]);
+      var friendObject = Friend(name: name[1], email: emailString);
       friends.add(friendObject);
     }
     return friends;

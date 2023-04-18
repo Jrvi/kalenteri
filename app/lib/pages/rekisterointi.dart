@@ -218,10 +218,7 @@ class _RekisterointiState extends State<Rekisterointi> {
 
   // Adding new user to database
   addUserToDB(String name, String email) {
-    LocalUser user = LocalUser(
-        imagePath: 'https://picsum.photos/200?random=${email.hashCode}',
-        name: name,
-        email: email);
+    LocalUser user = LocalUser(name: name, email: email);
     DatabaseUtil.addUserToDB(user);
   }
 }

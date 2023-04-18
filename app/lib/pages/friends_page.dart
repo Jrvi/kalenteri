@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+/*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -91,8 +91,6 @@ class FriendsState extends State<FriendsPage> {
                     Friend newFriend = Friend(
                       name: name,
                       email: email,
-                      imagePath:
-                          'https://picsum.photos/200?random=${email.hashCode}', //now just a random phoot, in the future use friend's profile picture
                     );
 
                     DatabaseReference db = database.ref().child('users/');
@@ -139,8 +137,7 @@ class FriendsState extends State<FriendsPage> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(_friendDataList[index].imagePath),
+                      backgroundImage: AssetImage('assets/profile.jpg'),
                     ),
                     title: Text(_friendDataList[index].name),
                     subtitle: Text(_friendDataList[index].email),
@@ -176,3 +173,4 @@ class FriendsState extends State<FriendsPage> {
     );
   }
 }
+*/
