@@ -18,8 +18,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final fakeuser = UserPreferences
-      .getUser(); //since not yet real users with right info (name + picture), lets use fake data
+  final fakeuser = UserPreferences.getUser();
   List<Friend> _friendDataList = [];
   final _scrollController = ScrollController();
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -199,12 +198,14 @@ class _SettingsPageState extends State<SettingsPage> {
             Wrap(
               alignment: WrapAlignment.center,
               children: [
-                FloatingActionButton.extended(
-                  onPressed: () {
-                    addFriendDialog();
-                  },
-                  label: const Text(friend_add),
-                  icon: const Icon(Icons.add),
+                Center(
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      addFriendDialog();
+                    },
+                    label: const Text(friend_add),
+                    icon: const Icon(Icons.add),
+                  ),
                 ),
               ],
             ),
