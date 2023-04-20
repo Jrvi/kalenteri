@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/localUser.dart';
+import 'package:vapaat/utils/friends_preference.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
@@ -32,12 +33,13 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-//static?
+//Fetches users friends from database
   Future<void> fetchList() async {
     _friendDataList = await DatabaseUtil.getFriends();
     setState(() {});
   }
 
+//Add friend dialog, witch will show when user pushes 'Add new friend' floating button and witch will add new friend to database
   Future addFriendDialog() {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
@@ -99,11 +101,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     // Check if name and email are not empty and if not, adds friend
                     if (name.isNotEmpty && email.isNotEmpty && accountExists) {
-                      Friend newFriend = Friend(
-                        name: name,
-                        email: email,
-                      );
-
                       DatabaseReference db = database.ref().child('users/');
 
                       // Querying for the correct user using their email address
@@ -113,6 +110,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           await db.orderByChild('email').equalTo(email).get();
 
                       String? friendUID = snapshot.children.first.key;
+
+                      Friend newFriend = Friend(
+                        name: name,
+                        email: email,
+                        uid: friendUID,
+                      );
 
                       DatabaseUtil.addFriend(newFriend, friendUID);
                       nameController.clear();
@@ -184,9 +187,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       trailing: IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () {
-                          setState(() {
-                            _friendDataList.removeAt(index);
-                          });
+                          String? friendID = _friendDataList[index].uid;
+                          DatabaseUtil.deleteFriend(friendID);
+                          fetchList();
                         },
                       ),
                     );
