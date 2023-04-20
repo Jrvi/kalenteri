@@ -28,7 +28,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     Freetime(),
     Calender(),
-    SettingsPage(), //from here one can navigate to profile, groups, friends, etc
+    SettingsPage(), //Here is user logout and friend adding/removing
   ];
 
   //when the bar is clicked, the screen changes

@@ -62,6 +62,7 @@ class DatabaseUtil {
     final data = {
       'name': friend.name,
       'email': friend.email,
+      'uid': friendUID,
     };
 
     await ref.child('$friendUID').set(data);
@@ -78,15 +79,20 @@ class DatabaseUtil {
     final snapshot = await ref.get();
     for (var friend in snapshot.children) {
       var data = friend.value.toString().split(",");
-      var name = data[0].split(" ");
-      var email = data[1].split(" ");
+      var uid = data[0].split(" ");
+      var name = data[1].split(" ");
+      var email = data[2].split(" ");
       String emailString = email[2].substring(0, email[2].length - 1);
-      var friendObject = Friend(name: name[1], email: emailString);
+      var friendObject = Friend(uid: uid[1], name: name[2], email: emailString);
       friends.add(friendObject);
     }
     return friends;
   }
 
   ///Delete friend from user's friend list
-  static void delFriend(Friend friend) {}
+  static void deleteFriend(String? friendUID) {
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref('users/${user.uid}/friends/');
+    ref.child('$friendUID').remove();
+  }
 }

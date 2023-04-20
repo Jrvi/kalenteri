@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vapaat/pages/models/localUser.dart';
+import 'package:vapaat/utils/friends_preference.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
@@ -18,8 +19,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final fakeuser = UserPreferences
-      .getUser(); //since not yet real users with right info (name + picture), lets use fake data
+  final fakeuser = UserPreferences.getUser();
   List<Friend> _friendDataList = [];
   final _scrollController = ScrollController();
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -33,12 +33,13 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-//static?
+//Fetches users friends from database
   Future<void> fetchList() async {
     _friendDataList = await DatabaseUtil.getFriends();
     setState(() {});
   }
 
+//Add friend dialog, witch will show when user pushes 'Add new friend' floating button and witch will add new friend to database
   Future addFriendDialog() {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
@@ -100,11 +101,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     // Check if name and email are not empty and if not, adds friend
                     if (name.isNotEmpty && email.isNotEmpty && accountExists) {
-                      Friend newFriend = Friend(
-                        name: name,
-                        email: email,
-                      );
-
                       DatabaseReference db = database.ref().child('users/');
 
                       // Querying for the correct user using their email address
@@ -114,6 +110,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           await db.orderByChild('email').equalTo(email).get();
 
                       String? friendUID = snapshot.children.first.key;
+
+                      Friend newFriend = Friend(
+                        name: name,
+                        email: email,
+                        uid: friendUID,
+                      );
 
                       DatabaseUtil.addFriend(newFriend, friendUID);
                       nameController.clear();
@@ -178,16 +180,16 @@ class _SettingsPageState extends State<SettingsPage> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: AssetImage('assets/profile.jpg'),
+                        backgroundImage: AssetImage('assets/user.png'),
                       ),
                       title: Text(_friendDataList[index].name),
                       subtitle: Text(_friendDataList[index].email),
                       trailing: IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () {
-                          setState(() {
-                            _friendDataList.removeAt(index);
-                          });
+                          String? friendID = _friendDataList[index].uid;
+                          DatabaseUtil.deleteFriend(friendID);
+                          fetchList();
                         },
                       ),
                     );
@@ -199,12 +201,14 @@ class _SettingsPageState extends State<SettingsPage> {
             Wrap(
               alignment: WrapAlignment.center,
               children: [
-                FloatingActionButton.extended(
-                  onPressed: () {
-                    addFriendDialog();
-                  },
-                  label: const Text(friend_add),
-                  icon: const Icon(Icons.add),
+                Center(
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      addFriendDialog();
+                    },
+                    label: const Text(friend_add),
+                    icon: const Icon(Icons.add),
+                  ),
                 ),
               ],
             ),

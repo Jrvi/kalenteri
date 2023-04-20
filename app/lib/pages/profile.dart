@@ -112,33 +112,6 @@ class _profileState extends State<Profile> {
 
           //Nimi ja spo
           buildName(user),
-
-          const SizedBox(height: 64),
-
-          Center(
-            //these will go under Calender-page
-            child: ButtonWidget(
-              text: 'Lisää kalenteri',
-              onClicked: () {},
-            ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            //these will go under Calender-page
-            child: ButtonWidget(
-              text: 'Lisää menemisiä',
-              onClicked: () {
-                eventDialog();
-              },
-            ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            child: ButtonWidget(
-              text: 'Poista menemisiä',
-              onClicked: () {},
-            ),
-          ),
         ],
       ),
     );
