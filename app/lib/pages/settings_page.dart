@@ -180,7 +180,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: AssetImage('assets/profile.jpg'),
+                        backgroundImage: AssetImage('assets/user.png'),
                       ),
                       title: Text(_friendDataList[index].name),
                       subtitle: Text(_friendDataList[index].email),

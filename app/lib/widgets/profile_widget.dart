@@ -24,7 +24,7 @@ class ProfileWidget extends StatelessWidget {
 
 //Prifilepicture on the page
   Widget buildImage() {
-    final image = AssetImage('assets/profile.jpg');
+    final image = AssetImage('assets/user.png');
 
     //Images size and circle form
     return ClipOval(
