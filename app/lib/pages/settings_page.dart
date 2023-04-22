@@ -89,6 +89,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   onPressed: () async {
                     final name = nameController.text;
                     final email = emailController.text;
+                    Friend newFriend = Friend(name: '', email: '');
 
                     // Checking if there is an account tied to given email
                     // fetchSignInMethodsForEmail returns an array with sign-in methods the given email has
@@ -99,8 +100,21 @@ class _SettingsPageState extends State<SettingsPage> {
                       return value.isNotEmpty;
                     });
 
+                    // Checking if the name is correct
+                    // Database is being queried only once for the friend details (I think)
+                    var namesMatch = false;
+                    if (accountExists) {
+                      newFriend = await DatabaseUtil.getUserByEmail(email);
+                      namesMatch =
+                          name.toLowerCase() == newFriend.name.toLowerCase();
+                    }
+
                     // Check if name and email are not empty and if not, adds friend
-                    if (name.isNotEmpty && email.isNotEmpty && accountExists) {
+                    if (name.isNotEmpty &&
+                        email.isNotEmpty &&
+                        accountExists &&
+                        namesMatch) {
+                      /*
                       DatabaseReference db = database.ref().child('users/');
 
                       // Querying for the correct user using their email address
@@ -116,8 +130,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         email: email,
                         uid: friendUID,
                       );
+                      */
 
-                      DatabaseUtil.addFriend(newFriend, friendUID);
+                      DatabaseUtil.addFriend(newFriend);
                       nameController.clear();
                       emailController.clear();
                       fetchList();

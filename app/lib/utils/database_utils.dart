@@ -52,20 +52,32 @@ class DatabaseUtil {
         email: value.child("email/").value.toString()));
   }
 
+  // Queries for the user using an email address
+  // Returns a Future<Friend> (use "await" to get "Friend" :] )
+  static Future<Friend> getUserByEmail(String email) async {
+    DatabaseReference db = database.ref().child('users/');
+    DataSnapshot snapshot = await db.orderByChild('email').equalTo(email).get();
+    Friend friend = Friend(
+        name: snapshot.children.first.child('username').value.toString(),
+        email: email,
+        uid: snapshot.children.first.key);
+    return friend;
+  }
+
   ///Add new friend to user's friend list
   /// [friend] is Friend object that will be added user's friend list
   /// [user] is the user who is adding the friend
-  static Future<void> addFriend(Friend friend, String? friendUID) async {
+  static Future<void> addFriend(Friend friend) async {
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref('users/${user.uid}/friends/');
 
     final data = {
       'name': friend.name,
       'email': friend.email,
-      'uid': friendUID,
+      'uid': friend.uid,
     };
 
-    await ref.child('$friendUID').set(data);
+    await ref.child('${friend.uid}').set(data);
   }
 
   ///Get list of friends from database
