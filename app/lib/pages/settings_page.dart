@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {});
   }
 
-//Add friend dialog, witch will show when user pushes 'Add new friend' floating button and witch will add new friend to database
+//Add friend dialog, which will show when user pushes 'Add new friend' floating button and witch will add new friend to database
   Future addFriendDialog() {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
@@ -93,20 +93,31 @@ class _SettingsPageState extends State<SettingsPage> {
 
                     // Checking if there is an account tied to given email
                     // fetchSignInMethodsForEmail returns an array with sign-in methods the given email has
-                    // TODO: Error messages for when user gives a wrong email address (and maybe put this in database_utils)
-                    var accountExists = await FirebaseAuth.instance
-                        .fetchSignInMethodsForEmail(email)
-                        .then((value) {
-                      return value.isNotEmpty;
-                    });
+                    bool accountExists;
+                    try {
+                      accountExists = await FirebaseAuth.instance
+                          .fetchSignInMethodsForEmail(email)
+                          .then((value) {
+                        return value.isNotEmpty;
+                      });
+                    } on FirebaseAuthException {
+                      accountExists = false;
+                    }
 
-                    // Checking if the name is correct
-                    // Database is being queried only once for the friend details (I think)
-                    var namesMatch = false;
+                    // Checking if the name is correct and if so, uses the queried user as the "newFriend"
+                    // Database is being queried only once for the (possible) friend details (I think)
+                    bool namesMatch = false;
                     if (accountExists) {
                       newFriend = await DatabaseUtil.getUserByEmail(email);
                       namesMatch =
                           name.toLowerCase() == newFriend.name.toLowerCase();
+                    }
+
+                    // Error messages with SnackBar
+                    if (accountExists || !namesMatch) {
+                      final error =
+                          SnackBar(content: Text(wrong_name_or_email));
+                      ScaffoldMessenger.of(context).showSnackBar(error);
                     }
 
                     // Check if name and email are not empty and if not, adds friend
@@ -114,24 +125,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         email.isNotEmpty &&
                         accountExists &&
                         namesMatch) {
-                      /*
-                      DatabaseReference db = database.ref().child('users/');
-
-                      // Querying for the correct user using their email address
-                      // Returns a DataSnapshot
-                      // Could be in database_utils
-                      DataSnapshot snapshot =
-                          await db.orderByChild('email').equalTo(email).get();
-
-                      String? friendUID = snapshot.children.first.key;
-
-                      Friend newFriend = Friend(
-                        name: name,
-                        email: email,
-                        uid: friendUID,
-                      );
-                      */
-
                       DatabaseUtil.addFriend(newFriend);
                       nameController.clear();
                       emailController.clear();
