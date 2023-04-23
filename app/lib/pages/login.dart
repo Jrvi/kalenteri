@@ -180,8 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
             break;
           default:
             errorMessage = "An undefined Error happened.";
-            print('Error message: ${e.message}');
-            print('Error code: ${e.code}');
+          // print('Error message: ${e.message}');
+          // print('Error code: ${e.code}');
         }
         final error = SnackBar(content: Text(errorMessage!));
         ScaffoldMessenger.of(context).showSnackBar(error);
