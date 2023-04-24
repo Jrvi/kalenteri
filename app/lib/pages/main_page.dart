@@ -38,19 +38,41 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     });
   }
 
+  // Handling the back button
+  DateTime currentBackPressTime = DateTime.now();
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 1)) {
+      currentBackPressTime = now;
+      final confirm = SnackBar(
+          duration: const Duration(seconds: 1),
+          content: Text('Press back again to exit'));
+      ScaffoldMessenger.of(context).showSnackBar(confirm);
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(onWillPop());
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
           //Here something else, so that the app wont go over phone's upper edge
           //but there wont't be 'back' arrowbutton in main pages(free times, calender, settings)
-          ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: OwnNavBar(
-        selectedIndex: _selectedIndex,
-        onItemSelected: _onItemTapped,
+        ),
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: OwnNavBar(
+          selectedIndex: _selectedIndex,
+          onItemSelected: _onItemTapped,
+        ),
       ),
     );
   }

@@ -24,8 +24,8 @@ class OwnNavBar extends StatelessWidget {
           label: navBar_calender,
         ),
         NavigationDestination(
-          icon: Icon(Icons.add_circle),
-          label: navBar_more,
+          icon: Icon(Icons.person),
+          label: navBar_profile,
         ),
       ],
     );

@@ -22,7 +22,6 @@ class _SettingsPageState extends State<SettingsPage> {
   final fakeuser = UserPreferences.getUser();
   List<Friend> _friendDataList = [];
   final _scrollController = ScrollController();
-  static FirebaseDatabase database = FirebaseDatabase.instance;
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
@@ -34,6 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
 //Fetches users friends from database
+// And does it each time this page is opened. TODO: Might want to change that.
   Future<void> fetchList() async {
     _friendDataList = await DatabaseUtil.getFriends();
     setState(() {});
@@ -67,6 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SizedBox(height: 10),
                   TextField(
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: friend_email,
                       border: OutlineInputBorder(
@@ -138,89 +139,112 @@ class _SettingsPageState extends State<SettingsPage> {
             ));
   }
 
+  // Handling the back button
+  DateTime currentBackPressTime = DateTime.now();
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 1)) {
+      currentBackPressTime = now;
+      final confirm = SnackBar(
+          duration: const Duration(seconds: 1),
+          content: Text('Press back again to exit'));
+      ScaffoldMessenger.of(context).showSnackBar(confirm);
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ProfileWidget(
-                  isEdit: false,
-                ),
-                const SizedBox(width: 16.0),
-                buildName(fakeuser),
-                Spacer(),
-                ButtonWidget(
-                    onClicked: () {
-                      FirebaseAuth.instance.signOut().then((value) => {
-                            log("signed out"),
-                            Navigator.popUntil(context,
-                                (Route<dynamic> predicate) => predicate.isFirst)
-                          });
-                    },
-                    text: logout),
-              ],
-            ),
-            Divider(height: 32.0, thickness: 2.0),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Icon(Icons.group),
-                SizedBox(width: 16.0),
-                Text(friendlist_caption, style: TextStyle(fontSize: 20)),
-                Spacer(),
-              ],
-            ),
-            const SizedBox(height: 4),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: fetchList,
-                child: ListView.builder(
-                  controller: _scrollController,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  physics: BouncingScrollPhysics(),
-                  itemCount: _friendDataList.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage('assets/user.png'),
-                      ),
-                      title: Text(_friendDataList[index].name),
-                      subtitle: Text(_friendDataList[index].email),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          String? friendID = _friendDataList[index].uid;
-                          DatabaseUtil.deleteFriend(friendID);
-                          fetchList();
-                        },
-                      ),
-                    );
-                  },
-                ),
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(onWillPop());
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ProfileWidget(
+                    isEdit: false,
+                  ),
+                  const SizedBox(width: 16.0),
+                  buildName(fakeuser),
+                  Spacer(),
+                  ButtonWidget(
+                      onClicked: () {
+                        FirebaseAuth.instance.signOut().then((value) => {
+                              log("signed out"),
+                              Navigator.popUntil(
+                                  context,
+                                  (Route<dynamic> predicate) =>
+                                      predicate.isFirst)
+                            });
+                      },
+                      text: logout),
+                ],
               ),
-            ),
-            const SizedBox(height: 24),
-            Wrap(
-              alignment: WrapAlignment.center,
-              children: [
-                Center(
-                  child: FloatingActionButton.extended(
-                    onPressed: () {
-                      addFriendDialog();
+              Divider(height: 32.0, thickness: 2.0),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Icon(Icons.group),
+                  SizedBox(width: 16.0),
+                  Text(friendlist_caption, style: TextStyle(fontSize: 20)),
+                  Spacer(),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: fetchList,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    physics: BouncingScrollPhysics(),
+                    itemCount: _friendDataList.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage('assets/user.png'),
+                        ),
+                        title: Text(_friendDataList[index].name),
+                        subtitle: Text(_friendDataList[index].email),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            String? friendID = _friendDataList[index].uid;
+                            DatabaseUtil.deleteFriend(friendID);
+                            fetchList();
+                          },
+                        ),
+                      );
                     },
-                    label: const Text(friend_add),
-                    icon: const Icon(Icons.add),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: 24),
+              Wrap(
+                alignment: WrapAlignment.center,
+                children: [
+                  Center(
+                    child: FloatingActionButton.extended(
+                      onPressed: () {
+                        addFriendDialog();
+                      },
+                      label: const Text(friend_add),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
