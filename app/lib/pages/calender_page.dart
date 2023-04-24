@@ -133,7 +133,7 @@ class _CalenderState extends State<Calender> {
                 _focusedDay = focusedDay;
               },
             ),
-            const SizedBox(height: 84),
+            const SizedBox(height: 20),
             Center(
               //these will go under Calender-page
               child: ButtonWidget(
@@ -143,11 +143,13 @@ class _CalenderState extends State<Calender> {
                 },
               ),
             ),
-            const SizedBox(height: 24),
             Center(
               child: ButtonWidget(
                 text: calender_delete,
-                onClicked: () {},
+                onClicked: () {
+                  DatabaseUtil.deleteEvent(_selectedDay?.day.toString(),
+                      _selectedDay?.month.toString());
+                },
               ),
             )
           ],
