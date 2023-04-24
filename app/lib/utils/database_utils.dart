@@ -107,4 +107,16 @@ class DatabaseUtil {
     DatabaseReference ref = database.ref('users/${user.uid}/friends/');
     ref.child('$friendUID').remove();
   }
+
+  ///Delete friend from user's friend list
+  static void deleteEvent(String? day, String? month) {
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref('events/${user.uid}/');
+    String joo = '$day-$month';
+    ref.orderByKey().startAt(joo).endAt("$joo\uf8ff").get().then((snapshot) {
+      for (var element in snapshot.children) {
+        ref.child('${element.key}').remove();
+      }
+    });
+  }
 }
