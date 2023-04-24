@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/button_widget.dart';
+
+import '../properties.dart';
 
 class Rekisterointi extends StatefulWidget {
   const Rekisterointi({super.key});
@@ -63,7 +65,7 @@ class _RekisterointiState extends State<Rekisterointi> {
           return ('Enter an email address');
         }
 
-        // Checking the email. Feel free to change if oyu know a better way :D
+        // Checking the email. Feel free to change if you know a better way :D
         // This version checks the string for 'weird' characters
         if (!RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]').hasMatch(value)) {
           return ('Enter a valid email address');
@@ -91,6 +93,14 @@ class _RekisterointiState extends State<Rekisterointi> {
       autofocus: false,
       controller: passwordController,
       obscureText: true,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return (login_password_hint);
+        }
+        if (value.length < password_length) {
+          return (login_password_hint2);
+        }
+      },
       onSaved: (value) {
         passwordController.text = value!;
       },
@@ -138,41 +148,38 @@ class _RekisterointiState extends State<Rekisterointi> {
     final signUpButton = ButtonWidget(
         text: 'Register',
         onClicked: () {
-          addUser(emailController.text, passwordController.text);
+          addUser(emailController.text, passwordController.text,
+              nameController.text);
         });
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    // TODO: Logo =)
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: Image.asset('polku/kuvan/sijaintiin.png',
-                    //   fit: BoxFit.contain,),
-                    // ),
-                    //SizedBox(height: 15),
-                    nameField,
-                    SizedBox(height: 15),
-                    emailField,
-                    SizedBox(height: 15),
-                    passwordField,
-                    SizedBox(height: 15),
-                    confirmPassword,
-                    SizedBox(height: 15),
-                    signUpButton,
-                  ],
-                ),
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // TODO: Logo =)
+                  // SizedBox(
+                  //   height: 200,
+                  //   child: Image.asset('polku/kuvan/sijaintiin.png',
+                  //   fit: BoxFit.contain,),
+                  // ),
+                  //SizedBox(height: 15),
+                  nameField,
+                  SizedBox(height: 15),
+                  emailField,
+                  SizedBox(height: 15),
+                  passwordField,
+                  SizedBox(height: 15),
+                  confirmPassword,
+                  SizedBox(height: 15),
+                  signUpButton,
+                ],
               ),
             ),
           ),
@@ -182,9 +189,8 @@ class _RekisterointiState extends State<Rekisterointi> {
   }
 
   // Adding user to authenticated users
-  // Also adding user to database
   // TODO: Handle errors
-  void addUser(String email, String password) async {
+  void addUser(String email, String password, String name) async {
     if (_formKey.currentState!.validate()) {
       await _authKey
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -195,9 +201,24 @@ class _RekisterointiState extends State<Rekisterointi> {
                 Navigator.of(context).pushNamed('/main', arguments: 'main')
               })
           .catchError((e) {
+        // switch (e.code) {
+        // case "wrong-password":
+        //   errorMessage = "Wrong email or password.";
+        //   break;
+        // default:
+        //   errorMessage = "An undefined Error happened.";
+        print('Error message: $e');
+        // print('Error code: ${e.code}');
         final error = SnackBar(content: Text(e!));
         ScaffoldMessenger.of(context).showSnackBar(error);
       });
+      addUserToDB(name, email);
     }
+  }
+
+  // Adding new user to database
+  addUserToDB(String name, String email) {
+    LocalUser user = LocalUser(name: name, email: email);
+    DatabaseUtil.addUserToDB(user);
   }
 }

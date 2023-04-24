@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:vapaat/pages/models/event.dart';
 import 'package:vapaat/pages/models/friend.dart';
-import 'package:vapaat/pages/models/localuser.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
@@ -35,11 +37,7 @@ class DatabaseUtil {
   static Future<void> addUserToDB(LocalUser localuser) async {
     final user = FirebaseAuth.instance.currentUser!;
     DatabaseReference ref = database.ref("/users/${user.uid}");
-    await ref.set({
-      "email": user.email.toString(),
-      "username": localuser.name,
-      "profile_picture": localuser.imagePath
-    });
+    await ref.set({"email": user.email.toString(), "username": localuser.name});
   }
 
   // Täs pitäis ottaa myös huomioon FirebaseAuthin user, että voi olla järkevämpää, että vaihdetaan siihen.
@@ -50,9 +48,20 @@ class DatabaseUtil {
     DatabaseReference ref = database.ref();
     final data = ref.child("/users/${user.uid}").get();
     data.then((value) => localUser = LocalUser(
-        imagePath: value.child("profile_picture/").value.toString(),
         name: value.child("username/").value.toString(),
         email: value.child("email/").value.toString()));
+  }
+
+  // Queries for the user using an email address
+  // Returns a Future<Friend> (use "await" to get "Friend" :] )
+  static Future<Friend> getUserByEmail(String email) async {
+    DatabaseReference db = database.ref().child('users/');
+    DataSnapshot snapshot = await db.orderByChild('email').equalTo(email).get();
+    Friend friend = Friend(
+        name: snapshot.children.first.child('username').value.toString(),
+        email: email,
+        uid: snapshot.children.first.key);
+    return friend;
   }
 
   ///Add new friend to user's friend list
@@ -60,16 +69,15 @@ class DatabaseUtil {
   /// [user] is the user who is adding the friend
   static Future<void> addFriend(Friend friend) async {
     final user = FirebaseAuth.instance.currentUser!;
-    DatabaseReference ref = database.ref('users/${user.uid}/friends');
+    DatabaseReference ref = database.ref('users/${user.uid}/friends/');
 
     final data = {
       'name': friend.name,
       'email': friend.email,
-      'imagePath': friend.imagePath,
+      'uid': friend.uid,
     };
 
-    await ref.push().set(
-        data); //push() creates a new child node; without it this only saves one friend at the time
+    await ref.child('${friend.uid}').set(data);
   }
 
   ///Get list of friends from database
@@ -83,17 +91,20 @@ class DatabaseUtil {
     final snapshot = await ref.get();
     for (var friend in snapshot.children) {
       var data = friend.value.toString().split(",");
-      var imagePath = data[0].split(" ");
+      var uid = data[0].split(" ");
       var name = data[1].split(" ");
       var email = data[2].split(" ");
       String emailString = email[2].substring(0, email[2].length - 1);
-      var friendObject =
-          Friend(name: name[2], email: emailString, imagePath: imagePath[1]);
+      var friendObject = Friend(uid: uid[1], name: name[2], email: emailString);
       friends.add(friendObject);
     }
     return friends;
   }
 
   ///Delete friend from user's friend list
-  static void delFriend(Friend friend) {}
+  static void deleteFriend(String? friendUID) {
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref('users/${user.uid}/friends/');
+    ref.child('$friendUID').remove();
+  }
 }

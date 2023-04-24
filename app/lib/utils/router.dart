@@ -1,6 +1,5 @@
 import 'package:vapaat/pages/login.dart';
 import 'package:vapaat/pages/main_page.dart';
-import 'package:vapaat/pages/edit_profile.dart';
 import 'package:vapaat/pages/profile.dart';
 import 'package:vapaat/pages/rekisterointi.dart';
 import 'package:flutter/material.dart';
@@ -38,13 +37,6 @@ class RouteGenerator {
         if (args is String) {
           return MaterialPageRoute(
             builder: (_) => Profile(),
-          );
-        }
-        return _errorRoute();
-      case '/edit_profile':
-        if (args is String) {
-          return MaterialPageRoute(
-            builder: (_) => EditProfile(),
           );
         }
         return _errorRoute();
