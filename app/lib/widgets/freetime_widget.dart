@@ -46,6 +46,7 @@ class _FreetimeState extends State<Freetime> {
         freeTimeSlots.add(TimeSlot(timeSlots.last.end, endDate));
       }
     }
+    DatabaseUtil.clearEvents();
   }
 
   Future refresh() async {
@@ -63,7 +64,6 @@ class _FreetimeState extends State<Freetime> {
   @override
   void initState() {
     super.initState();
-    DatabaseUtil.clearEvents();
     refresh();
   }
 
