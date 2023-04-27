@@ -1,6 +1,6 @@
 import 'package:vapaat/pages/models/TimeSlot.dart';
-import 'package:vapaat/testdata/testdata.dart';
 import 'package:flutter/material.dart';
+import 'package:vapaat/utils/database_utils.dart';
 
 class Freetime extends StatefulWidget {
   @override
@@ -13,8 +13,8 @@ class _FreetimeState extends State<Freetime> {
   void getFreeTimeSlotsForTwoCalendars(DateTime startDate, DateTime endDate,
       {int duration = 60}) {
     // Retrieve events from both calendars between start and end dates
-    final person1Events = TestData.events1;
-    final person2Events = TestData.events2;
+    final person1Events = DatabaseUtil.getOwnEvents();
+    final person2Events = DatabaseUtil.getFriendsEvents();
 
     // Merge the two calendars' events
     final allEvents = [...person1Events, ...person2Events];
@@ -52,7 +52,10 @@ class _FreetimeState extends State<Freetime> {
     freeTimeSlots.clear();
     setState(() {
       getFreeTimeSlotsForTwoCalendars(
-          DateTime(2023, 3, 10, 0, 0), DateTime(2023, 3, 11, 0, 0),
+          DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 0, 0),
+          DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day + 1, 0, 0),
           duration: 30);
     });
   }
@@ -60,6 +63,7 @@ class _FreetimeState extends State<Freetime> {
   @override
   void initState() {
     super.initState();
+    DatabaseUtil.clearEvents();
     refresh();
   }
 
@@ -80,8 +84,6 @@ class _FreetimeState extends State<Freetime> {
               height: 125,
               child: Card(
                 child: ListTile(
-                  leading: FlutterLogo(),
-                  trailing: Text("tänne jotain?"),
                   title: Text(
                       "${freeTimeSlots[index].start.hour.toString()}.${freeTimeSlots[index].start.minute.toString()}-${freeTimeSlots[index].end.hour.toString()}.${freeTimeSlots[index].end.minute.toString()}"),
                 ),

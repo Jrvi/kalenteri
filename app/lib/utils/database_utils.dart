@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,6 +10,8 @@ import 'package:vapaat/pages/models/localUser.dart';
 class DatabaseUtil {
   static FirebaseDatabase database = FirebaseDatabase.instance;
   static LocalUser? localUser;
+  static List<Event> ownEvents = [];
+  static List<Event> friendsEvents = [];
   //static final user = FirebaseAuth.instance.currentUser!;
 
   /// Adds Event to database
@@ -24,14 +27,54 @@ class DatabaseUtil {
     });
   }
 
+  static void clearEvents() {
+    ownEvents.clear();
+    friendsEvents.clear();
+  }
+
   /// Deletes Event from database
   static void delEvent(Event event) {}
 
   /// Gets list of Events from data place and return it
-  /*List<Event> getEvents (LocalUser localuser) {
+  static List<Event> getOwnEvents() {
+    final user = FirebaseAuth.instance.currentUser!;
+    DatabaseReference ref = database.ref();
+    final data = ref.child("/events/${user.uid}/").get();
+    data.then((value) => {
+          for (var event in value.children)
+            {
+              ownEvents.add(Event(
+                  start: DateTime.parse(event.child("start").value.toString()),
+                  end: DateTime.parse(event.child("end").value.toString()))),
+            }
+        });
+    return ownEvents;
+  }
 
-    return
-  }*/
+  static List<Event> getFriendsEvents() {
+    final friends = DatabaseUtil.getFriends();
+    var data;
+    DatabaseReference ref = database.ref();
+    friends.then((friends) => {
+          for (var friend in friends)
+            {
+              data = ref.child("events/${friend.uid}/").get(),
+              data.then((events) => {
+                    for (var event in events.children)
+                      {
+                        friendsEvents.add(
+                          Event(
+                              start: DateTime.parse(
+                                  event.child("start").value.toString()),
+                              end: DateTime.parse(
+                                  event.child("end").value.toString())),
+                        )
+                      }
+                  })
+            }
+        });
+    return friendsEvents;
+  }
 
   /// Adds new user to database
   static Future<void> addUserToDB(LocalUser localuser) async {
