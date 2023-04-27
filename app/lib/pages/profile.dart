@@ -3,8 +3,7 @@ import 'package:vapaat/utils/database_utils.dart';
 import 'package:vapaat/widgets/profile_widget.dart';
 import 'package:vapaat/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:vapaat/pages/models/localuser.dart';
-import 'package:vapaat/pages/edit_profile.dart';
+import 'package:vapaat/pages/models/localUser.dart';
 import 'package:vapaat/utils/user_preferences.dart';
 import 'package:vapaat/properties.dart';
 
@@ -106,45 +105,13 @@ class _profileState extends State<Profile> {
           const SizedBox(height: 44),
           //Profiilikuva
           ProfileWidget(
-            imagePath: user.imagePath,
             isEdit: false,
-            onClicked: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EditProfile()));
-            },
           ),
 
           const SizedBox(height: 24),
 
           //Nimi ja spo
           buildName(user),
-
-          const SizedBox(height: 64),
-
-          Center(
-            //these will go under Calender-page
-            child: ButtonWidget(
-              text: 'Lisää kalenteri',
-              onClicked: () {},
-            ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            //these will go under Calender-page
-            child: ButtonWidget(
-              text: 'Lisää menemisiä',
-              onClicked: () {
-                eventDialog();
-              },
-            ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            child: ButtonWidget(
-              text: 'Poista menemisiä',
-              onClicked: () {},
-            ),
-          ),
         ],
       ),
     );

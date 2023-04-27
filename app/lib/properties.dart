@@ -3,13 +3,14 @@
 const app_name = "App's name";
 
 //Login-page's texts:
+const password_length = 6;
 const login_login = "Log in";
 const login_no_account = "Don't have account?";
 const login_register = "Register here";
 const login_email = "Email";
 const login_password = "Password";
 const login_password_hint = "Enter your password";
-const login_password_hint2 = "The password must contain at least 8 characters.";
+const login_password_hint2 = "At least $password_length characters";
 const login_email_error = "Please enter a valid email address";
 const login_password_error = "Please enter a valid password";
 const login_email_hint = "Enter your email";
@@ -18,6 +19,7 @@ const login_email_hint = "Enter your email";
 const navBar_calender = "Calender";
 const navBar_more = "More";
 const navBar_time = "Free times";
+const navBar_profile = "Profile";
 
 //More-page's texts:
 const profile_caption = "Profile";
@@ -37,6 +39,7 @@ const friend_add = "Add new friend";
 const friend_new = "Add a new friend using their email";
 const friend_email = "Email";
 const friend_name = "Friend's name";
+const wrong_name_or_email = "Wrong name or email address";
 
 //All groups-page's texts:
 const all_groups_caption = "All groups";
@@ -58,7 +61,7 @@ const group_exit = "Leave group";
 
 //Calender page:
 const calender_add = "Add event";
-const calender_delete = "Delete event";
+const calender_delete = "Delete events";
 
 //Freetime page:
 const freetime_update = "Update";

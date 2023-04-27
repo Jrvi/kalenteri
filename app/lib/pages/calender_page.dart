@@ -71,66 +71,89 @@ class _CalenderState extends State<Calender> {
             ],
           ));
 
+  // Handling the back button
+  DateTime currentBackPressTime = DateTime.now();
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 1)) {
+      currentBackPressTime = now;
+      final confirm = SnackBar(
+          duration: const Duration(seconds: 1),
+          content: Text('Press back again to exit'));
+      ScaffoldMessenger.of(context).showSnackBar(confirm);
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        physics: BouncingScrollPhysics(),
-        children: [
-          TableCalendar(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) {
-              // Use `selectedDayPredicate` to determine which day is currently selected.
-              // If this returns true, then `day` will be marked as selected.
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(onWillPop());
+      },
+      child: Scaffold(
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          physics: BouncingScrollPhysics(),
+          children: [
+            TableCalendar(
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+              focusedDay: _focusedDay,
+              calendarFormat: _calendarFormat,
+              selectedDayPredicate: (day) {
+                // Use `selectedDayPredicate` to determine which day is currently selected.
+                // If this returns true, then `day` will be marked as selected.
 
-              // Using `isSameDay` is recommended to disregard
-              // the time-part of compared DateTime objects.
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(_selectedDay, selectedDay)) {
-                // Call `setState()` when updating the selected day
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-              }
-            },
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                // Call `setState()` when updating calendar format
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              // No need to call `setState()` here
-              _focusedDay = focusedDay;
-            },
-          ),
-          const SizedBox(height: 84),
-          Center(
-            //these will go under Calender-page
-            child: ButtonWidget(
-              text: calender_add,
-              onClicked: () {
-                eventDialog();
+                // Using `isSameDay` is recommended to disregard
+                // the time-part of compared DateTime objects.
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                if (!isSameDay(_selectedDay, selectedDay)) {
+                  // Call `setState()` when updating the selected day
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                }
+              },
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  // Call `setState()` when updating calendar format
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+              onPageChanged: (focusedDay) {
+                // No need to call `setState()` here
+                _focusedDay = focusedDay;
               },
             ),
-          ),
-          const SizedBox(height: 24),
-          Center(
-            child: ButtonWidget(
-              text: calender_delete,
-              onClicked: () {},
+            const SizedBox(height: 20),
+            Center(
+              //these will go under Calender-page
+              child: ButtonWidget(
+                text: calender_add,
+                onClicked: () {
+                  eventDialog();
+                },
+              ),
             ),
-          )
-        ],
+            Center(
+              child: ButtonWidget(
+                text: calender_delete,
+                onClicked: () {
+                  DatabaseUtil.deleteEvent(_selectedDay?.day.toString(),
+                      _selectedDay?.month.toString());
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

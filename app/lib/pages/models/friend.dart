@@ -3,11 +3,11 @@
 class Friend {
   final String name;
   final String email;
-  final String imagePath;
+  final String? uid;
 
   Friend({
     required this.name,
     required this.email,
-    required this.imagePath,
+    this.uid,
   });
 }
