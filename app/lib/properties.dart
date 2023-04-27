@@ -1,6 +1,6 @@
 //Fonts, texts, etc.
 
-const app_name = "App's name";
+const app_name = "Freetime";
 
 //Login-page's texts:
 const password_length = 6;

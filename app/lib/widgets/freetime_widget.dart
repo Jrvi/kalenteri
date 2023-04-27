@@ -72,7 +72,7 @@ class _FreetimeState extends State<Freetime> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Vapaatajat"),
+        title: Text("Free Time Slots"),
       ),
       body: RefreshIndicator(
         onRefresh: refresh,
