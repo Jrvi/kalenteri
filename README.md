@@ -1,78 +1,31 @@
-# kalenteri
-Mobiiledevauskurssin repo
+# TIEA329 Mobiilisovellus -kurssi
 
-##18.4.2023
-MVP to do:
-	- tekstit ? terms of services + kuvia sovelluksessa (Mitä Play-kauppa vaatii)
+Tekijät
+Jani Leppänen, Siiri Weckberg, Juho Järvi, Phatchanon Chuchat
 
-	- Kaverin varmistus --> kaverin spo ja nimimerkki pitää täsmätä.
-	- Error viestit (kaverin lisääminen)?
-	- Takaisin napin käsittely (Free times, calender ja more sivulla)
-	- Kaverit sivulle näkyviin oikein (nyt vaatii toisella screenillä käynnin, että päivittyy)
-	- Kaverin poistaminen
-	- Profiilikuvan vaihtaminen johonkin vakkarikuvaan
-	- "Add new friend" --> tyhjennä tekstikentät (jos esim. kirjoittanut jo jotain, painanut vback ja uudelleen add new friend, vanhat tekstit jää)
+## Freetime
 
-	- Poista tapahtumat ("delete events")
+Freetime on sosiaalisen verkostoitumisen sovellus, jonka avulla voit tarkistaa ystäviesi kalenterit ja saatavuuden, mikä helpottaa tapahtumien ja hangoutien ajoittamista. Ota vain yhteyttä ystäviisi sovelluksessa, niin voit tarkastella heidän saatavuuttaan ja ajoittaa tapahtumia, jotka sopivat kaikille.
 
-	- Back painikkeen toiminta pois joka screeniltä.
-	- Poista turhat sivut (ryhmät, profiilin muokkaus)
+Sovellus julkaistiin 2.5.2023 Googlen Play-kaupassa.
 
+---------------------------------------------------------------------------------------------
+![o](https://user-images.githubusercontent.com/120563276/235960785-22f7bba7-20fe-4285-9338-2f5e6b100d96.png)
+![i](https://user-images.githubusercontent.com/120563276/235960790-141f8839-0158-4a3d-900a-6bff180dc0af.png)
+![j](https://user-images.githubusercontent.com/120563276/235960795-e66f1be6-4477-4d0e-9263-c159bb65a090.png)
 
-
-(Joskus jää aikaa)
-- kalenterinäkymään jotain, mistä tietää mikä päivä on merkitty jotain.
 
 ---------------------------------------------------------------------------------------------
 
-## 24.3.2023 MVP?
- ### Ulkoasu
-  vakiot
-	  - tekstit ja fontit
-
-### Toiminnot
-	Onko MVP:
-
-	EI - kaverin poisto
-	EI - Käyttäjän tietojen muokkaus (nimi, salasana, kuva)
-	EI - Käyttäjälle oikea kuva
-	EI - Ryhmän poistaminen/ryhmästä poistuminen?
-	EI - logout
-
-	ON - kaverien lisäys
-	ON - Log in toimimaan oikein
-	ON - Ryhmien tekeminen
-	ON - kalenteri
-
-## viikkopalaverit
-viikottain torstaina klo. 16.15
-
-## kotitehtävä1
-Tavoitteet: Saada appi kauppaan
-Käyttäjät: Opiskelijat
-Alusta: Mobiili (android, ios) ehkä työpöytä sovellus
-Aikaikkuna: 3kk (kurssi)
-
-## Feature list
-* kirjautuminen
-* kalenteri synkkaus
-* ryhmät
-* kaverit
-* vertailu
-
-## Git ohjeet
-Luokaa jokaiselle uudelle ominaisuudelle oma haara.
-git branch -> antaa listan  sun aikaisemmista haaroista
-git checkout/branch "haaran nimi" -> vaihtaa tai luo uuden.
-
-git add --all
-git commit -m "yritä kuvailla parhaan mukaa"
-git status -> näkee mitkä on lisätty
-git push
-
-git merge -> vasta  testauksen jälkeen.
-
-## Github
-Pushin jälkeen luokaa pull request, johon laitetta muut tarkastamaan koodinne ennen merge toimintoa
+## Feature list (MVP):
+* kirjautuminen sähköpostilla
+* kalenteriin tapahtumien poistaminen ja lisääminen
+* kaverien lisääminen
+* Käyttäjän ja kaverin väliset vapaat ajat näkyvät etusivulla
 
 
+----------------------------------------------------------------------------------------------------
+Shortly:
+Freetime is a social networking app that lets you check your friends' calendars and availability, making it easy to schedule events and hangouts. Just connect with your friends in the app to see their availability and schedule events that work for everyone.
+
+The application was released on May 2, 2023 in the Google Play store.
